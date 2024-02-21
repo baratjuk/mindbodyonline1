@@ -17,8 +17,8 @@ const server = http.createServer( (req, res) => {
 server.listen(port)
 
 let options = {
-    key: fs.readFileSync(`/home/bitnami/htdocs/test1/key.pem`),
-    cert: fs.readFileSync(`/home/bitnami/htdocs/test1/cert.pem`),
+    key: fs.readFileSync(`/opt/mindbody/mindbodyonline1/key.pem`),
+    cert: fs.readFileSync(`/opt/mindbody/mindbodyonline1/cert.pem`),
     passphrase: 'quake2'
 }
 
