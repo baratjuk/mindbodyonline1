@@ -38,7 +38,7 @@ class Api {
                 event
               ],
               eventSchemaVersion: 1,
-              webhookUrl: 'https://3.65.29.31/',
+              webhookUrl: 'https://dev1.htt.ai/',
               referenceId: `test1_${event}`
         }
         try {
@@ -64,7 +64,7 @@ class Api {
             }  
         } catch(e) {
             this.utils.log('subscribe error : ' + e.stack )  
-            // throw e      
+            throw e      
         }  
         return {}
     }
@@ -79,7 +79,7 @@ class Api {
                 event
               ],
               eventSchemaVersion: 1,
-              webhookUrl: 'https://3.65.29.31/',
+              webhookUrl: 'https://dev1.htt.ai/',
               referenceId: `test1_${event}`
         }
         try {
