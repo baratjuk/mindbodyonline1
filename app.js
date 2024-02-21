@@ -6,7 +6,7 @@ import url from 'url';
 import fs from 'fs';
 import mysql from 'mysql';
 
-const port = process.env.PORT || 80
+const port = process.env.PORT || 3001
 const html = fs.readFileSync('index.html')
 const utils = new Utils('test1.log')
 const api = new Api()
