@@ -24,10 +24,10 @@ let options = {
 
 // console.log(utils.print_object(options))
 
-const httpsServer = https.createServer(options, (req, res) => {
-    serverRequest(req, res)
-})
-httpsServer.listen(443)
+// const httpsServer = https.createServer(options, (req, res) => {
+//     serverRequest(req, res)
+// })
+// httpsServer.listen(443)
 
 const serverRequest = async (req, res) => {
     if (req.method === 'POST') {
