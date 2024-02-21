@@ -30,7 +30,7 @@ class Api {
     async subscribe(query) {
         let {event} = query
         if(!event) {
-            return
+            return {}
         }
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions`
         let content = {
@@ -56,11 +56,8 @@ class Api {
             this.utils.log('subscribe url : ' + url + ' => ' + response.status)
             if (response.status < 300) {
                 let data = response.data
-                try {
-                    this.utils.log('subscribe data : ' + this.utils.print_object(data))
-                } catch (ex) {
-                    this.utils.log('subscribe parse error : ' + ex.message)  
-                }
+                this.utils.log('subscribe data : ' + this.utils.print_object(data))
+                return data
             }  
         } catch(e) {
             this.utils.log('subscribe error : ' + e.stack )  
@@ -71,7 +68,7 @@ class Api {
 
     async patchSubscribe(subscriptionId) {
         if(!subscriptionId) {
-            return
+            return {}
         }
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/${subscriptionId}`
         let content = {
@@ -98,6 +95,7 @@ class Api {
             if (response.status === 200) {
                 let data = response.data
                 this.utils.log('subscribe data : ' + this.utils.print_object(data))
+                return data
             }  
         } catch(e) {
             this.utils.log('subscribe error : ' + e.message)   
@@ -105,7 +103,7 @@ class Api {
         }  
     }
 
-    async deleteSubscribe(subscriptionId) {
+    async delete(subscriptionId) {
         if(!subscriptionId) {
             return
         }
@@ -125,11 +123,13 @@ class Api {
             if (response.status === 200) {
                 let data = response.data
                 this.utils.log('subscribe data : ' + this.utils.print_object(data))
+                return data
             }  
         } catch(e) {
             this.utils.log('subscribe error : ' + e.message)      
-             throw e 
+            throw e 
         }  
+        return {}
     }
 }
 
