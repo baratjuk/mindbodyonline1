@@ -54,7 +54,7 @@ class Api {
                 }
             )
             this.utils.log('subscribe url : ' + url + ' => ' + response.status)
-            if (response.status === 200) {
+            if (response.status < 300) {
                 let data = response.data
                 try {
                     this.utils.log('subscribe data : ' + this.utils.print_object(data))
