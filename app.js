@@ -10,8 +10,8 @@ const port = process.env.PORT || 3001
 const html = fs.readFileSync('index.html')
 const utils = new Utils('test1.log')
 const api = new Api()
-  
-const server = http.createServer( (req, res) => {
+
+const server = http.createServer((req, res) => {
     serverRequest(req, res)
 })
 server.listen(port)
@@ -40,7 +40,7 @@ const serverRequest = async (req, res) => {
             let json = JSON.parse(body)
             insert(req.url, 'POST', json)
 
-            res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
+            res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
             res.write('POST OK')
             res.end()
         });
@@ -49,7 +49,7 @@ const serverRequest = async (req, res) => {
         let query = parts.query
 
         utils.log('GET : ' + req.url)
-        switch(parts.pathname) {
+        switch (parts.pathname) {
             case '/subscriptions':
                 let json = await api.subscriptions()
                 insert(req.url, 'GET', json)
@@ -61,22 +61,30 @@ const serverRequest = async (req, res) => {
                     insert(req.url, 'GET', json)
                 }
                 break
+            case '/delete':
+                let {id} = query
+                utils.log('delete : ' + utils.print_object(query))
+                if (id) {
+                    let json = await api.delete(id)
+                    insert(req.url, 'GET', json)
+                }
+                break
             case '/favicon.ico':
-                break     
-        }    
-        res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
+                break
+        }
+        res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
         res.write('GET OK')
         res.end()
     } else {
-        let url = req.url
-        let method = req.method
+        // let url = req.url
+        // let method = req.method
 
-        utils.log(method + ' : ' + url)
-        insert(url, method, {})
-        
-        res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
-        res.write('GET OK')
-        res.end()
+        // utils.log(method + ' : ' + url)
+        // insert(url, method, {})
+
+        // res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
+        // res.write('GET OK')
+        // res.end()
     }
 }
 
@@ -90,7 +98,7 @@ const dbConnect = mysql.createConnection({
 dbConnect.connect((err) => {
     if (err) {
         throw err
-    }  
+    }
     utils.log("DB Connected!");
 })
 
@@ -98,12 +106,12 @@ const insert = (content, method, json) => {
     let jsonStr = JSON.stringify(json)
     let sql = `INSERT INTO table1 (data, content, created_at, method) VALUES ('${jsonStr}', '${content}', now(), '${method}');`
     dbConnect.query(sql, function (err, result) {
-        if (err) { 
-            throw err 
+        if (err) {
+            throw err
         }
         utils.log("Record inserted")
     })
 }
 
 
-utils.log('Server running at port : ' + port );
+utils.log('Server running at port : ' + port);
