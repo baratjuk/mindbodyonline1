@@ -228,6 +228,7 @@ class Api {
                 {
                     timeout: Api.TIMEOUT,
                     headers: {
+                        'API-Key': Api.API_KEY,
                         siteId: -99,
                         Accept: 'application/json',
                         'Content-Type': 'application/json' 
