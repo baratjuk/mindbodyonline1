@@ -258,8 +258,31 @@ class Api {
         return {}
     }
 
-    async clientCompleteInfo() {
-        let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo`
+    async clients() {
+        let url = `https://api.mindbodyonline.com/public/v6/client/clients`
+        let response = await axios.get(
+            url,
+            {
+                timeout: Api.TIMEOUT,
+                headers: {
+                    'API-Key': Api.API_KEY,
+                    siteId: Api.SITEID,
+                    Accept: 'application/json',
+                    authorization: this.accessToken
+                }
+            }
+        )
+        this.utils.log('clients url : ' + url + ' => ' + response.status)
+        if (response.status === 200) {
+            let data = response.data
+            this.utils.log('clients data : ' + this.utils.print_object(data))
+            return data
+        }    
+        return {}
+    }
+
+    async clientCompleteInfo(query) {
+        let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo?`
         let response = await axios.get(
             url,
             {

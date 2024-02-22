@@ -85,15 +85,20 @@ const serverRequest = async (req, res) => {
                 }
                 break
             case '/auth': { // https://dev1.htt.ai/auth
-                    let answer = await api.authToken()
+                    let answer = await api.auth()
                     db.insertApi(req.url, answer)
                 }
                 break    
             case '/client_info': { 
-                    let answer = await api.clientCompleteInfo()
+                    let answer = await api.clientCompleteInfo(query)
                     db.insertApi(req.url, answer)
                 }
-                break     
+                break   
+            case '/clients': { 
+                    let answer = await api.clients()
+                    db.insertApi(req.url, answer)
+                }
+                break        
             case '/favicon.ico':
                 break
             default:
