@@ -261,7 +261,7 @@ class Api {
     async clients(query) {
         let { page } = query
         if (!page) {
-            this.utils.log('clients error need "page" param')
+            this.utils.log('clients error : need "page" param')
             return {}
         }
         let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=10&offset=${10*page}`
@@ -287,7 +287,12 @@ class Api {
     }
 
     async clientCompleteInfo(query) {
-        let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo?`
+        let { id } = query
+        if (!id) {
+            this.utils.log('clientCompleteInfo error : need "id" param')
+            return {}
+        }
+        let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo?clientId=${id}`
         let response = await axios.get(
             url,
             {
