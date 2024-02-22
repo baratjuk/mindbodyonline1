@@ -11,6 +11,7 @@ class Utils {
     log(message) {
         fs.appendFileSync(`/tmp/${this.logFileName}`, new Date().toISOString() + ' - ' + message + '\n')
         console.log(message)
+        console.log('')
     }
 
     print_object(obj) {
