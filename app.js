@@ -95,7 +95,7 @@ const serverRequest = async (req, res) => {
                 }
                 break   
             case '/clients': { 
-                    let answer = await api.clients()
+                    let answer = await api.clients(query)
                     db.insertApi(req.url, answer)
                 }
                 break        

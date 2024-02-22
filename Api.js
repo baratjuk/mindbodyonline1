@@ -260,11 +260,11 @@ class Api {
 
     async clients(query) {
         let { page } = query
-        if(!page) {
+        if (!page) {
             this.utils.log('clients error need "page" param')
-            return
+            return {}
         }
-        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=10&offset=10`
+        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=10&offset=${10*page}`
         let response = await axios.get(
             url,
             {
