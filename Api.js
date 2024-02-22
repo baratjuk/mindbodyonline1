@@ -258,8 +258,13 @@ class Api {
         return {}
     }
 
-    async clients() {
-        let url = `https://api.mindbodyonline.com/public/v6/client/clients`
+    async clients(query) {
+        let { page } = query
+        if(!page) {
+            this.utils.log('clients error need "page" param')
+            return
+        }
+        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=10&offset=10`
         let response = await axios.get(
             url,
             {

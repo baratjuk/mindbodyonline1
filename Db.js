@@ -24,24 +24,32 @@ class Db {
     }
 
     insertApi(url, answer) {
-        let jsonStr = JSON.stringify(answer)
-        let sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
-        this.dbConnect.query(sql, function (err, result) {
-            if (err) {
-                throw err
-            }
-        })
+        try {
+            let jsonStr = JSON.stringify(answer)
+            let sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
+            this.dbConnect.query(sql, function (err, result) {
+                if (err) {
+                    throw err
+                }
+            })
+        } catch (e) {
+            this.utils.log('insertApi error : ' + e.stack)
+        }
     }
-    
+
     insertWebhook(method, url, data, headers) {
-        let jsonStr = JSON.stringify(data)
-        let headersStr = JSON.stringify(headers)
-        let sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ('${method}', '${url}', '${jsonStr}', now(), '${headersStr}');`
-        this.dbConnect.query(sql, function (err, result) {
-            if (err) {
-                throw err
-            }
-        })
+        try {
+            let jsonStr = JSON.stringify(data)
+            let headersStr = JSON.stringify(headers)
+            let sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ('${method}', '${url}', '${jsonStr}', now(), '${headersStr}');`
+            this.dbConnect.query(sql, function (err, result) {
+                if (err) {
+                    throw err
+                }
+            })
+        } catch (e) {
+            this.utils.log('insertWebhook error : ' + e.stack)
+        }
     }
 }
 
