@@ -15,7 +15,7 @@ class Api {
         'clientContract.cancelled',
         'clientSale.created',
       ]
-    static TIMEOUT = 5000
+    static TIMEOUT = 30000
     utils = new Utils('api_test1.log')
 
     async subscriptions() {
