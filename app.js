@@ -92,7 +92,11 @@ const serverRequest = async (req, res) => {
         res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
         res.write('GET OK')
         res.end()
-    } 
+    } else {
+        res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
+        res.write('GET OK')
+        res.end()
+    }
 }
 
 utils.log('Server running at port : ' + port);
