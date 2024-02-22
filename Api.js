@@ -3,8 +3,8 @@ import Utils from './Utils.js';
 
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
-    static USER = 'jpatalano@staturesoftware.com'
-    static PASSWORD = 'J@e12399'
+    static USER = 'Siteowner'
+    static PASSWORD = 'apitest1234'
 
     static EVENTS = [
         //Site
@@ -243,7 +243,7 @@ class Api {
             }  
         } catch(e) {
             this.utils.log('authToken error : ' + e.stack )  
-            // throw e      
+            throw e      
         }  
         return {}
     }
