@@ -7,13 +7,13 @@ class Api {
         'client.created',
         'client.updated',
         'client.deactivated',
-        'clientProfileMerger.created',
-        'clientMembershipAssignment.created',
-        'clientMembershipAssignment.cancelled',
-        'clientContract.created',
-        'clientContract.updated',
-        'clientContract.cancelled',
-        'clientSale.created',
+        // 'clientProfileMerger.created',
+        // 'clientMembershipAssignment.created',
+        // 'clientMembershipAssignment.cancelled',
+        // 'clientContract.created',
+        // 'clientContract.updated',
+        // 'clientContract.cancelled',
+        // 'clientSale.created',
       ]
     static TIMEOUT = 30000
     utils = new Utils('api_test1.log')
