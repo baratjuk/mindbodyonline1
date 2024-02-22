@@ -41,7 +41,7 @@ const serverRequest = async (req, res) => {
             utils.log('body : ' + body)
 
             let json = JSON.parse(body)
-            db.insertWebhook(req.method, req.url, json)
+            db.insertWebhook(req.method, req.url, json, req.headers)
 
             res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
             res.write('POST OK')
@@ -87,12 +87,13 @@ const serverRequest = async (req, res) => {
             case '/favicon.ico':
                 break
             default:
-                db.insertWebhook(req.method, req.url, {})
+                db.insertWebhook(req.method, req.url, {}, req.headers)
         }
         res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
         res.write('GET OK')
         res.end()
     } else {
+        db.insertWebhook(req.method, req.url, {}, req.headers)
         res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
         res.write('OK')
         res.end()
