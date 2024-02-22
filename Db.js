@@ -24,7 +24,8 @@ class Db {
     }
 
     insertApi(url, answer) {
-        let sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${answer}', now());`
+        let jsonStr = JSON.stringify(answer)
+        let sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
         this.dbConnect.query(sql, function (err, result) {
             if (err) {
                 throw err
