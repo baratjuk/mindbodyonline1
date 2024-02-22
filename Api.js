@@ -7,13 +7,13 @@ class Api {
         'client.created',
         'client.updated',
         'client.deactivated',
-        // 'clientProfileMerger.created',
-        // 'clientMembershipAssignment.created',
-        // 'clientMembershipAssignment.cancelled',
-        // 'clientContract.created',
-        // 'clientContract.updated',
-        // 'clientContract.cancelled',
-        // 'clientSale.created',
+        'clientProfileMerger.created',
+        'clientMembershipAssignment.created',
+        'clientMembershipAssignment.cancelled',
+        'clientContract.created',
+        'clientContract.updated',
+        'clientContract.cancelled',
+        'clientSale.created',
       ]
     static TIMEOUT = 30000
     utils = new Utils('api_test1.log')
@@ -36,6 +36,40 @@ class Api {
             this.utils.log('subscriptions data : ' + this.utils.print_object(data))
             return data
         }    
+        return {}
+    }
+
+    async subscribe(event) {
+        let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions`
+        let content = {
+            eventIds: [
+                event
+              ],
+              eventSchemaVersion: 1,
+              webhookUrl: 'https://dev1.htt.ai/',
+              referenceId: `test1_${event}`
+        }
+        try {
+            let response = await axios.post(
+                url,
+                content,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        Accept: 'application/json',
+                    }
+                }
+            )
+            this.utils.log('subscribe url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                return data
+            }  
+        } catch(e) {
+            this.utils.log('subscribe error : ' + e.stack )  
+            throw e      
+        }  
         return {}
     }
 

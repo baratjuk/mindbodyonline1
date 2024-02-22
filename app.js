@@ -56,7 +56,14 @@ const serverRequest = async (req, res) => {
                     db.insertApi(req.url, answer)
                 }
                 break
-            case '/subscribe': { // https://dev1.htt.ai/subscribe
+            case '/subscribe':
+                let { event } = query
+                if (event) {
+                    let answer = await api.subscribe(event)
+                    db.insertApi(req.url, answer)
+                }
+                break    
+            case '/subscribeall': { // https://dev1.htt.ai/subscribe
                     let answer = await api.subscribeAll()
                     db.insertApi(req.url, answer)
                 }
