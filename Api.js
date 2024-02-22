@@ -4,17 +4,58 @@ import Utils from './Utils.js';
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
     static EVENTS = [
+        //Site
+        'site.created',
+        'site.updated',
+        'site.deactivated',
+        //Business Day Closure
+        'siteBusinessDayClosure.created',
+        'siteBusinessDayClosure.cancelled',
+        //Location
+        'location.created',
+        'location.updated',
+        'location.deactivated',
+        //Appointment
+        'appointmentBooking.created',
+        'appointmentBooking.updated',
+        'appointmentBooking.cancelled',
+        'appointmentAddOn.created',
+        'appointmentAddOn.deleted',
+        //Class Schedule
+        'classSchedule.created',
+        'classSchedule.updated',
+        'classSchedule.cancelled',
+        //Class
+        'class.updated',
+        //Class Booking
+        'classRosterBooking.created',
+        'classRosterBookingStatus.updated',
+        'classRosterBooking.cancelled',
+        //Class Waitlist
+        'classWaitlistRequest.created',
+        'classWaitlistRequest.cancelled',
+        //Class Description
+        'classDescription.updated',
+        //Client
         'client.created',
         'client.updated',
         'client.deactivated',
+        //Merge
         'clientProfileMerger.created',
+        //Membership
         'clientMembershipAssignment.created',
         'clientMembershipAssignment.cancelled',
+        //
         'clientContract.created',
         'clientContract.updated',
         'clientContract.cancelled',
+        //Contract
         'clientSale.created',
-      ]
+        //Staff
+        'staff.created',
+        'staff.updated',
+        'staff.deactivated',
+      ]  
     static TIMEOUT = 30000
     utils = new Utils('api_test1.log')
 
