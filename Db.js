@@ -9,13 +9,13 @@ class Db {
     constructor(utils) {
         super.constructor()
         this.utils = utils
-        dbConnect = mysql.createConnection({
+        this.dbConnect = mysql.createConnection({
             host: 'ls-305804f2824c8ee28da1406bf9e7a66d71591ce2.c1eg6w6sc9q2.eu-central-1.rds.amazonaws.com',
             user: 'dbmasteruser',
             password: 'p+d+34MQO!.2Z5u6Q+xoO[hRmfxvW^im',
             database: 'mydb'
         })
-        dbConnect.connect((err) => {
+        this.dbConnect.connect((err) => {
             if (err) {
                 throw err
             }
@@ -26,7 +26,7 @@ class Db {
     insertApi(url, answer) {
         let jsonStr = JSON.stringify(json)
         let sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${answer}', now());`
-        dbConnect.query(sql, function (err, result) {
+        this.dbConnect.query(sql, function (err, result) {
             if (err) {
                 throw err
             }
@@ -37,7 +37,7 @@ class Db {
     insertWebhook(method, url, data) {
         let jsonStr = JSON.stringify(data)
         let sql = `INSERT INTO webhooks (method, url, data, created_at) VALUES ('${method}', '${url}', '${jsonStr}', now());`
-        dbConnect.query(sql, function (err, result) {
+        this.dbConnect.query(sql, function (err, result) {
             if (err) {
                 throw err
             }
