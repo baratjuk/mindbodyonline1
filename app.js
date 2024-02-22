@@ -1,15 +1,16 @@
 import Utils from './Utils.js';
 import Api from './Api.js';
+import Db from './Db.js';
 import http from 'http';
 import https from 'https';
 import url from 'url';
 import fs from 'fs';
-import mysql from 'mysql';
 
 const port = process.env.PORT || 3001
 const html = fs.readFileSync('index.html')
 const utils = new Utils('test1.log')
 const api = new Api()
+const db = new Db(utils)
 
 const server = http.createServer((req, res) => {
     serverRequest(req, res)
@@ -28,15 +29,19 @@ server.listen(port)
 // httpsServer.listen(443)
 
 const serverRequest = async (req, res) => {
+
+    utils.log(req.method + ' : ' + req.url)
+
     if (req.method === 'POST') {
         let body = ''
         req.on('data', (chunk) => {
             body += chunk
         });
         req.on('end', () => {
-            utils.log('POST : ' + body)
+            utils.log('body : ' + body)
+
             let json = JSON.parse(body)
-            insert(req.url, 'POST', json)
+            db.insertWebhook(req.method, req.url, json)
 
             res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
             res.write('POST OK')
@@ -45,79 +50,42 @@ const serverRequest = async (req, res) => {
     } else if (req.method === 'GET') {
         let parts = url.parse(req.url, true)
         let query = parts.query
-
-        utils.log('GET : ' + req.url)
-
         switch (parts.pathname) {
             case '/subscriptions': { // https://dev1.htt.ai/subscriptions
-                    let json = await api.subscriptions()
-                    insert(req.url, 'GET', json)
+                    let answer = await api.subscriptions()
+                    db.insertApi(req.url, answer)
                 }
                 break
             case '/subscribe': { // https://dev1.htt.ai/subscribe
-                    let json = await api.subscribeAll()
-                    insert(req.url, 'GET', json)
+                    let answer = await api.subscribeAll()
+                    db.insertApi(req.url, answer)
                 }
                 break
             case '/patch': { // https://dev1.htt.ai/patch?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
                     let { id } = query
                     if (id) {
-                        let json = await api.patchSubscribe(id)
-                        insert(req.url, 'GET', json)
+                        let answer = await api.patchSubscribe(id)
+                        db.insertApi(req.url, answer)
                     }
                 }
                 break    
             case '/delete': {// https://dev1.htt.ai/delete?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
                     let { id } = query
                     if (id) {
-                        let json = await api.delete(id)
-                        insert(req.url, 'GET', json)
+                        let answer = await api.delete(id)
+                        db.insertApi(req.url, answer)
                     }
                 }
                 break
             case '/favicon.ico':
                 break
+            default:
+                db.insertWebhook(req.method, req.url, {})
         }
         res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
         res.write('GET OK')
         res.end()
-    } else {
-        // let url = req.url
-        // let method = req.method
-
-        // utils.log(method + ' : ' + url)
-        // insert(url, method, {})
-
-        // res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
-        // res.write('GET OK')
-        // res.end()
-    }
+    } 
 }
-
-const dbConnect = mysql.createConnection({
-    host: 'ls-305804f2824c8ee28da1406bf9e7a66d71591ce2.c1eg6w6sc9q2.eu-central-1.rds.amazonaws.com',
-    user: 'dbmasteruser',
-    password: 'p+d+34MQO!.2Z5u6Q+xoO[hRmfxvW^im',
-    database: 'mydb'
-})
-
-dbConnect.connect((err) => {
-    if (err) {
-        throw err
-    }
-    utils.log("DB Connected!");
-})
-
-const insert = (content, method, json) => {
-    let jsonStr = JSON.stringify(json)
-    let sql = `INSERT INTO table1 (data, content, created_at, method) VALUES ('${jsonStr}', '${content}', now(), '${method}');`
-    dbConnect.query(sql, function (err, result) {
-        if (err) {
-            throw err
-        }
-        utils.log("Record inserted")
-    })
-}
-
 
 utils.log('Server running at port : ' + port);
