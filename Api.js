@@ -3,6 +3,9 @@ import Utils from './Utils.js';
 
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
+    static USER = 'jpatalano@staturesoftware.com'
+    static PASSWORD = 'J@e12399'
+
     static EVENTS = [
         //Site
         'site.created',
@@ -208,6 +211,38 @@ class Api {
         } catch(e) {
             this.utils.log('delete error : ' + e.message)      
             throw e 
+        }  
+        return {}
+    }
+
+    async authToken() {
+        let url = `https://api.mindbodyonline.com/public/v6/usertoken/issue`
+        let content = {
+            Username: Api.USER,
+            Password: Api.PASSWORD
+        }
+        try {
+            let response = await axios.post(
+                url,
+                content,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        siteId: -99,
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json' 
+                    }
+                }
+            )
+            this.utils.log('authToken url : ' + url + ' => ' + response.status)
+            if (response.status < 300) {
+                let data = response.data
+                this.utils.log('authToken data : ' + this.utils.print_object(data))
+                return data
+            }  
+        } catch(e) {
+            this.utils.log('authToken error : ' + e.stack )  
+            throw e      
         }  
         return {}
     }
