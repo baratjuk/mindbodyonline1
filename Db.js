@@ -30,7 +30,6 @@ class Db {
             if (err) {
                 throw err
             }
-            this.utils.log("insertApi")
         })
     }
     
@@ -41,7 +40,6 @@ class Db {
             if (err) {
                 throw err
             }
-            this.utils.log("insertWebhook")
         })
     }
 }
