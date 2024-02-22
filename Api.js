@@ -3,8 +3,10 @@ import Utils from './Utils.js';
 
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
+
     static USER = 'Siteowner'
     static PASSWORD = 'apitest1234'
+    static SITEID = -99
 
     static EVENTS = [
         //Site
@@ -60,7 +62,14 @@ class Api {
         'staff.deactivated',
       ]  
     static TIMEOUT = 30000
+
     utils = new Utils('api_test1.log')
+    accessToken = ''
+
+    constructor() {
+        super.constructor()
+        this.auth()
+    }
 
     async subscriptions() {
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions`
@@ -215,7 +224,7 @@ class Api {
         return {}
     }
 
-    async authToken() {
+    async auth() {
         let url = `https://api.mindbodyonline.com/public/v6/usertoken/issue`
         let content = {
             Username: Api.USER,
@@ -229,7 +238,7 @@ class Api {
                     timeout: Api.TIMEOUT,
                     headers: {
                         'API-Key': Api.API_KEY,
-                        siteId: -99,
+                        siteId: Api.SITEID,
                         Accept: 'application/json',
                         'Content-Type': 'application/json' 
                     }
@@ -238,6 +247,7 @@ class Api {
             this.utils.log('authToken url : ' + url + ' => ' + response.status)
             if (response.status < 300) {
                 let data = response.data
+                this.accessToken = data.AccessToken
                 this.utils.log('authToken data : ' + this.utils.print_object(data))
                 return data
             }  
@@ -245,6 +255,29 @@ class Api {
             this.utils.log('authToken error : ' + e.stack )  
             throw e      
         }  
+        return {}
+    }
+
+    async clientCompleteInfo() {
+        let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo`
+        let response = await axios.get(
+            url,
+            {
+                timeout: Api.TIMEOUT,
+                headers: {
+                    'API-Key': Api.API_KEY,
+                    siteId: Api.SITEID,
+                    Accept: 'application/json',
+                    authorization: this.accessToken
+                }
+            }
+        )
+        this.utils.log('clientCompleteInfo url : ' + url + ' => ' + response.status)
+        if (response.status === 200) {
+            let data = response.data
+            this.utils.log('clientCompleteInfo data : ' + this.utils.print_object(data))
+            return data
+        }    
         return {}
     }
 }

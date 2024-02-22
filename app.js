@@ -89,6 +89,11 @@ const serverRequest = async (req, res) => {
                     db.insertApi(req.url, answer)
                 }
                 break    
+            case '/client_info': { 
+                    let answer = await api.clientCompleteInfo()
+                    db.insertApi(req.url, answer)
+                }
+                break     
             case '/favicon.ico':
                 break
             default:
