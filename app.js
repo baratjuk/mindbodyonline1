@@ -84,6 +84,11 @@ const serverRequest = async (req, res) => {
                     }
                 }
                 break
+            case '/auth': { // https://dev1.htt.ai/auth
+                    let answer = await api.authToken()
+                    db.insertApi(req.url, answer)
+                }
+                break    
             case '/favicon.ico':
                 break
             default:
