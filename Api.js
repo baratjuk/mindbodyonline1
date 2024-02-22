@@ -243,7 +243,7 @@ class Api {
             }  
         } catch(e) {
             this.utils.log('authToken error : ' + e.stack )  
-            throw e      
+            // throw e      
         }  
         return {}
     }
