@@ -58,12 +58,10 @@ class Db {
     }
 
     insertWebhook(method, url, data, headers) {
-        // let jsonStr = JSON.stringify(data)
-        // let headersStr = JSON.stringify(headers)
-        // const sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ('${method}', '${url}', '${jsonStr}', now(), '${headersStr}');`
-        const sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ?`
-        let date = null //new Date()
-        this.dbConnect.query(sql, {method, url, data, date, headers}, (err, result) => {
+        let jsonStr = JSON.stringify(data)
+        let headersStr = JSON.stringify(headers)
+        const sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ('${method}', '${url}', '${jsonStr}', now(), '${headersStr}');`
+        this.dbConnect.query(sql, (err, result) => {
             if (err) {
                 this.utils.log('insertWebhook error : ' + err.stack)
             }
