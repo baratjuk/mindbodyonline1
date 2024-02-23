@@ -142,8 +142,7 @@ const serverRequest = async (req, res) => {
             // case '/favicon.ico':
             //     break
             default:
-                // db.insertWebhook(req.method, req.url, null, req.headers)
-                db.insertWebhook(req.method, req.url, {}, {})
+                db.insertWebhook(req.method, req.url, null, req.headers)
         }
         res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
         res.write('GET OK')
