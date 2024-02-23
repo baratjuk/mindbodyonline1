@@ -8,9 +8,9 @@
 {% for item in items %}
 <p>
     <b>{{item.id}} {{item.method}} <span style="color:blue;">{{item.url}}</span> {{item.created_at}}</b>
-    <p>----- headers -------</p>
-    <div>{{item.headers}}</div>
-    <p>----- body -------</p>
+    <p>--- headers ---</p>
+    <div><small>{{item.headers}}</small></div>
+    <p>--- DATA ---</p>
     <div>{{item.data}}</div>  
 </p>
 {% endfor %}
