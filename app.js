@@ -55,7 +55,7 @@ const serverRequest = async (req, res) => {
             case '/api': {
                     let apiData = await db.selectApi()
                     let html = await getHtml('api.twig', {items: apiData})
-                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
                     res.write(html)
                     res.end()
                 }
@@ -63,7 +63,7 @@ const serverRequest = async (req, res) => {
             case '/webhooks': {
                     let webhooksData = await db.selectWebhooks()
                     let html = await getHtml('webhooks.twig', {items: webhooksData})
-                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
                     res.write(html)
                     res.end()
                 }
@@ -130,8 +130,8 @@ const serverRequest = async (req, res) => {
                     db.insertApi(req.url, answer)
                 }
                 break      
-            // case '/favicon.ico':
-            //     break
+            case '/favicon.ico':
+                break
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)
         }
