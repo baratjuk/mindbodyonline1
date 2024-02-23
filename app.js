@@ -54,14 +54,14 @@ const serverRequest = async (req, res) => {
             case '/api': {
                     let apiData = await db.selectApi()
                     res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                    res.write(apiData)
+                    res.write(JSON.stringify(apiData))
                     res.end()
                 }
                 break
             case '/webhooks': {
                     let webhooksData = await db.selectWebhooks()
                     res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                    res.write(webhooksData)
+                    res.write(JSON.stringify(webhooksData))
                     res.end()
                 }
                 break    
