@@ -321,15 +321,16 @@ class Api {
     }
 
     async addAppointment(query) {
-        let { id } = query
-        if (!id) {
+        let { id, location } = query
+        if (!id || !location) {
             this.utils.log('addAppointment error : need "id" param')
             return {}
         }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
             ClientId: id,
-            StaffId: this.staffId
+            StaffId: this.staffId,
+            LocationId : location
         }
         let response = await axios.post (
             url,
