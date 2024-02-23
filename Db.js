@@ -72,7 +72,7 @@ class Db {
                 }
             })
         } catch (e) {
-            this.utils.log('insertWebhook error : ' + e.stack)
+            console.log('insertWebhook error : ' + e.message)
         }
     }
 }
