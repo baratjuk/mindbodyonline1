@@ -6,7 +6,7 @@
 <body>
 <div class="main">
 {% for item in items %}
-<p><b>{{item.id}} {{item.created_at}} {{item.url}}</b> <div>{{item.answer}}</div>  </p>
+<p><b>{{item.id}} <div style="color:blue;">{{item.url}}</div></b> {{item.created_at}} <div>{{item.answer}}</div>  </p>
 {% endfor %}
 </div>
 </body>
