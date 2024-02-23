@@ -5,6 +5,7 @@ import http from 'http';
 import https from 'https';
 import url from 'url';
 import fs from 'fs';
+import Twig from 'twig';
 
 const port = process.env.PORT || 3001
 const html = fs.readFileSync('index.html')
@@ -53,18 +54,34 @@ const serverRequest = async (req, res) => {
         switch (parts.pathname) {
             case '/api': {
                     let apiData = await db.selectApi()
+                    let html = await getHtml('api.twig', {items: apiData})
                     res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                    res.write(JSON.stringify(apiData))
+                    res.write(html)
                     res.end()
                 }
                 return
             case '/webhooks': {
                     let webhooksData = await db.selectWebhooks()
+                    let html = await getHtml('webhooks.twig', {items: webhooksData})
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(html)
+                    res.end()
+                }
+                return
+            case '/api-json': {
+                    let apiData = await db.selectApi()
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(JSON.stringify(apiData))
+                    res.end()
+                }
+                return
+            case '/webhooks-json': {
+                    let webhooksData = await db.selectWebhooks()
                     res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
                     res.write(JSON.stringify(webhooksData))
                     res.end()
                 }
-                return    
+                return        
             case '/subscriptions': { // https://dev1.htt.ai/subscriptions
                     let answer = await api.subscriptions()
                     db.insertApi(req.url, answer)
@@ -113,8 +130,8 @@ const serverRequest = async (req, res) => {
                     db.insertApi(req.url, answer)
                 }
                 break      
-            case '/favicon.ico':
-                break
+            // case '/favicon.ico':
+            //     break
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)
         }
@@ -127,6 +144,19 @@ const serverRequest = async (req, res) => {
         res.write('OK')
         res.end()
     }
+}
+
+const getHtml = async (template, data) => {
+    // '/opt/mindbody/mindbodyonline1/' + 
+    let ret_html = await new Promise(r => Twig.renderFile(template, data, (err, html) => {
+        if (err) {
+            this.utils.log('getHtml : ' + err);
+            r(null);
+        } else {
+            r(html);
+        }
+    }))
+    return ret_html;
 }
 
 utils.log('Server running at port : ' + port);
