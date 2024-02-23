@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>API</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<body>
+<div class="main">
+{% for item in items %}
+<p>
+    <b>{{item.id}} {{item.method}} <span style="color:blue;">{{item.url}}</span> {{item.created_at}}</b>
+    <p>----- headers -------</p>
+    <div>{{item.headers}}</div>
+    <p>----- body -------</p>
+    <div>{{item.data}}</div>  
+</p>
+{% endfor %}
+</div>
+</body>
+</html>
