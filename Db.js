@@ -23,11 +23,35 @@ class Db {
         })
     }
 
+    async selectApi() {
+        const sql = `SELECT * FROM api;`
+        let tableData = await new Promise(r => this.dbConnect.query(sql, (err, result) => {
+            if (err) {
+                r(null)
+            } else {
+                r(result)
+            }
+        }))
+        return tableData
+    }
+
+    async selectWebhooks() {
+        const sql = `SELECT * FROM webhooks;`
+        let tableData = await new Promise(r => this.dbConnect.query(sql, (err, result) => {
+            if (err) {
+                r(null)
+            } else {
+                r(result)
+            }
+        }))
+        return tableData
+    }
+
     insertApi(url, answer) {
         try {
             let jsonStr = JSON.stringify(answer)
-            let sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
-            this.dbConnect.query(sql, function (err, result) {
+            const sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
+            this.dbConnect.query(sql, (err, result) => {
                 if (err) {
                     throw err
                 }
@@ -41,8 +65,8 @@ class Db {
         try {
             let jsonStr = JSON.stringify(data)
             let headersStr = JSON.stringify(headers)
-            let sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ('${method}', '${url}', '${jsonStr}', now(), '${headersStr}');`
-            this.dbConnect.query(sql, function (err, result) {
+            const sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ('${method}', '${url}', '${jsonStr}', now(), '${headersStr}');`
+            this.dbConnect.query(sql, (err, result) => {
                 if (err) {
                     throw err
                 }

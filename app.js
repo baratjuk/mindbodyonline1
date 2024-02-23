@@ -51,6 +51,20 @@ const serverRequest = async (req, res) => {
         let parts = url.parse(req.url, true)
         let query = parts.query
         switch (parts.pathname) {
+            case '/api': {
+                    let apiData = await db.selectApi()
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(apiData)
+                    res.end()
+                }
+                break
+            case '/webhooks': {
+                    let webhooksData = await db.selectWebhooks()
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(webhooksData)
+                    res.end()
+                }
+                break    
             case '/subscriptions': { // https://dev1.htt.ai/subscriptions
                     let answer = await api.subscriptions()
                     db.insertApi(req.url, answer)
@@ -99,8 +113,6 @@ const serverRequest = async (req, res) => {
                     db.insertApi(req.url, answer)
                 }
                 break        
-            case '/favicon.ico':
-                break
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)
         }
