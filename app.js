@@ -120,7 +120,7 @@ const serverRequest = async (req, res) => {
                     db.insertApi(req.url, answer)
                 }
                 break    
-            case '/client_info': { 
+            case '/client-info': { 
                     let answer = await api.clientCompleteInfo(query)
                     db.insertApi(req.url, answer)
                 }
