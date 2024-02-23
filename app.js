@@ -57,14 +57,14 @@ const serverRequest = async (req, res) => {
                     res.write(JSON.stringify(apiData))
                     res.end()
                 }
-                break
+                return
             case '/webhooks': {
                     let webhooksData = await db.selectWebhooks()
                     res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
                     res.write(JSON.stringify(webhooksData))
                     res.end()
                 }
-                break    
+                return    
             case '/subscriptions': { // https://dev1.htt.ai/subscriptions
                     let answer = await api.subscriptions()
                     db.insertApi(req.url, answer)
