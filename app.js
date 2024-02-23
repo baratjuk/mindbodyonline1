@@ -112,7 +112,9 @@ const serverRequest = async (req, res) => {
                     let answer = await api.clients(query)
                     db.insertApi(req.url, answer)
                 }
-                break        
+                break      
+            case '/favicon.ico':
+                break
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)
         }
