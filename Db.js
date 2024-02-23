@@ -48,23 +48,20 @@ class Db {
     }
 
     insertApi(url, answer) {
-        try {
-            let jsonStr = JSON.stringify(answer)
-            const sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
-            this.dbConnect.query(sql, (err, result) => {
-                if (err) {
-                    throw err
-                }
-            })
-        } catch (e) {
-            this.utils.log('insertApi error : ' + e.stack)
-        }
+        let jsonStr = JSON.stringify(answer)
+        const sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
+        this.dbConnect.query(sql, (err, result) => {
+            if (err) {
+                this.utils.log('insertApi error : ' + err.stack)
+            }
+        })
     }
 
     insertWebhook(method, url, data, headers) {
         let jsonStr = JSON.stringify(data)
         let headersStr = JSON.stringify(headers)
         console.log('headersStr : ' + headersStr) 
+        console.log('headersStr : ' + encodeURI(headersStr))
         const sql = `INSERT INTO webhooks (method, url, data, created_at, headers) VALUES ('${method}', '${url}', '${jsonStr}', now(), '${headersStr}');`
         this.dbConnect.query(sql, (err, result) => {
             if (err) {
