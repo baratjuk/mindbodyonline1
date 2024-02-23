@@ -65,11 +65,14 @@ class Api {
 
     utils = new Utils('api_test1.log')
     accessToken = ''
+    staffId = ''
 
     constructor() {
         super.constructor()
         this.auth()
     }
+
+    // Webhooks
 
     async subscriptions() {
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions`
@@ -224,6 +227,8 @@ class Api {
         return {}
     }
 
+    // Publi API
+
     async auth() {
         let url = `https://api.mindbodyonline.com/public/v6/usertoken/issue`
         let content = {
@@ -248,6 +253,7 @@ class Api {
             if (response.status < 300) {
                 let data = response.data
                 this.accessToken = data.AccessToken
+                this.staffId = data.User.Id
                 this.utils.log('authToken data : ' + this.utils.print_object(data))
                 return data
             }  
@@ -309,6 +315,39 @@ class Api {
         if (response.status === 200) {
             let data = response.data
             this.utils.log('clientCompleteInfo data : ' + this.utils.print_object(data))
+            return data
+        }    
+        return {}
+    }
+
+    async addAppointment(query) {
+        let { id } = query
+        if (!id) {
+            this.utils.log('addAppointment error : need "id" param')
+            return {}
+        }
+        let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
+        let content = {
+            ClientId: id,
+            StaffId: this.staffId
+        }
+        let response = await axios.post (
+            url,
+            content,
+            {
+                timeout: Api.TIMEOUT,
+                headers: {
+                    'API-Key': Api.API_KEY,
+                    siteId: Api.SITEID,
+                    Accept: 'application/json',
+                    authorization: this.accessToken
+                }
+            }
+        )
+        this.utils.log('clients url : ' + url + ' => ' + response.status)
+        if (response.status === 200) {
+            let data = response.data
+            this.utils.log('clients data : ' + this.utils.print_object(data))
             return data
         }    
         return {}

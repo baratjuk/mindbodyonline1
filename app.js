@@ -52,6 +52,7 @@ const serverRequest = async (req, res) => {
         let parts = url.parse(req.url, true)
         let query = parts.query
         switch (parts.pathname) {
+            // log
             case '/api': {
                     let apiData = await db.selectApi()
                     let html = await getHtml('api.twig', {items: apiData})
@@ -81,7 +82,8 @@ const serverRequest = async (req, res) => {
                     res.write(JSON.stringify(webhooksData))
                     res.end()
                 }
-                return        
+                return     
+            // webhooks       
             case '/subscriptions': { // https://dev1.htt.ai/subscriptions
                     let answer = await api.subscriptions()
                     db.insertApi(req.url, answer)
@@ -115,6 +117,7 @@ const serverRequest = async (req, res) => {
                     }
                 }
                 break
+            // public api    
             case '/auth': { // https://dev1.htt.ai/auth
                     let answer = await api.auth()
                     db.insertApi(req.url, answer)
@@ -129,11 +132,17 @@ const serverRequest = async (req, res) => {
                     let answer = await api.clients(query)
                     db.insertApi(req.url, answer)
                 }
-                break      
-            case '/favicon.ico':
                 break
+            case '/add-appointment': { 
+                    let answer = await api.addAppointment(query)
+                    db.insertApi(req.url, answer)
+                }
+                break          
+            // tresh    
+            // case '/favicon.ico':
+            //     break
             default:
-                db.insertWebhook(req.method, req.url, {}, req.headers)
+                db.insertWebhook(req.method, req.url, null, req.headers)
         }
         res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
         res.write('GET OK')
@@ -147,7 +156,6 @@ const serverRequest = async (req, res) => {
 }
 
 const getHtml = async (template, data) => {
-    // '/opt/mindbody/mindbodyonline1/' + 
     let ret_html = await new Promise(r => Twig.renderFile(template, data, (err, html) => {
         if (err) {
             this.utils.log('getHtml : ' + err);
