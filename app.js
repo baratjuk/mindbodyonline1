@@ -44,13 +44,14 @@ const serverRequest = async (req, res) => {
             let json = JSON.parse(body)
             db.insertWebhook(req.method, req.url, json, req.headers)
 
-            res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
-            res.write('POST OK')
+            res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+            res.write(`{"method" : "${req.method}", "message" : "OK"}`)
             res.end()
         });
     } else if (req.method === 'GET') {
         let parts = url.parse(req.url, true)
         let query = parts.query
+        let answer = null
         switch (parts.pathname) {
             // log
             case '/api': {
@@ -85,26 +86,26 @@ const serverRequest = async (req, res) => {
                 return     
             // webhooks       
             case '/subscriptions': { // https://dev1.htt.ai/subscriptions
-                    let answer = await api.subscriptions()
+                    answer = await api.subscriptions()
                     db.insertApi(req.url, answer)
                 }
                 break
             case '/subscribe':
                 let { event } = query
                 if (event) {
-                    let answer = await api.subscribe(event)
+                    answer = await api.subscribe(event)
                     db.insertApi(req.url, answer)
                 }
                 break    
             case '/subscribeall': { // https://dev1.htt.ai/subscribe
-                    let answer = await api.subscribeAll()
+                    answer = await api.subscribeAll()
                     db.insertApi(req.url, answer)
                 }
                 break
             case '/patch': { // https://dev1.htt.ai/patch?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
                     let { id } = query
                     if (id) {
-                        let answer = await api.patchSubscribe(id)
+                        answer = await api.patchSubscribe(id)
                         db.insertApi(req.url, answer)
                     }
                 }
@@ -112,29 +113,29 @@ const serverRequest = async (req, res) => {
             case '/delete': {// https://dev1.htt.ai/delete?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
                     let { id } = query
                     if (id) {
-                        let answer = await api.delete(id)
+                        answer = await api.delete(id)
                         db.insertApi(req.url, answer)
                     }
                 }
                 break
             // public api    
             case '/auth': { // https://dev1.htt.ai/auth
-                    let answer = await api.auth()
+                    answer = await api.auth()
                     db.insertApi(req.url, answer)
                 }
                 break    
             case '/client-info': { 
-                    let answer = await api.clientCompleteInfo(query)
+                    answer = await api.clientCompleteInfo(query)
                     db.insertApi(req.url, answer)
                 }
                 break   
             case '/clients': { 
-                    let answer = await api.clients(query)
+                    answer = await api.clients(query)
                     db.insertApi(req.url, answer)
                 }
                 break
             case '/add-appointment': { 
-                    let answer = await api.addAppointment(query)
+                    answer = await api.addAppointment(query)
                     db.insertApi(req.url, answer)
                 }
                 break      
@@ -143,13 +144,17 @@ const serverRequest = async (req, res) => {
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)
         }
-        res.writeHead(200, 'OK', { 'Content-Type': 'text/plain' })
-        res.write('GET OK')
+        res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+        if(answer) {
+            res.write(JSON.stringify(answer))
+        } else {
+            res.write(`{"method" : "${req.method}", "message" : "OK"}`)
+        }
         res.end()
     } else {
         db.insertWebhook(req.method, req.url, {}, req.headers)
-        res.writeHead(200, 'OK', {'Content-Type': 'text/plain'})
-        res.write('OK')
+        res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+        res.write(`{"method" : "${req.method}", "message" : "OK"}`)
         res.end()
     }
 }
