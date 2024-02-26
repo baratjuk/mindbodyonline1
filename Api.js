@@ -95,7 +95,11 @@ class Api {
         return {}
     }
 
-    async subscribe(event) {
+    async subscribe(query) {
+        let { event } = query
+        if(!event) {
+            return {"error" : "need 'event' param"}
+        }
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions`
         let content = {
             eventIds: [
@@ -162,11 +166,12 @@ class Api {
         return {}
     }
 
-    async patchSubscribe(subscriptionId) {
-        if(!subscriptionId) {
-            return {}
+    async patchSubscribe(query) {
+        let { id } = query
+        if(!id) {
+            return {"error" : "need 'id' param"}
         }
-        let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/${subscriptionId}`
+        let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/${id}`
         let content = {
             eventIds: Api.EVENTS,
               eventSchemaVersion: 1,
@@ -198,11 +203,12 @@ class Api {
         }  
     }
 
-    async delete(subscriptionId) {
-        if(!subscriptionId) {
-            return
+    async delete(query) {
+        let { id } = query
+        if(!id) {
+            return {"error" : "need 'id' param"}
         }
-        let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/${subscriptionId}`
+        let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/${id}`
         try {
             let response = await axios.delete (
                 url,
@@ -267,8 +273,7 @@ class Api {
     async clients(query) {
         let { page } = query
         if (!page) {
-            this.utils.log('clients error : need "page" param')
-            return {}
+            return {"error" : "need 'page' param"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=10&offset=${10*page}`
         let response = await axios.get(
@@ -295,8 +300,7 @@ class Api {
     async clientCompleteInfo(query) {
         let { id } = query
         if (!id) {
-            this.utils.log('clientCompleteInfo error : need "id" param')
-            return {}
+            return {"error" : "need 'id' param"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo?clientId=${id}`
         let response = await axios.get(
@@ -323,8 +327,7 @@ class Api {
     async addAppointment(query) {
         let { id, location } = query
         if (!id || !location) {
-            this.utils.log('addAppointment error : need "id" param')
-            return {}
+            return {"error" : "need 'id', 'location' param"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {

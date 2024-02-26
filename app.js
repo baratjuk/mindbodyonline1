@@ -91,11 +91,8 @@ const serverRequest = async (req, res) => {
                 }
                 break
             case '/subscribe':
-                let { event } = query
-                if (event) {
-                    answer = await api.subscribe(event)
-                    db.insertApi(req.url, answer)
-                }
+                answer = await api.subscribe(query)
+                db.insertApi(req.url, answer)
                 break    
             case '/subscribeall': { // https://dev1.htt.ai/subscribe
                     answer = await api.subscribeAll()
@@ -103,19 +100,13 @@ const serverRequest = async (req, res) => {
                 }
                 break
             case '/patch': { // https://dev1.htt.ai/patch?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
-                    let { id } = query
-                    if (id) {
-                        answer = await api.patchSubscribe(id)
-                        db.insertApi(req.url, answer)
-                    }
+                    answer = await api.patchSubscribe(query)
+                    db.insertApi(req.url, answer)
                 }
                 break    
             case '/delete': {// https://dev1.htt.ai/delete?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
-                    let { id } = query
-                    if (id) {
-                        answer = await api.delete(id)
-                        db.insertApi(req.url, answer)
-                    }
+                    answer = await api.delete(query)
+                    db.insertApi(req.url, answer)
                 }
                 break
             // public api    
