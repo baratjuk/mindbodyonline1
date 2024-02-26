@@ -37,7 +37,7 @@ class Utils {
                     if (type == 'boolean' || type == 'number' || type == 'string') {
                         str += `${obj}\n`
                     } else if (type == 'object') {
-                        if (level < 9) {
+                        if (level < 3) {
                             str += `\n${this.print(obj, level + 1)}`
                         } else {
                             str += '...\n'
