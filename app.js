@@ -131,7 +131,11 @@ const serverRequest = async (req, res) => {
                 }
                 break      
             case '/favicon.ico':
-                break        
+                break    
+            // Go HighLevel
+            case '/oauth':  
+                await api.initAuth(req, res)
+                return        
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)
         }

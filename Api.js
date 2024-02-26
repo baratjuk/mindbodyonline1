@@ -356,6 +356,15 @@ class Api {
         }    
         return {}
     }
+
+    // Go HighLevel
+
+    async initAuth(req, res) {
+        const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
+        const clientId = '65d9b25d8f603887639719d6-lt2xajq6'
+        const scope = 'contacts.readonly calendars.readonly'
+        return res.redirect(`https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`)
+    }
 }
 
 export default Api;
