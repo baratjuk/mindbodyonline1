@@ -364,8 +364,6 @@ class Api {
         const clientId = '65d9b25d8f603887639719d6-lt2xajq6'
         const scope = 'contacts.readonly calendars.readonly'
         const url = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`
-        console.log('url : ' + url)
-        console.log('res : ' + this.utils.print_object(res))
         res.writeHead(302, {'Location': url});
         res.end();
     }
