@@ -359,7 +359,7 @@ class Api {
 
     // Go HighLevel
 
-    async initAuth(req, res) {
+    initAuth(res) {
         const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
         const clientId = '65d9b25d8f603887639719d6-lt2xajq6'
         const scope = 'contacts.readonly calendars.readonly'
