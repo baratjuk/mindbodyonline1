@@ -134,8 +134,7 @@ const serverRequest = async (req, res) => {
                 break    
             // Go HighLevel
             case '/oauth':  
-                answer = api.initAuth(res)
-                console.log('answer : ' + answer)
+                api.initAuth(res)
                 return        
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)

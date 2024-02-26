@@ -366,7 +366,8 @@ class Api {
         const url = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`
         console.log('url : ' + url)
         console.log('res : ' + this.utils.print_object(res))
-        return res.redirect(url)
+        res.writeHead(302, {'Location': url});
+        res.end();
     }
 }
 
