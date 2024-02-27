@@ -443,7 +443,7 @@ class Api {
     }
 
     async hlTest() {
-        let url = `https://rest.gohighlevel.com/v1/calendars/teams`
+        let url = `https://rest.gohighlevel.com/v1/contacts/`
         try {
             let response = await axios.get(
                 url,
