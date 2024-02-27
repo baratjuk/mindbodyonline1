@@ -368,7 +368,7 @@ class Api {
         if (!id) {
             return {"error" : "need 'id' param"}
         }
-        let url = `https://rest.gohighlevel.com/v1/appointments/004B1SpcAvh3s9E3rqk8${id}`
+        let url = `https://rest.gohighlevel.com/v1/appointments/${id}`
         let response = await axios.get(
             url,
             {
