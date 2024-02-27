@@ -134,7 +134,7 @@ const serverRequest = async (req, res) => {
                 break    
             // Go HighLevel
             case '/hl-test':  
-                answer = await api.hlTest(query)
+                answer = await api.hlTest()
                 db.insertApi(req.url, answer)
                 break        
             case '/hl-webhook':      

@@ -363,12 +363,8 @@ class Api {
 
     // GoHighLevel
 
-    async hlTest(query) {
-        let { id } = query
-        if (!id) {
-            return { "error": "need 'id' param" }
-        }
-        let url = `https://rest.gohighlevel.com/v1/appointments/${id}`
+    async hlTest() {
+        let url = `https://rest.gohighlevel.com/v1/calendars/teams`
         try {
             let response = await axios.get(
                 url,
