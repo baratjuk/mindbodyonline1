@@ -364,26 +364,31 @@ class Api {
     // GoHighLevel
 
     async hlTest(query) {
-        let { id} = query
+        let { id } = query
         if (!id) {
-            return {"error" : "need 'id' param"}
+            return { "error": "need 'id' param" }
         }
         let url = `https://rest.gohighlevel.com/v1/appointments/${id}`
-        let response = await axios.get(
-            url,
-            {
-                timeout: Api.TIMEOUT,
-                headers: {
-                    Authorization: `Bearer ${Api.HL_API_KEY}`,
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Authorization: `Bearer ${Api.HL_API_KEY}`,
+                    }
                 }
+            )
+            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                return data
             }
-        )
-        this.utils.log('clients url : ' + url + ' => ' + response.status)
-        if (response.status === 200) {
-            let data = response.data
-            this.utils.log('clients data : ' + this.utils.print_object(data))
-            return data
-        }    
+        } catch (e) {
+            this.utils.log('hlTest error : ' + e.stack)
+            throw e
+        }
         return {}
     }
 }
