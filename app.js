@@ -134,8 +134,11 @@ const serverRequest = async (req, res) => {
                 break    
             // Go HighLevel
             case '/hl-oauth':  
-                api.initAuth(res)
-                return    
+                api.hlOauth(res)
+            case '/hl-token':  
+                answer = await api.hlAccessToken()
+                db.insertApi(req.url, answer)
+                break        
             case '/hl-webhook':      
                 break
             default:
