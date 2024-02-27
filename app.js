@@ -133,10 +133,8 @@ const serverRequest = async (req, res) => {
             case '/favicon.ico':
                 break    
             // Go HighLevel
-            case '/hl-oauth':  
-                api.hlOauth(res)
-            case '/hl-token':  
-                answer = await api.hlAccessToken()
+            case '/hl-test':  
+                answer = await api.hlTest(query)
                 db.insertApi(req.url, answer)
                 break        
             case '/hl-webhook':      

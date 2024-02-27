@@ -67,6 +67,10 @@ class Api {
     accessToken = ''
     staffId = ''
 
+    // GoHighLevel
+
+    static HL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlFGZnBCQTZjMXQ4RDQyVTlyT0FVIiwiY29tcGFueV9pZCI6IktnUFpGVFZoRHhWM0FjdUdEZnYzIiwidmVyc2lvbiI6MSwiaWF0IjoxNzA4NjU0NzQ4MTQwLCJzdWIiOiJ1c2VyX2lkIn0.RPe6ZVDODH6z4wHMP_bOQtMKW21ENYdMmnEb-QtS5ZM'
+
     constructor() {
         super.constructor()
         this.auth()
@@ -357,69 +361,20 @@ class Api {
         return {}
     }
 
-    // Go HighLevel
+    // GoHighLevel
 
-    hlOauth(res) {
-        const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
-        // const clientId = '65d9b25d8f603887639719d6-lt2xajq6'
-        const clientId = 'wDi6eqcFLqJ0D8w7lq8t'
-        const scope = 'contacts.readonly calendars.readonly'
-        const url = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`
-        this.utils.log('oauth url : ' + url)
-        res.writeHead(302, {'Location': url});
-        res.end();
-    }
-
-    async hlAccessToken() {
-        let url = `https://services.leadconnectorhq.com/oauth/token`
-        let content = {
-            client_id: '65d9b25d8f603887639719d6-lt2xajq6',
-            client_secret: '025f590f-3334-4516-824a-aa62cff8c006',
-            grant_type: 'authorization_code',
-            code: '',
-            user_type: 'Location',
-            redirect_uri: 'https://dev1.htt.ai/hl-oauth'
+    async hlTest(query) {
+        let { id} = query
+        if (!id) {
+            return {"error" : "need 'id' param"}
         }
-        try {
-            let response = await axios.post(
-                url,
-                content,
-                {
-                    timeout: Api.TIMEOUT,
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded' 
-                    }
-                }
-            )
-            this.utils.log('hlAccessToken url : ' + url + ' => ' + response.status)
-            if (response.status < 300) {
-                let data = response.data
-                this.utils.log('hlAccessToken data : ' + this.utils.print_object(data))
-                return data
-            }  
-        } catch(e) {
-            this.utils.log('hlAccessToken error : ' + e.stack )  
-            throw e      
-        }  
-        return {}
-    }
-
-    async hlClients() {
-        let { location_id } = query
-        if (!location_id) {
-            return {"error" : "need 'location_id' param"}
-        }
-        let accessToken = ''
-        let url = `https://services.leadconnectorhq.com/contacts/?locationId=${location_id}`
+        let url = `https://rest.gohighlevel.com/v1/appointments/004B1SpcAvh3s9E3rqk8${id}`
         let response = await axios.get(
             url,
             {
                 timeout: Api.TIMEOUT,
                 headers: {
-                    Accept: 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                    Version: '2021-07-28'
+                    Authorization: `Bearer ${Api.HL_API_KEY}`,
                 }
             }
         )
