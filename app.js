@@ -136,7 +136,15 @@ const serverRequest = async (req, res) => {
             case '/hl-test':  
                 answer = await api.hlTest()
                 db.insertApi(req.url, answer)
-                break        
+                break
+            case '/hl-locations':  
+                answer = await api.hlLocations()
+                db.insertApi(req.url, answer)
+                break       
+            case '/hl-calendars-teams':  
+                answer = await api.hlCalendarsTeams()
+                db.insertApi(req.url, answer)
+                break         
             case '/hl-webhook':      
                 break
             default:

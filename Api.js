@@ -363,6 +363,56 @@ class Api {
 
     // GoHighLevel
 
+    async hlLocations() {
+        let url = `https://rest.gohighlevel.com/v1/locations/`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Authorization: `Bearer ${Api.HL_API_KEY}`,
+                    }
+                }
+            )
+            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                return data
+            }
+        } catch (e) {
+            this.utils.log('hlTest error : ' + e.stack)
+            throw e
+        }
+        return {}
+    }
+
+    async hlCalendarsTeams() {
+        let url = `https://rest.gohighlevel.com/v1/calendars/teams`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Authorization: `Bearer ${Api.HL_API_KEY}`,
+                    }
+                }
+            )
+            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                return data
+            }
+        } catch (e) {
+            this.utils.log('hlTest error : ' + e.stack)
+            throw e
+        }
+        return {}
+    }
+
     async hlTest() {
         let url = `https://rest.gohighlevel.com/v1/calendars/teams`
         try {
