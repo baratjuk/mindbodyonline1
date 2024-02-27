@@ -388,7 +388,7 @@ class Api {
         return {}
     }
 
-    async hlUsers() {
+    async hlUsers(query) {
         let { location } = query
         if (!location) {
             return {"error" : "need 'location' param"}
