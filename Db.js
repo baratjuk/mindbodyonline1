@@ -37,7 +37,8 @@ class Db {
             }
         }))
         if(tableData) {
-            return tableData[0].data
+            let jsonObj = JSON.parse(tableData[0].data)
+            return jsonObj
         }
         return {}
     }
