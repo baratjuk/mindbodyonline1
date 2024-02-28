@@ -364,7 +364,7 @@ class Api {
     // GoHighLevel
 
     hlOauth(res) {
-        const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
+        const redirectUri = 'https://dev1.htt.ai/hl-oauth-callback' 
         const clientId = '65df0226f872554f303a37c9-lt5mdcsu'
         const scope = 'contacts.readonly calendars.readonly'
         const url = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`
