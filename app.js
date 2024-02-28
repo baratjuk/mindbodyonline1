@@ -134,7 +134,7 @@ const serverRequest = async (req, res) => {
                 break    
             // Go HighLevel
             case '/hl-oauth':  
-                api.initAuth(res)
+                api.hlOauth(res)
                 return 
             case '/hl-token':  
                 answer = await api.hlAccessToken()
