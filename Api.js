@@ -428,8 +428,8 @@ class Api {
             calendarId: 'KOO9Rxf2W8HJvILJkUSw',
             locationId: 'QFfpBA6c1t8D42U9rOAU',
             contactId: 'gzRquCYXnqBAKogqBprW',
-            startTime: '2024-03-04T10:00:00-05:00',
-            endTime: '2024-03-04T10:30:00-05:00',
+            startTime: '2024-03-04T11:00:00-05:00',
+            endTime: '2024-03-04T11:30:00-05:00',
             title: 'Test Event',
             appointmentStatus: 'new',
             assignedUserId: 'ns8F6riHLV3uFivbGV8T',
@@ -451,7 +451,7 @@ class Api {
             }
         )
         this.utils.log('hlAddAppointment url : ' + url + ' => ' + response.status)
-        if (response.status === 200) {
+        if (response.status < 300) {
             let data = response.data
             this.utils.log('hlAddAppointment data : ' + this.utils.print_object(data))
             return data
