@@ -363,7 +363,11 @@ class Api {
 
     // GoHighLevel
 
-    hlOauth(res) {
+    hlOauth(res, query) {
+        let { code } = query
+        if(code) {
+            return false
+        }
         const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
         const clientId = '65df0226f872554f303a37c9-lt5mdcsu'
         const scope = 'contacts.readonly calendars.readonly'
@@ -371,6 +375,7 @@ class Api {
         this.utils.log('oauth url : ' + url)
         res.writeHead(302, {'Location': url});
         res.end();
+        return true
     }
 
     async hlAccessToken() {
@@ -379,7 +384,7 @@ class Api {
             client_id: '65df0226f872554f303a37c9-lt5mdcsu',
             client_secret: 'f4ad852d-7915-4918-b1a5-262e21c58c9d',
             grant_type: 'authorization_code',
-            code: '',
+            code: '99dd67c86381d1a208990fd8688cbda35705c395',
             user_type: 'Location',
             redirect_uri: 'https://dev1.htt.ai/hl-oauth'
         }
