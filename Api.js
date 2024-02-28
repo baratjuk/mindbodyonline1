@@ -71,7 +71,7 @@ class Api {
     static HL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlFGZnBCQTZjMXQ4RDQyVTlyT0FVIiwiY29tcGFueV9pZCI6IktnUFpGVFZoRHhWM0FjdUdEZnYzIiwidmVyc2lvbiI6MSwiaWF0IjoxNzA4NjU0NzQ4MTQwLCJzdWIiOiJ1c2VyX2lkIn0.RPe6ZVDODH6z4wHMP_bOQtMKW21ENYdMmnEb-QtS5ZM'
     static HL_CLIENT_ID = '65df0226f872554f303a37c9-lt5mdcsu'
     static HL_CLIENT_SECRET = 'f4ad852d-7915-4918-b1a5-262e21c58c9d'
-    hlAccessToken = ''
+    hlAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoQ2xhc3MiOiJMb2NhdGlvbiIsImF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJzb3VyY2UiOiJJTlRFR1JBVElPTiIsInNvdXJjZUlkIjoiNjVkZjAyMjZmODcyNTU0ZjMwM2EzN2M5LWx0NW1kY3N1IiwiY2hhbm5lbCI6Ik9BVVRIIiwicHJpbWFyeUF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJvYXV0aE1ldGEiOnsic2NvcGVzIjpbImNvbnRhY3RzLnJlYWRvbmx5IiwiY2FsZW5kYXJzLnJlYWRvbmx5Il0sImNsaWVudCI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOSIsImNsaWVudEtleSI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOS1sdDVtZGNzdSJ9LCJpYXQiOjE3MDkxMTc2NjEuMjQ0LCJleHAiOjE3MDkyMDQwNjEuMjQ0fQ.Kxr22bEA9aJELUgyE_oaUAZTk6HrlS25DL0vT7J3zuw'
 
     constructor() {
         super.constructor()
@@ -418,17 +418,23 @@ class Api {
     }
 
     async hlAddAppointment(query) {
-        let { email, phone, slot } = query
-        if (!email || !slot) {
-            return {"error" : "need 'email', 'slot' param"}
-        }
+        // let { email, phone, slot } = query
+        // if (!email || !slot) {
+        //     return {"error" : "need 'email', 'slot' param"}
+        // }
         let url = `https://rest.gohighlevel.com/v1/appointments/`
         let content = {
-            email,
-            phone,
-            selectedSlot : slot,
-            selectedTimezone: 'America/New_York',
-            calendarId: 'KOO9Rxf2W8HJvILJkUSw'
+            calendarId: 'KOO9Rxf2W8HJvILJkUSw',
+            locationId: 'QFfpBA6c1t8D42U9rOAU',
+            contactId: 'gzRquCYXnqBAKogqBprW',
+            startTime: '2024-03-04T10:00:00-05:00',
+            endTime: '2024-03-04T10:30:00-05:00',
+            title: 'Test Event',
+            appointmentStatus: 'new',
+            assignedUserId: 'UGMJN0eJ0E9Im3DEvBB4',
+            address: 'Zoom',
+            ignoreDateRange: false,
+            toNotify: false
         }
         let response = await axios.post (
             url,
@@ -436,7 +442,7 @@ class Api {
             {
                 timeout: Api.TIMEOUT,
                 headers: {
-                    Authorization: `Bearer ${Api.HL_API_KEY}`,
+                    Authorization: `Bearer ${this.hlAccessToken}`,
                 }
             }
         )
