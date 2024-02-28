@@ -373,7 +373,7 @@ class Api {
         }
         const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
         const clientId = Api.HL_CLIENT_ID
-        const scope = 'contacts.readonly calendars.readonly'
+        const scope = 'contacts.readonly calendars.readonly calendars.write calendars/events.readonly calendars/events.write calendars/groups.readonly calendars/groups.write calendars/resources.readonly calendars/resources.write'
         const url = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`
         this.utils.log('oauth url : ' + url)
         res.writeHead(302, {'Location': url});
@@ -442,8 +442,8 @@ class Api {
             {
                 timeout: Api.TIMEOUT,
                 headers: {
-                    // Authorization: `Bearer ${this.hlAccessToken}`,
-                    Authorization: `Bearer ${Api.HL_API_KEY}`
+                    Authorization: `Bearer ${this.hlAccessToken}`,
+                    // Authorization: `Bearer ${Api.HL_API_KEY}`
                 }
             }
         )
