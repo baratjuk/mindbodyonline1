@@ -468,7 +468,7 @@ class Api {
     }
 
     async hlTest() {
-        let url = `https://rest.gohighlevel.com/v1/appointments?userId=gzRquCYXnqBAKogqBprW`
+        let url = `https://rest.gohighlevel.com/v1/appointments?startDate=1704096058000&endDate=1709280058000&userId=gzRquCYXnqBAKogqBprW&1704096058`
         try {
             let response = await axios.get(
                 url,
