@@ -4,7 +4,7 @@ import Utils from './Utils.js';
 class Db {
 
     static STORE = {
-        GHL : 0,
+        GHL : 1,
     }
 
     utils
