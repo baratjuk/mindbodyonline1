@@ -369,7 +369,7 @@ class Api {
         let { code } = query
         if(code) {
             this.utils.log('hlOauth code : ' + code)
-            return await hlAccessToken(code)
+            return await this.hlAccessToken(code)
         }
         const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
         const clientId = Api.HL_CLIENT_ID
