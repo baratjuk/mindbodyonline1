@@ -436,7 +436,7 @@ class Api {
     async hlAddAppointment(query) {
         let { start, end } = query
         if (!start || !end) {
-            return { "error": "need 'email', 'slot' param" }
+            return { "error": "need 'start', 'end' param" }
         }
         let url = `https://services.leadconnectorhq.com/calendars/events/appointments`
         let content = {
