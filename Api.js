@@ -9,12 +9,8 @@ class Api {
     // static PASSWORD = 'apitest1234'
     // static SITEID = -99
 
-    // static USER = 'jpatalano@thecovery.com'
-    // static PASSWORD = 'Joe.12399'
-    // static SITEID = -99
-
-    static USER = 'Siteowner'
-    static PASSWORD = 'apitest1234'
+    static USER = 'jpatalano@thecovery.com'
+    static PASSWORD = 'Joe.12399'
     static SITEID = -2147481231
 
     static EVENTS = [
