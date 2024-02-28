@@ -484,6 +484,37 @@ class Api {
         return {}
     }
 
+    async hlContactsV2(query) {
+        let { location } = query
+        if (!location) {
+            return {"error" : "need 'location' param"}
+        }
+        let url = `https://services.leadconnectorhq.com/contacts/?locationId=${location}`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${this.hlAccessToken}`,
+                        Version: '2021-07-28'
+                    }
+                }
+            )
+            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                return data
+            }
+        } catch (e) {
+            this.utils.log('hlTest error : ' + e.stack)
+            throw e
+        }
+        return {}
+    }
+
     async hlLocations() {
         let url = `https://rest.gohighlevel.com/v1/locations/`
         try {
@@ -564,7 +595,7 @@ class Api {
     }
 
     async hlTest() {
-        let url = `https://services.leadconnectorhq.com/contacts/?locationId=QFfpBA6c1t8D42U9rOAU`
+        let url = `https://services.leadconnectorhq.com/calendars`
         try {
             let response = await axios.get(
                 url,

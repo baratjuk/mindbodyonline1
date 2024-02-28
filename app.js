@@ -140,10 +140,6 @@ const serverRequest = async (req, res) => {
                 }
                 db.insertApi(req.url, answer)
                 break 
-            // case '/hl-token':  
-            //     answer = await api.hlAccessToken()
-            //     db.insertApi(req.url, answer)
-            //     break
             case '/hl-test':  
                 answer = await api.hlTest()
                 db.insertApi(req.url, answer)
