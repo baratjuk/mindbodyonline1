@@ -373,7 +373,7 @@ class Api {
     static HL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlFGZnBCQTZjMXQ4RDQyVTlyT0FVIiwiY29tcGFueV9pZCI6IktnUFpGVFZoRHhWM0FjdUdEZnYzIiwidmVyc2lvbiI6MSwiaWF0IjoxNzA4NjU0NzQ4MTQwLCJzdWIiOiJ1c2VyX2lkIn0.RPe6ZVDODH6z4wHMP_bOQtMKW21ENYdMmnEb-QtS5ZM'
     static HL_CLIENT_ID = '65df0226f872554f303a37c9-lt5mdcsu'
     static HL_CLIENT_SECRET = 'f4ad852d-7915-4918-b1a5-262e21c58c9d'
-    static HL_LOCATION_ID = 'QFfpBA6c1t8D42U9rOAU'
+    // static HL_LOCATION_ID = 'QFfpBA6c1t8D42U9rOAU'
  
     async hlOauth(res, query) {
         let { code } = query
@@ -434,17 +434,19 @@ class Api {
     }
 
     async hlAddAppointment(query) {
-        // let { email, phone, slot } = query
-        // if (!email || !slot) {
-        //     return {"error" : "need 'email', 'slot' param"}
-        // }
+        let { start, end } = query
+        if (!start || !end) {
+            return { "error": "need 'email', 'slot' param" }
+        }
         let url = `https://services.leadconnectorhq.com/calendars/events/appointments`
         let content = {
             calendarId: 'KOO9Rxf2W8HJvILJkUSw',
             locationId: 'QFfpBA6c1t8D42U9rOAU',
             contactId: 'gzRquCYXnqBAKogqBprW',
-            startTime: '2024-03-04T11:00:00-05:00',
-            endTime: '2024-03-04T11:30:00-05:00',
+            // startTime: '2024-03-04T11:00:00-05:00',
+            // endTime: '2024-03-04T11:30:00-05:00',
+            startTime: start,
+            endTime: end,
             title: 'Test Event',
             appointmentStatus: 'new',
             assignedUserId: 'ns8F6riHLV3uFivbGV8T',
@@ -452,25 +454,31 @@ class Api {
             ignoreDateRange: false,
             toNotify: false
         }
-        let response = await axios.post (
-            url,
-            content,
-            {
-                timeout: Api.TIMEOUT,
-                headers: {
-                    Accept: 'application/json',
-                    Authorization: `Bearer ${this.hlAccessToken}`,
-                    'Content-Type': 'application/json',
-                    Version: '2021-04-15'
+        try {
+            let response = await axios.post(
+                url,
+                content,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${this.hlAccessToken}`,
+                        'Content-Type': 'application/json',
+                        Version: '2021-04-15'
+                    }
                 }
+            )
+            this.utils.log('hlAddAppointment url : ' + url + ' => ' + response.status)
+            if (response.status < 300) {
+                let data = response.data
+                this.utils.log('hlAddAppointment data : ' + this.utils.print_object(data))
+                return data
             }
-        )
-        this.utils.log('hlAddAppointment url : ' + url + ' => ' + response.status)
-        if (response.status < 300) {
-            let data = response.data
-            this.utils.log('hlAddAppointment data : ' + this.utils.print_object(data))
-            return data
-        }    
+        } catch (e) {
+            this.utils.log('hlAddAppointment error : ' + e.stack)
+            // throw e
+            return {"error" : e.message}
+        }
         return {}
     }
 
