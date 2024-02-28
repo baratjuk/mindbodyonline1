@@ -67,12 +67,6 @@ class Api {
     accessToken = ''
     staffId = ''
 
-    // GoHighLevel
-    static HL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlFGZnBCQTZjMXQ4RDQyVTlyT0FVIiwiY29tcGFueV9pZCI6IktnUFpGVFZoRHhWM0FjdUdEZnYzIiwidmVyc2lvbiI6MSwiaWF0IjoxNzA4NjU0NzQ4MTQwLCJzdWIiOiJ1c2VyX2lkIn0.RPe6ZVDODH6z4wHMP_bOQtMKW21ENYdMmnEb-QtS5ZM'
-    static HL_CLIENT_ID = '65df0226f872554f303a37c9-lt5mdcsu'
-    static HL_CLIENT_SECRET = 'f4ad852d-7915-4918-b1a5-262e21c58c9d'
-    hlAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoQ2xhc3MiOiJMb2NhdGlvbiIsImF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJzb3VyY2UiOiJJTlRFR1JBVElPTiIsInNvdXJjZUlkIjoiNjVkZjAyMjZmODcyNTU0ZjMwM2EzN2M5LWx0NW1kY3N1IiwiY2hhbm5lbCI6Ik9BVVRIIiwicHJpbWFyeUF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJvYXV0aE1ldGEiOnsic2NvcGVzIjpbImNvbnRhY3RzLnJlYWRvbmx5IiwiY2FsZW5kYXJzLnJlYWRvbmx5IiwiY2FsZW5kYXJzLndyaXRlIiwiY2FsZW5kYXJzL2V2ZW50cy5yZWFkb25seSIsImNhbGVuZGFycy9ldmVudHMud3JpdGUiLCJjYWxlbmRhcnMvZ3JvdXBzLnJlYWRvbmx5IiwiY2FsZW5kYXJzL2dyb3Vwcy53cml0ZSIsImNhbGVuZGFycy9yZXNvdXJjZXMucmVhZG9ubHkiLCJjYWxlbmRhcnMvcmVzb3VyY2VzLndyaXRlIl0sImNsaWVudCI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOSIsImNsaWVudEtleSI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOS1sdDVtZGNzdSJ9LCJpYXQiOjE3MDkxMTkyMjQuMDY2LCJleHAiOjE3MDkyMDU2MjQuMDY2fQ.epR7m4efudNYURkWjiu0ZlI9lpQAV1asYhu7ngBLTho'
-
     constructor() {
         super.constructor()
         this.auth()
@@ -364,6 +358,13 @@ class Api {
     }
 
     // GoHighLevel
+    static HL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlFGZnBCQTZjMXQ4RDQyVTlyT0FVIiwiY29tcGFueV9pZCI6IktnUFpGVFZoRHhWM0FjdUdEZnYzIiwidmVyc2lvbiI6MSwiaWF0IjoxNzA4NjU0NzQ4MTQwLCJzdWIiOiJ1c2VyX2lkIn0.RPe6ZVDODH6z4wHMP_bOQtMKW21ENYdMmnEb-QtS5ZM'
+    static HL_CLIENT_ID = '65df0226f872554f303a37c9-lt5mdcsu'
+    static HL_CLIENT_SECRET = 'f4ad852d-7915-4918-b1a5-262e21c58c9d'
+    static HL_LOCATION_ID = 'QFfpBA6c1t8D42U9rOAU'
+
+    hlAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoQ2xhc3MiOiJMb2NhdGlvbiIsImF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJzb3VyY2UiOiJJTlRFR1JBVElPTiIsInNvdXJjZUlkIjoiNjVkZjAyMjZmODcyNTU0ZjMwM2EzN2M5LWx0NW1kY3N1IiwiY2hhbm5lbCI6Ik9BVVRIIiwicHJpbWFyeUF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJvYXV0aE1ldGEiOnsic2NvcGVzIjpbImNvbnRhY3RzLnJlYWRvbmx5IiwiY2FsZW5kYXJzLnJlYWRvbmx5IiwiY2FsZW5kYXJzLndyaXRlIiwiY2FsZW5kYXJzL2V2ZW50cy5yZWFkb25seSIsImNhbGVuZGFycy9ldmVudHMud3JpdGUiLCJjYWxlbmRhcnMvZ3JvdXBzLnJlYWRvbmx5IiwiY2FsZW5kYXJzL2dyb3Vwcy53cml0ZSIsImNhbGVuZGFycy9yZXNvdXJjZXMucmVhZG9ubHkiLCJjYWxlbmRhcnMvcmVzb3VyY2VzLndyaXRlIl0sImNsaWVudCI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOSIsImNsaWVudEtleSI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOS1sdDVtZGNzdSJ9LCJpYXQiOjE3MDkxMTkyMjQuMDY2LCJleHAiOjE3MDkyMDU2MjQuMDY2fQ.epR7m4efudNYURkWjiu0ZlI9lpQAV1asYhu7ngBLTho'
+ 
 
     async hlOauth(res, query) {
         let { code } = query
@@ -595,7 +596,7 @@ class Api {
     }
 
     async hlTest() {
-        let url = `https://services.leadconnectorhq.com/calendars`
+        let url = `https://services.leadconnectorhq.com/calendars/?locationId=${Api.HL_LOCATION_ID}`
         try {
             let response = await axios.get(
                 url,
