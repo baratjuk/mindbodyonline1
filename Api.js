@@ -65,15 +65,16 @@ class Api {
     static TIMEOUT = 30000
 
     utils = new Utils('api_test1.log')
-    db = new Db(this.utils)
+    db
     accessToken = ''
     staffId = ''
 
     // GoHighLevel
     hlAccessToken
 
-    constructor() {
+    constructor(db) {
         super.constructor()
+        this.db = db
         this.auth()
         this.init()
     }

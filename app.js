@@ -10,8 +10,8 @@ import Twig from 'twig';
 const port = process.env.PORT || 3001
 const html = fs.readFileSync('index.html')
 const utils = new Utils('test1.log')
-const api = new Api()
 const db = new Db(utils)
+const api = new Api(db)
 
 const server = http.createServer((req, res) => {
     serverRequest(req, res)
