@@ -5,13 +5,13 @@ import Db from './Db.js';
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
 
-    // static USER = 'Siteowner'
-    // static PASSWORD = 'apitest1234'
-    // static SITEID = -99
+    static USER = 'Siteowner'
+    static PASSWORD = 'apitest1234'
+    static SITEID = -99
 
-    static USER = 'jpatalano@staturesoftware.com'
-    static PASSWORD = 'J@e12399'
-    static SITEID = -2147481231
+    // static USER = 'jpatalano@staturesoftware.com'
+    // static PASSWORD = 'J@e12399'
+    // static SITEID = -2147481231
 
     static EVENTS = [
         //Site
