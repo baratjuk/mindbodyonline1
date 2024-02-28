@@ -442,7 +442,8 @@ class Api {
             {
                 timeout: Api.TIMEOUT,
                 headers: {
-                    Authorization: `Bearer ${this.hlAccessToken}`,
+                    // Authorization: `Bearer ${this.hlAccessToken}`,
+                    Authorization: `Bearer ${Api.HL_API_KEY}`
                 }
             }
         )
