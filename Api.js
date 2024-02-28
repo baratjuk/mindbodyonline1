@@ -382,7 +382,7 @@ class Api {
             let tokenData = await this.hlToken(code) 
             data.code = code
             data.accessToken = data.access_token
-            hlAccessToken = data.access_token
+            this.hlAccessToken = data.access_token
             data.refreshToken = data.refresh_token
             this.db.setStoreObj(Db.STORE.GHL, data)
             return tokenData
