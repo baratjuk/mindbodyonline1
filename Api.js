@@ -80,7 +80,7 @@ class Api {
 
     async init() {
         let data = await this.db.getStoreObj(Db.STORE.GHL) 
-        hlAccessToken = data.accessToken
+        this.hlAccessToken = data.accessToken
     }
 
     // Webhooks
