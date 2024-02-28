@@ -423,7 +423,7 @@ class Api {
         // if (!email || !slot) {
         //     return {"error" : "need 'email', 'slot' param"}
         // }
-        let url = `https://rest.gohighlevel.com/v1/appointments/`
+        let url = `https://services.leadconnectorhq.com/calendars/events/appointments`
         let content = {
             calendarId: 'KOO9Rxf2W8HJvILJkUSw',
             locationId: 'QFfpBA6c1t8D42U9rOAU',
@@ -447,7 +447,6 @@ class Api {
                     Authorization: `Bearer ${this.hlAccessToken}`,
                     'Content-Type': 'application/json',
                     Version: '2021-04-15'
-                    // Authorization: `Bearer ${Api.HL_API_KEY}`
                 }
             }
         )
@@ -457,6 +456,33 @@ class Api {
             this.utils.log('hlAddAppointment data : ' + this.utils.print_object(data))
             return data
         }    
+        return {}
+    }
+
+    async hlCalendars() {
+        let url = `https://services.leadconnectorhq.com/calendars/?locationId=${Api.HL_LOCATION_ID}`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${this.hlAccessToken}`,
+                        Version: '2021-07-28'
+                    }
+                }
+            )
+            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                return data
+            }
+        } catch (e) {
+            this.utils.log('hlTest error : ' + e.stack)
+            throw e
+        }
         return {}
     }
 

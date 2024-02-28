@@ -151,7 +151,11 @@ const serverRequest = async (req, res) => {
             case '/hl-contacts':  
                 answer = await api.hlContacts()
                 db.insertApi(req.url, answer)
-                break    
+                break 
+            case '/hl-calendars':  
+                answer = await api.hlCalendars()
+                db.insertApi(req.url, answer)
+                break        
             case '/hl-locations':  
                 answer = await api.hlLocations()
                 db.insertApi(req.url, answer)
