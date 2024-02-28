@@ -432,7 +432,7 @@ class Api {
             endTime: '2024-03-04T10:30:00-05:00',
             title: 'Test Event',
             appointmentStatus: 'new',
-            assignedUserId: 'UGMJN0eJ0E9Im3DEvBB4',
+            assignedUserId: 'ns8F6riHLV3uFivbGV8T',
             address: 'Zoom',
             ignoreDateRange: false,
             toNotify: false
