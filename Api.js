@@ -363,6 +363,51 @@ class Api {
 
     // GoHighLevel
 
+    hlOauth(res) {
+        const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
+        const clientId = '65df0226f872554f303a37c9-lt5mdcsu'
+        const scope = 'contacts.readonly calendars.readonly'
+        const url = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`
+        this.utils.log('oauth url : ' + url)
+        res.writeHead(302, {'Location': url});
+        res.end();
+    }
+
+    async hlAccessToken() {
+        let url = `https://services.leadconnectorhq.com/oauth/token`
+        let content = {
+            client_id: '65df0226f872554f303a37c9-lt5mdcsu',
+            client_secret: 'f4ad852d-7915-4918-b1a5-262e21c58c9d',
+            grant_type: 'authorization_code',
+            code: '',
+            user_type: 'Location',
+            redirect_uri: 'https://dev1.htt.ai/hl-oauth'
+        }
+        try {
+            let response = await axios.post(
+                url,
+                content,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded' 
+                    }
+                }
+            )
+            this.utils.log('hlAccessToken url : ' + url + ' => ' + response.status)
+            if (response.status < 300) {
+                let data = response.data
+                this.utils.log('hlAccessToken data : ' + this.utils.print_object(data))
+                return data
+            }  
+        } catch(e) {
+            this.utils.log('hlAccessToken error : ' + e.stack )  
+            throw e      
+        }  
+        return {}
+    }
+
     async hlAddAppointment(query) {
         let { email, phone, slot } = query
         if (!email || !slot) {
