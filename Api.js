@@ -378,7 +378,7 @@ class Api {
         this.utils.log('oauth url : ' + url)
         res.writeHead(302, {'Location': url});
         res.end();
-        return true
+        return null
     }
 
     async hlAccessToken(code) {
