@@ -459,8 +459,12 @@ class Api {
         return {}
     }
 
-    async hlCalendars() {
-        let url = `https://services.leadconnectorhq.com/calendars/?locationId=${Api.HL_LOCATION_ID}`
+    async hlCalendars(query) {
+        let { location } = query
+        if (!location) {
+            return {"error" : "need 'location' param"}
+        }
+        let url = `https://services.leadconnectorhq.com/calendars/?locationId=${location}`
         try {
             let response = await axios.get(
                 url,
@@ -573,31 +577,6 @@ class Api {
             return {"error" : "need 'location' param"}
         }
         let url = `https://rest.gohighlevel.com/v1/users/?locationId=${location}`
-        try {
-            let response = await axios.get(
-                url,
-                {
-                    timeout: Api.TIMEOUT,
-                    headers: {
-                        Authorization: `Bearer ${Api.HL_API_KEY}`,
-                    }
-                }
-            )
-            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
-            if (response.status === 200) {
-                let data = response.data
-                this.utils.log('hlTest data : ' + this.utils.print_object(data))
-                return data
-            }
-        } catch (e) {
-            this.utils.log('hlTest error : ' + e.stack)
-            throw e
-        }
-        return {}
-    }
-
-    async hlCalendarsTeams() {
-        let url = `https://rest.gohighlevel.com/v1/calendars/teams`
         try {
             let response = await axios.get(
                 url,

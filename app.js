@@ -153,7 +153,7 @@ const serverRequest = async (req, res) => {
                 db.insertApi(req.url, answer)
                 break 
             case '/hl-calendars':  
-                answer = await api.hlCalendars()
+                answer = await api.hlCalendars(query)
                 db.insertApi(req.url, answer)
                 break        
             case '/hl-locations':  
