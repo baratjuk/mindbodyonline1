@@ -564,14 +564,16 @@ class Api {
     }
 
     async hlTest() {
-        let url = `https://rest.gohighlevel.com/v1/appointments?startDate=1704096058000&endDate=1709280058000&teamId=0XHCCPlm4RdW6wOM2Pq8&includeAll=true`
+        let url = `https://services.leadconnectorhq.com/contacts/?locationId=QFfpBA6c1t8D42U9rOAU`
         try {
             let response = await axios.get(
                 url,
                 {
                     timeout: Api.TIMEOUT,
                     headers: {
-                        Authorization: `Bearer ${Api.HL_API_KEY}`,
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${this.hlAccessToken}`,
+                        Version: '2021-07-28'
                     }
                 }
             )
