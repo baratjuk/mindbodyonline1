@@ -3,6 +3,10 @@ import Utils from './Utils.js';
 
 class Db {
 
+    static STORE = {
+        GHL : 0,
+    }
+
     utils
     dbConnect
 
@@ -20,6 +24,31 @@ class Db {
                 throw err
             }
             this.utils.log("DB Connected!");
+        })
+    }
+
+    async getStoreObj(id) {
+        const sql = `SELECT * FROM store WHERE id=${id};`
+        let tableData = await new Promise(r => this.dbConnect.query(sql, (err, result) => {
+            if (err) {
+                r(null)
+            } else {
+                r(result)
+            }
+        }))
+        if(tableData) {
+            return tableData[0].data
+        }
+        return {}
+    }
+
+    async setStoreObj(id, data) {
+        let jsonStr = JSON.stringify(data)
+        const sql = `UPDATE store SET data='${jsonStr}' WHERE id=${id};`
+        this.dbConnect.query(sql, (err, result) => {
+            if (err) {
+                this.utils.log('insertApi error : ' + err.stack)
+            }
         })
     }
 

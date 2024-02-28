@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Utils from './Utils.js';
+import Db from './Db.js';
 
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
@@ -64,12 +65,22 @@ class Api {
     static TIMEOUT = 30000
 
     utils = new Utils('api_test1.log')
+    db = new Db(this.utils)
     accessToken = ''
     staffId = ''
+
+    // GoHighLevel
+    hlAccessToken
 
     constructor() {
         super.constructor()
         this.auth()
+        this.init()
+    }
+
+    async init() {
+        let data = await this.db.getStoreObj(Db.STORE.GHL) 
+        hlAccessToken = data.accessToken
     }
 
     // Webhooks
@@ -362,15 +373,19 @@ class Api {
     static HL_CLIENT_ID = '65df0226f872554f303a37c9-lt5mdcsu'
     static HL_CLIENT_SECRET = 'f4ad852d-7915-4918-b1a5-262e21c58c9d'
     static HL_LOCATION_ID = 'QFfpBA6c1t8D42U9rOAU'
-
-    hlAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoQ2xhc3MiOiJMb2NhdGlvbiIsImF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJzb3VyY2UiOiJJTlRFR1JBVElPTiIsInNvdXJjZUlkIjoiNjVkZjAyMjZmODcyNTU0ZjMwM2EzN2M5LWx0NW1kY3N1IiwiY2hhbm5lbCI6Ik9BVVRIIiwicHJpbWFyeUF1dGhDbGFzc0lkIjoiUUZmcEJBNmMxdDhENDJVOXJPQVUiLCJvYXV0aE1ldGEiOnsic2NvcGVzIjpbImNvbnRhY3RzLnJlYWRvbmx5IiwiY2FsZW5kYXJzLnJlYWRvbmx5IiwiY2FsZW5kYXJzLndyaXRlIiwiY2FsZW5kYXJzL2V2ZW50cy5yZWFkb25seSIsImNhbGVuZGFycy9ldmVudHMud3JpdGUiLCJjYWxlbmRhcnMvZ3JvdXBzLnJlYWRvbmx5IiwiY2FsZW5kYXJzL2dyb3Vwcy53cml0ZSIsImNhbGVuZGFycy9yZXNvdXJjZXMucmVhZG9ubHkiLCJjYWxlbmRhcnMvcmVzb3VyY2VzLndyaXRlIl0sImNsaWVudCI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOSIsImNsaWVudEtleSI6IjY1ZGYwMjI2Zjg3MjU1NGYzMDNhMzdjOS1sdDVtZGNzdSJ9LCJpYXQiOjE3MDkxMTkyMjQuMDY2LCJleHAiOjE3MDkyMDU2MjQuMDY2fQ.epR7m4efudNYURkWjiu0ZlI9lpQAV1asYhu7ngBLTho'
  
-
     async hlOauth(res, query) {
         let { code } = query
         if(code) {
             this.utils.log('hlOauth code : ' + code)
-            return await this.hlToken(code)
+            let data = await this.db.getStoreObj(Db.STORE.GHL) 
+            let tokenData = await this.hlToken(code) 
+            data.code = code
+            data.accessToken = data.access_token
+            hlAccessToken = data.access_token
+            data.refreshToken = data.refresh_token
+            this.db.setStoreObj(Db.STORE.GHL, data)
+            return tokenData
         }
         const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
         const clientId = Api.HL_CLIENT_ID
@@ -407,7 +422,6 @@ class Api {
             this.utils.log('hlAccessToken url : ' + url + ' => ' + response.status)
             if (response.status < 300) {
                 let data = response.data
-                this.hlAccessToken = data.access_token
                 this.utils.log('hlAccessToken data : ' + this.utils.print_object(data))
                 return data
             }  
