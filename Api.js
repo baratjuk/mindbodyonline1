@@ -363,6 +363,38 @@ class Api {
 
     // GoHighLevel
 
+    async hlAddAppointment(query) {
+        let { email, phone, slot } = query
+        if (!email || !slot) {
+            return {"error" : "need 'email', 'slot' param"}
+        }
+        let url = `https://rest.gohighlevel.com/v1/appointments/`
+        let content = {
+            email,
+            phone,
+            selectedSlot : slot,
+            selectedTimezone: 'America/New_York',
+            calendarId: 'KOO9Rxf2W8HJvILJkUSw'
+        }
+        let response = await axios.post (
+            url,
+            content,
+            {
+                timeout: Api.TIMEOUT,
+                headers: {
+                    Authorization: `Bearer ${Api.HL_API_KEY}`,
+                }
+            }
+        )
+        this.utils.log('hlAddAppointment url : ' + url + ' => ' + response.status)
+        if (response.status === 200) {
+            let data = response.data
+            this.utils.log('hlAddAppointment data : ' + this.utils.print_object(data))
+            return data
+        }    
+        return {}
+    }
+
     async hlContacts() {
         let url = `https://rest.gohighlevel.com/v1/contacts/`
         try {
