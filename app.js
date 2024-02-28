@@ -134,14 +134,16 @@ const serverRequest = async (req, res) => {
                 break    
             // Go HighLevel
             case '/hl-oauth':  
-                if(api.hlOauth(res)) {
+                answer = await api.hlOauth(res)
+                if(!answer) {
                     return
                 }
-                break 
-            case '/hl-token':  
-                answer = await api.hlAccessToken()
                 db.insertApi(req.url, answer)
-                break
+                break 
+            // case '/hl-token':  
+            //     answer = await api.hlAccessToken()
+            //     db.insertApi(req.url, answer)
+            //     break
             case '/hl-test':  
                 answer = await api.hlTest()
                 db.insertApi(req.url, answer)
