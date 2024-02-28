@@ -369,7 +369,7 @@ class Api {
         let { code } = query
         if(code) {
             this.utils.log('hlOauth code : ' + code)
-            return await this.hlAccessToken(code)
+            return await this.hlToken(code)
         }
         const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
         const clientId = Api.HL_CLIENT_ID
@@ -381,7 +381,7 @@ class Api {
         return null
     }
 
-    async hlAccessToken(code) {
+    async hlToken(code) {
         let url = `https://services.leadconnectorhq.com/oauth/token`
         let content = {
             client_id: Api.HL_CLIENT_ID,
