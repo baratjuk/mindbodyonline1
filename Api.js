@@ -342,6 +342,31 @@ class Api {
         return {}
     }
 
+    async scheduleItems(query) {
+        start = '2024-02-29T12%3A00%3A00.000Z'
+        end = '2024-03-29T12%3A00%3A00.000Z'
+        let url = `https://api.mindbodyonline.com/public/v6/appointment/scheduleitems?startDate=${start}&endDate=${end}`
+        let response = await axios.get(
+            url,
+            {
+                timeout: Api.TIMEOUT,
+                headers: {
+                    'API-Key': Api.API_KEY,
+                    siteId: Api.SITEID,
+                    Accept: 'application/json',
+                    authorization: this.accessToken
+                }
+            }
+        )
+        this.utils.log('scheduleItems url : ' + url + ' => ' + response.status)
+        if (response.status === 200) {
+            let data = response.data
+            this.utils.log('scheduleItems data : ' + JSON.stringify(data, null, 4))
+            return data
+        }    
+        return {}
+    }
+
     async clients(query) {
         let { page } = query
         if (!page) {
