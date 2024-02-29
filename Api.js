@@ -374,9 +374,9 @@ class Api {
     }
 
     async addAppointment(query) {
-        let { id, location, session} = query
-        if (!id || !location || !session) {
-            return {"error" : "need 'id, location, session' param"}
+        let { id, location} = query
+        if (!id || !location) {
+            return {"error" : "need 'id, location' param"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
