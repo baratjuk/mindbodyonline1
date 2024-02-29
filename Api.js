@@ -109,7 +109,7 @@ class Api {
         this.utils.log('subscriptions url : ' + url + ' => ' + response.status)
         if (response.status === 200) {
             let data = response.data
-            this.utils.log('subscriptions data : ' + this.utils.print_object(data))
+            this.utils.log('subscriptions data : ' + JSON.stringify(data, null, 4))
             return data
         }    
         return {}
@@ -176,7 +176,7 @@ class Api {
             this.utils.log('subscribe url : ' + url + ' => ' + response.status)
             if (response.status < 300) {
                 let data = response.data
-                this.utils.log('subscribe data : ' + this.utils.print_object(data))
+                this.utils.log('subscribe data : ' + JSON.stringify(data, null, 4))
                 return data
             }  
         } catch(e) {
@@ -214,7 +214,7 @@ class Api {
             this.utils.log('patch url : ' + url + ' => ' + response.status)
             if (response.status < 300) {
                 let data = response.data
-                this.utils.log('patch data : ' + this.utils.print_object(data))
+                this.utils.log('patch data : ' + JSON.stringify(data, null, 4))
                 return data
             }  
         } catch(e) {
@@ -243,7 +243,7 @@ class Api {
             this.utils.log('delete url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('delete data : ' + this.utils.print_object(data))
+                this.utils.log('delete data : ' + JSON.stringify(data, null, 4))
                 return data
             }  
         } catch(e) {
@@ -286,7 +286,7 @@ class Api {
                 storeData.staffId = data.User.Id
                 this.db.setStoreObj(Db.STORE.MBO, storeData)
 
-                this.utils.log('authToken data : ' + this.utils.print_object(data))
+                this.utils.log('authToken data : ' + JSON.stringify(data, null, 4))
                 return data
             }  
         } catch(e) {
@@ -313,7 +313,7 @@ class Api {
         this.utils.log('locations url : ' + url + ' => ' + response.status)
         if (response.status === 200) {
             let data = response.data
-            this.utils.log('locations data : ' + this.utils.print_object(data))
+            this.utils.log('locations data : ' + JSON.stringify(data, null, 4))
             return data
         }    
         return {}
@@ -340,7 +340,7 @@ class Api {
         this.utils.log('clients url : ' + url + ' => ' + response.status)
         if (response.status === 200) {
             let data = response.data
-            this.utils.log('clients data : ' + this.utils.print_object(data))
+            this.utils.log('clients data : ' + JSON.stringify(data, null, 4))
             return data
         }    
         return {}
@@ -367,7 +367,7 @@ class Api {
         this.utils.log('clientCompleteInfo url : ' + url + ' => ' + response.status)
         if (response.status === 200) {
             let data = response.data
-            this.utils.log('clientCompleteInfo data : ' + this.utils.print_object(data))
+            this.utils.log('clientCompleteInfo data : ' + JSON.stringify(data, null, 4))
             return data
         }    
         return {}
@@ -404,7 +404,7 @@ class Api {
         this.utils.log('clients url : ' + url + ' => ' + response.status)
         if (response.status === 200) {
             let data = response.data
-            this.utils.log('clients data : ' + this.utils.print_object(data))
+            this.utils.log('clients data : ' + JSON.stringify(data, null, 4))
             return data
         }    
         return {}
@@ -464,7 +464,7 @@ class Api {
             this.utils.log('hlAccessToken url : ' + url + ' => ' + response.status)
             if (response.status < 300) {
                 let data = response.data
-                this.utils.log('hlAccessToken data : ' + this.utils.print_object(data))
+                this.utils.log('hlAccessToken data : ' + JSON.stringify(data, null, 4))
                 return data
             }  
         } catch(e) {
@@ -512,7 +512,7 @@ class Api {
             this.utils.log('hlAddAppointment url : ' + url + ' => ' + response.status)
             if (response.status < 300) {
                 let data = response.data
-                this.utils.log('hlAddAppointment data : ' + this.utils.print_object(data))
+                this.utils.log('hlAddAppointment data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
@@ -544,7 +544,7 @@ class Api {
             this.utils.log('hlTest url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
@@ -569,7 +569,7 @@ class Api {
             this.utils.log('hlTest url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
@@ -600,7 +600,7 @@ class Api {
             this.utils.log('hlTest url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
@@ -625,7 +625,7 @@ class Api {
             this.utils.log('hlTest url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
@@ -654,7 +654,7 @@ class Api {
             this.utils.log('hlTest url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
@@ -681,7 +681,7 @@ class Api {
             this.utils.log('hlTest url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + this.utils.print_object(data))
+                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
