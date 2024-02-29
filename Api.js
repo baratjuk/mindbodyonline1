@@ -374,9 +374,9 @@ class Api {
     }
 
     async addAppointment(query) {
-        let { id, location} = query
-        if (!id || !location) {
-            return {"error" : "need 'id, location' param"}
+        let { id, location, session} = query
+        if (!id || !location || !session) {
+            return {"error" : "need 'id, location, session' param"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
@@ -385,7 +385,7 @@ class Api {
             StaffId: this.staffId,
             StartDateTime: '2024-03-04T12:00:00.000Z',
             EndDateTime: '2024-03-04T12:30:00.000Z',
-            SessionTypeId : 4, // {"Type":"Enrollment","DefaultTimeLength":null,"StaffTimeLength":null,"Id":4,"Name":"Yoga","NumDeducted":1,"ProgramId":10}
+            SessionTypeId : session,
             ScheduleType : 'All',
         }
         let response = await axios.post (
