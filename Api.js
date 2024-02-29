@@ -383,8 +383,8 @@ class Api {
             ClientId: id,
             LocationId : location,
             StaffId: this.staffId,
-            StartDateTime: '2024-03-04T12:00:00.000Z',
-            EndDateTime: '2024-03-04T12:30:00.000Z',
+            StartDateTime: '2024-03-14T12:00:00.000Z',
+            EndDateTime: '2024-03-14T12:30:00.000Z',
             SessionTypeId : session,
             ScheduleType : 'All',
         }
