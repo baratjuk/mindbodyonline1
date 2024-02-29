@@ -319,6 +319,29 @@ class Api {
         return {}
     }
 
+    async sessions(query) {
+        let url = `https://api.mindbodyonline.com/public/v6/appointment/activesessiontimes`
+        let response = await axios.get(
+            url,
+            {
+                timeout: Api.TIMEOUT,
+                headers: {
+                    'API-Key': Api.API_KEY,
+                    siteId: Api.SITEID,
+                    Accept: 'application/json',
+                    authorization: this.accessToken
+                }
+            }
+        )
+        this.utils.log('sessions url : ' + url + ' => ' + response.status)
+        if (response.status === 200) {
+            let data = response.data
+            this.utils.log('sessions data : ' + this.utils.print_object(data))
+            return data
+        }    
+        return {}
+    }
+
     async clients(query) {
         let { page } = query
         if (!page) {
@@ -374,9 +397,9 @@ class Api {
     }
 
     async addAppointment(query) {
-        let { id, location } = query
-        if (!id || !location) {
-            return {"error" : "need 'id', 'location' param"}
+        let { id, location, session} = query
+        if (!id || !location || !session) {
+            return {"error" : "need 'id, location, session' param"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
@@ -385,6 +408,7 @@ class Api {
             StaffId: this.staffId,
             StartDateTime: '2024-03-04T12:00:00.000Z',
             EndDateTime: '2024-03-04T12:30:00.000Z',
+            SessionTypeId : session
 
         }
         let response = await axios.post (

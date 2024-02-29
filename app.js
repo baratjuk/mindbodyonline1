@@ -113,7 +113,11 @@ const serverRequest = async (req, res) => {
             case '/locations':  
                 answer = await api.locations()
                 db.insertApi(req.url, answer)
-                break         
+                break   
+            case '/sessions':  
+                answer = await api.sessions(query)
+                db.insertApi(req.url, answer)
+                break          
             case '/clients':  
                 answer = await api.clients(query)
                 db.insertApi(req.url, answer)
