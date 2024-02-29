@@ -5,13 +5,13 @@ import Db from './Db.js';
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
 
-    // static USER = 'Siteowner'
-    // static PASSWORD = 'apitest1234'
-    // static SITEID = -99
+    static USER = 'Siteowner'
+    static PASSWORD = 'apitest1234'
+    static SITEID = -99
 
-    static USER = 'jpatalano@thecovery.com'
-    static PASSWORD = 'Joe.12399'
-    static SITEID = -2147481231
+    // static USER = 'jpatalano@thecovery.com'
+    // static PASSWORD = 'Joe.12399'
+    // static SITEID = -2147481231
 
     static EVENTS = [
         //Site
@@ -296,6 +296,29 @@ class Api {
         return {}
     }
 
+    async locations() {
+        let url = `https://api.mindbodyonline.com/public/v6/site/locations`
+        let response = await axios.get(
+            url,
+            {
+                timeout: Api.TIMEOUT,
+                headers: {
+                    'API-Key': Api.API_KEY,
+                    siteId: Api.SITEID,
+                    Accept: 'application/json',
+                    authorization: this.accessToken
+                }
+            }
+        )
+        this.utils.log('locations url : ' + url + ' => ' + response.status)
+        if (response.status === 200) {
+            let data = response.data
+            this.utils.log('locations data : ' + this.utils.print_object(data))
+            return data
+        }    
+        return {}
+    }
+
     async clients(query) {
         let { page } = query
         if (!page) {
@@ -358,8 +381,11 @@ class Api {
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
             ClientId: id,
+            LocationId : location,
             StaffId: this.staffId,
-            LocationId : location
+            StartDateTime: '2024-03-04T12:00:00.000Z',
+            EndDateTime: '2024-03-04T12:30:00.000Z',
+
         }
         let response = await axios.post (
             url,

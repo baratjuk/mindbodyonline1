@@ -85,50 +85,46 @@ const serverRequest = async (req, res) => {
                 }
                 return     
             // webhooks       
-            case '/subscriptions': { // https://dev1.htt.ai/subscriptions
-                    answer = await api.subscriptions()
-                    db.insertApi(req.url, answer)
-                }
+            case '/subscriptions':  // https://dev1.htt.ai/subscriptions
+                answer = await api.subscriptions()
+                db.insertApi(req.url, answer)
                 break
             case '/subscribe':
                 answer = await api.subscribe(query)
                 db.insertApi(req.url, answer)
                 break    
-            case '/subscribeall': { // https://dev1.htt.ai/subscribe
-                    answer = await api.subscribeAll()
-                    db.insertApi(req.url, answer)
-                }
+            case '/subscribeall':  // https://dev1.htt.ai/subscribe
+                answer = await api.subscribeAll()
+                db.insertApi(req.url, answer)
                 break
-            case '/patch': { // https://dev1.htt.ai/patch?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
-                    answer = await api.patchSubscribe(query)
-                    db.insertApi(req.url, answer)
-                }
+            case '/patch':  // https://dev1.htt.ai/patch?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
+                answer = await api.patchSubscribe(query)
+                db.insertApi(req.url, answer)
                 break    
-            case '/delete': {// https://dev1.htt.ai/delete?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
-                    answer = await api.delete(query)
-                    db.insertApi(req.url, answer)
-                }
+            case '/delete': // https://dev1.htt.ai/delete?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
+                answer = await api.delete(query)
+                db.insertApi(req.url, answer)
                 break
             // public api    
-            case '/auth': { // https://dev1.htt.ai/auth
-                    answer = await api.auth()
-                    db.insertApi(req.url, answer)
-                }
-                break    
-            case '/client-info': { 
-                    answer = await api.clientCompleteInfo(query)
-                    db.insertApi(req.url, answer)
-                }
-                break   
-            case '/clients': { 
-                    answer = await api.clients(query)
-                    db.insertApi(req.url, answer)
-                }
+            case '/auth':  // https://dev1.htt.ai/auth
+                answer = await api.auth()
+                db.insertApi(req.url, answer)
+                break  
+            case '/locations':  
+                answer = await api.locations()
+                db.insertApi(req.url, answer)
+                break         
+            case '/clients':  
+                answer = await api.clients(query)
+                db.insertApi(req.url, answer)
                 break
-            case '/add-appointment': { 
-                    answer = await api.addAppointment(query)
-                    db.insertApi(req.url, answer)
-                }
+            case '/client-info':  
+                answer = await api.clientCompleteInfo(query)
+                db.insertApi(req.url, answer)
+                break    
+            case '/add-appointment':  
+                answer = await api.addAppointment(query)
+                db.insertApi(req.url, answer)
                 break      
             case '/favicon.ico':
                 break    
