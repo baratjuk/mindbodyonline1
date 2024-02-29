@@ -396,8 +396,9 @@ class Api {
     async bookableItems(query) {
         let start = '2024-02-29T12%3A00%3A00.000Z'
         let end = '2024-03-29T12%3A00%3A00.000Z'
-        let session = 1371
-        let url = `https://api.mindbodyonline.com/public/v6/appointment/bookableitems?startDate=${start}&endDate=${end}`
+        let session1 = 1371
+        let session2 = 1372
+        let url = `https://api.mindbodyonline.com/public/v6/appointment/bookableitems?startDate=${start}&endDate=${end}&sessionTypeIds[0]=${session1}&sessionTypeIds[1]=${session2}`
         let response = await axios.get(
             url,
             {
