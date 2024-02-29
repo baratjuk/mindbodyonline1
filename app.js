@@ -31,7 +31,7 @@ server.listen(port)
 
 const serverRequest = async (req, res) => {
 
-    utils.log(req.method + ' : ' + req.url + ' : ' + JSON.stringify(req.headers))
+    utils.log(req.method + ' : ' + req.url + ' : ' + JSON.stringify(req.headers, null, 4))
 
     if (req.method === 'POST') {
         let body = ''
@@ -175,7 +175,7 @@ const serverRequest = async (req, res) => {
         }
         res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
         if(answer) {
-            res.write(JSON.stringify(answer))
+            res.write(JSON.stringify(answer, null, 4))
         } else {
             res.write(`{"method" : "${req.method}", "message" : "OK"}`)
         }
