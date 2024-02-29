@@ -9,10 +9,6 @@ class Api {
     // static PASSWORD = 'apitest1234'
     // static SITEID = -99
 
-    // static USER = 'jpatalano@staturesoftware.com'
-    // static PASSWORD = 'J@e12399'
-    // static SITEID = -2147481231
-
     static USER = 'jpatalano@thecovery.com'
     static PASSWORD = 'Joe.12399'
     static SITEID = -2147481231
@@ -74,6 +70,8 @@ class Api {
 
     utils = new Utils('api_test1.log')
     db
+
+    // Mindbodyonline
     accessToken = ''
     staffId = ''
 
@@ -83,13 +81,15 @@ class Api {
     constructor(db) {
         super.constructor()
         this.db = db
-        this.auth()
         this.init()
     }
 
     async init() {
         let data = await this.db.getStoreObj(Db.STORE.GHL) 
         this.hlAccessToken = data.accessToken
+        data = await this.db.getStoreObj(Db.STORE.MBO) 
+        this.accessToken = data.accessToken
+        this.staffId = data.staffId
     }
 
     // Webhooks
@@ -280,6 +280,12 @@ class Api {
                 let data = response.data
                 this.accessToken = data.AccessToken
                 this.staffId = data.User.Id
+
+                let storeData = await this.db.getStoreObj(Db.STORE.MBO) 
+                storeData.accessToken = data.AccessToken
+                storeData.staffId = data.User.Id
+                this.db.setStoreObj(Db.STORE.MBO, storeData)
+
                 this.utils.log('authToken data : ' + this.utils.print_object(data))
                 return data
             }  

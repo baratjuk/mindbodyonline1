@@ -4,7 +4,8 @@ import Utils from './Utils.js';
 class Db {
 
     static STORE = {
-        GHL : 1,
+        GHL: 1,
+        MBO: 2,
     }
 
     utils
@@ -43,7 +44,7 @@ class Db {
         return {}
     }
 
-    async setStoreObj(id, data) {
+    setStoreObj(id, data) {
         let jsonStr = JSON.stringify(data)
         const sql = `UPDATE store SET data='${jsonStr}' WHERE id=${id};`
         this.dbConnect.query(sql, (err, result) => {
