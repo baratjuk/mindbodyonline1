@@ -290,8 +290,10 @@ class Api {
                 return data
             }  
         } catch(e) {
-            this.utils.log('authToken error : ' + e.stack )  
-            throw e      
+            // throw e      
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('authToken error : ' + JSON.stringify(error, null, 4))
+            return error
         }  
         return {}
     }
@@ -511,9 +513,9 @@ class Api {
                 return data
             }
         } catch (e) {
-            this.utils.log('addAppointment error : ' + e.stack)
-            return {error: {data: e.response.config.data, answer: e.response.data}}
-            // throw e
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('addAppointment error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
@@ -575,9 +577,10 @@ class Api {
                 this.utils.log('hlAccessToken data : ' + JSON.stringify(data, null, 4))
                 return data
             }  
-        } catch(e) {
-            this.utils.log('hlAccessToken error : ' + e.stack )  
-            throw e      
+        } catch(e) {   
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlAccessToken error : ' + JSON.stringify(error, null, 4))
+            return error
         }  
         return {}
     }
@@ -624,9 +627,9 @@ class Api {
                 return data
             }
         } catch (e) {
-            this.utils.log('hlAddAppointment error : ' + e.stack)
-            // throw e
-            return {"error" : e.message}
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlAddAppointment error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
@@ -656,8 +659,9 @@ class Api {
                 return data
             }
         } catch (e) {
-            this.utils.log('hlTest error : ' + e.stack)
-            throw e
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlTest error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
@@ -674,15 +678,16 @@ class Api {
                     }
                 }
             )
-            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            this.utils.log('hlContacts url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
+                this.utils.log('hlContacts data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
-            this.utils.log('hlTest error : ' + e.stack)
-            throw e
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlContacts error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
@@ -705,15 +710,16 @@ class Api {
                     }
                 }
             )
-            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            this.utils.log('hlContactsV2 url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
+                this.utils.log('hlContactsV2 data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
-            this.utils.log('hlTest error : ' + e.stack)
-            throw e
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlContactsV2 error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
@@ -730,15 +736,16 @@ class Api {
                     }
                 }
             )
-            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            this.utils.log('hlLocations url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
+                this.utils.log('hlLocations data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
-            this.utils.log('hlTest error : ' + e.stack)
-            throw e
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlLocations error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
@@ -759,15 +766,16 @@ class Api {
                     }
                 }
             )
-            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
+            this.utils.log('hlUsers url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
+                this.utils.log('hlUsers data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
-            this.utils.log('hlTest error : ' + e.stack)
-            throw e
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlUsers error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
@@ -793,8 +801,9 @@ class Api {
                 return data
             }
         } catch (e) {
-            this.utils.log('hlTest error : ' + e.stack)
-            throw e
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlTest error : ' + JSON.stringify(error, null, 4))
+            return error
         }
         return {}
     }
