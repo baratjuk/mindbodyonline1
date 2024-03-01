@@ -475,39 +475,45 @@ class Api {
     }
 
     async addAppointment(query) {
-        let { id, location, session} = query
+        let { id, location, session } = query
         if (!id || !location || !session) {
-            return {"error" : "need 'id, location, session' param"}
+            return { "error": "need 'id, location, session' param" }
         }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
             ClientId: id,
-            LocationId : location,
+            LocationId: location,
             StaffId: this.staffId,
             StartDateTime: '2024-03-04T15:00:00.000Z',
             EndDateTime: '2024-03-04T15:30:00.000Z',
-            SessionTypeId : session,
-            ScheduleType : 'All',
+            SessionTypeId: session,
+            ScheduleType: 'All',
         }
-        let response = await axios.post (
-            url,
-            content,
-            {
-                timeout: Api.TIMEOUT,
-                headers: {
-                    'API-Key': Api.API_KEY,
-                    siteId: Api.SITEID,
-                    Accept: 'application/json',
-                    authorization: this.accessToken
+        try {
+            let response = await axios.post(
+                url,
+                content,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
                 }
+            )
+            this.utils.log('addAppointment url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('addAppointment data : ' + JSON.stringify(data, null, 4))
+                return data
             }
-        )
-        this.utils.log('clients url : ' + url + ' => ' + response.status)
-        if (response.status === 200) {
-            let data = response.data
-            this.utils.log('clients data : ' + JSON.stringify(data, null, 4))
-            return data
-        }    
+        } catch (e) {
+            this.utils.log('addAppointment error : ' + e.stack)
+            return {"error" : e.message}
+            // throw e
+        }
         return {}
     }
 
