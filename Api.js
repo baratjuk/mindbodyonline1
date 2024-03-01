@@ -345,8 +345,8 @@ class Api {
     }
 
     async scheduleItems(query) {
-        let start = '2024-02-29T12%3A00%3A00.000Z'
-        let end = '2024-03-29T12%3A00%3A00.000Z'
+        let start = '2024-02-29T09:00:00-08:00'
+        let end = '2024-03-29T09:00:00-08:00'
         let url = `https://api.mindbodyonline.com/public/v6/appointment/scheduleitems?startDate=${start}&endDate=${end}`
         let response = await axios.get(
             url,
