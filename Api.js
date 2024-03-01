@@ -489,6 +489,7 @@ class Api {
             SessionTypeId: session,
             ScheduleType: 'All',
         }
+        this.utils.log('addAppointment content : ' + JSON.stringify(content, null, 4))
         try {
             let response = await axios.post(
                 url,
