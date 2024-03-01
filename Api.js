@@ -477,18 +477,18 @@ class Api {
     }
 
     async addAppointment(query) {
-        let { id, location, session } = query
-        if (!id || !location || !session) {
-            return { "error": "need 'id, location, session' param" }
-        }
+        // let { id, location, session } = query
+        // if (!id || !location || !session) {
+        //     return { "error": "need 'id, location, session' param" }
+        // }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
-            ClientId: id,
-            LocationId: location,
-            StaffId: this.staffId,
-            StartDateTime: '2024-03-04T15:00:00.000Z',
-            EndDateTime: '2024-03-04T15:30:00.000Z',
-            SessionTypeId: session,
+            ClientId: 100000000,
+            LocationId: 1,
+            StaffId: 5,
+            StartDateTime: '2024-03-01T09:00:00-08:00',
+            EndDateTime: '2024-03-01T09:30:00-08:00',
+            SessionTypeId: 1371,
             ScheduleType: 'All',
         }
         this.utils.log('addAppointment content : ' + JSON.stringify(content, null, 4))
