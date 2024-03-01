@@ -347,7 +347,8 @@ class Api {
     async scheduleItems(query) {
         let start = '2024-02-29T09:00:00-08:00'
         let end = '2024-03-29T09:00:00-08:00'
-        let url = `https://api.mindbodyonline.com/public/v6/appointment/scheduleitems?startDate=${start}&endDate=${end}`
+        let url = `https://api.mindbodyonline.com/public/v6/appointment/scheduleitems`
+                +`?startDate=${start}&endDate=${end}`
         let response = await axios.get(
             url,
             {
@@ -473,6 +474,40 @@ class Api {
             this.utils.log('clientCompleteInfo data : ' + JSON.stringify(data, null, 4))
             return data
         }    
+        return {}
+    }
+
+    async appointments(query) {
+        let { page } = query
+        if (!page) {
+            return { "error": "'page' parameters required" }
+        }
+        const limit = 100
+        let url = `https://api.mindbodyonline.com/public/v6/appointment/staffappointments?limit=${limit}&offset=${limit * page}`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('appointments url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('appointments data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('appointments error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
         return {}
     }
 

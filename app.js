@@ -138,6 +138,10 @@ const serverRequest = async (req, res) => {
                 answer = await api.clientCompleteInfo(query)
                 db.insertApi(req.url, answer)
                 break    
+            case '/appointments':  
+                answer = await api.appointments(query)
+                db.insertApi(req.url, answer)
+                break    
             case '/add-appointment':  
                 answer = await api.addAppointment(query)
                 db.insertApi(req.url, answer)
