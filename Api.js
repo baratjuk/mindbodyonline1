@@ -397,29 +397,34 @@ class Api {
     }
 
     async bookableItems(query) {
-        let start = '2024-02-29T09:00:00-08:00'
-        let end = '2024-03-29T09:00:00-08:00'
-        let session1 = 1371
-        let session2 = 1372
-        let url = `https://api.mindbodyonline.com/public/v6/appointment/bookableitems?startDate=${start}&endDate=${end}&sessionTypeIds[0]=${session1}&sessionTypeIds[1]=${session2}`
-        let response = await axios.get(
-            url,
-            {
-                timeout: Api.TIMEOUT,
-                headers: {
-                    'API-Key': Api.API_KEY,
-                    siteId: Api.SITEID,
-                    Accept: 'application/json',
-                    authorization: this.accessToken
+        let { start, end, session } = query
+        let url = `https://api.mindbodyonline.com/public/v6/appointment/bookableitems`
+            + `?startDate=${start ?? '2024-02-29T09:00:00-08:00'}&endDate=${end ?? '2024-03-29T09:00:00-08:00'}`
+            + `&sessionTypeIds[0]=${session ?? 1371}`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
                 }
+            )
+            this.utils.log('bookableItems url : ' + url + ' => ' + response.status)
+            if (response.status < 300) {
+                let data = response.data
+                this.utils.log('bookableItems data : ' + JSON.stringify(data, null, 4))
+                return data
             }
-        )
-        this.utils.log('bookableItems url : ' + url + ' => ' + response.status)
-        if (response.status === 200) {
-            let data = response.data
-            this.utils.log('bookableItems data : ' + JSON.stringify(data, null, 4))
-            return data
-        }    
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('bookableItems error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
         return {}
     }
 
