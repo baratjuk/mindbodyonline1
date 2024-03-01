@@ -118,7 +118,7 @@ class Api {
     async subscribe(query) {
         let { event } = query
         if(!event) {
-            return {"error" : "need 'event' param"}
+            return {"error" : "'event' parameters required"}
         }
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions`
         let content = {
@@ -189,7 +189,7 @@ class Api {
     async patchSubscribe(query) {
         let { id } = query
         if(!id) {
-            return {"error" : "need 'id' param"}
+            return {"error" : "'id' parameters required"}
         }
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/${id}`
         let content = {
@@ -226,7 +226,7 @@ class Api {
     async delete(query) {
         let { id } = query
         if(!id) {
-            return {"error" : "need 'id' param"}
+            return {"error" : "'id' parameters required"}
         }
         let url = `https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/${id}`
         try {
@@ -425,7 +425,7 @@ class Api {
     async clients(query) {
         let { page } = query
         if (!page) {
-            return {"error" : "need 'page' param"}
+            return {"error" : "'page' parameters required"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=10&offset=${10*page}`
         let response = await axios.get(
@@ -452,7 +452,7 @@ class Api {
     async clientCompleteInfo(query) {
         let { id } = query
         if (!id) {
-            return {"error" : "need 'id' param"}
+            return {"error" : "'id' parameters required"}
         }
         let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo?clientId=${id}`
         let response = await axios.get(
@@ -477,19 +477,21 @@ class Api {
     }
 
     async addAppointment(query) {
-        // let { id, location, session } = query
-        // if (!id || !location || !session) {
-        //     return { "error": "need 'id, location, session' param" }
-        // }
+        let { start, end, client, staff, location, session, schedule } = query
+        if (!start || !end) {
+            return { "error": "'start', 'end' parameters required" }
+        }
         let url = `https://api.mindbodyonline.com/public/v6/appointment/addappointment`
         let content = {
-            ClientId: 100000000,
-            LocationId: 1,
-            StaffId: 100000001,
-            StartDateTime: '2024-03-01T09:00:00-08:00',
-            EndDateTime: '2024-03-01T09:30:00-08:00',
-            SessionTypeId: 1371,
-            ScheduleType: 'All',
+            ClientId: client ?? 100000000,
+            LocationId: location ?? 1,
+            StaffId: staff ?? 100000001,
+            // StartDateTime: '2024-03-01T09:00:00-08:00',
+            // EndDateTime: '2024-03-01T09:30:00-08:00',
+            StartDateTime: start,
+            EndDateTime: end,
+            SessionTypeId: session ?? 1371,
+            ScheduleType: schedule ?? 'All',
         }
         this.utils.log('addAppointment content : ' + JSON.stringify(content, null, 4))
         try {
@@ -588,7 +590,7 @@ class Api {
     async hlAddAppointment(query) {
         let { start, end } = query
         if (!start || !end) {
-            return { "error": "need 'start', 'end' param" }
+            return { "error": "'start', 'end' parameters required" }
         }
         let url = `https://services.leadconnectorhq.com/calendars/events/appointments`
         let content = {
@@ -637,7 +639,7 @@ class Api {
     async hlCalendars(query) {
         let { location } = query
         if (!location) {
-            return {"error" : "need 'location' param"}
+            return {"error" : "'location' parameters required"}
         }
         let url = `https://services.leadconnectorhq.com/calendars/?locationId=${location}`
         try {
@@ -695,7 +697,7 @@ class Api {
     async hlContactsV2(query) {
         let { location } = query
         if (!location) {
-            return {"error" : "need 'location' param"}
+            return {"error" : "'location' parameters required"}
         }
         let url = `https://services.leadconnectorhq.com/contacts/?locationId=${location}`
         try {
@@ -753,7 +755,7 @@ class Api {
     async hlUsers(query) {
         let { location } = query
         if (!location) {
-            return {"error" : "need 'location' param"}
+            return {"error" : "'location' parameters required"}
         }
         let url = `https://rest.gohighlevel.com/v1/users/?locationId=${location}`
         try {
