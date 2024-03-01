@@ -512,8 +512,8 @@ class Api {
             }
         } catch (e) {
             this.utils.log('addAppointment error : ' + e.stack)
-            return {"error" : e.message}
-            // throw e
+            // return {"error" : e.message}
+            throw e
         }
         return {}
     }
