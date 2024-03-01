@@ -485,7 +485,7 @@ class Api {
         let content = {
             ClientId: 100000000,
             LocationId: 1,
-            StaffId: 5,
+            StaffId: 100000001,
             StartDateTime: '2024-03-01T09:00:00-08:00',
             EndDateTime: '2024-03-01T09:30:00-08:00',
             SessionTypeId: 1371,
