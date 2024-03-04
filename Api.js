@@ -73,7 +73,6 @@ class Api {
 
     // Mindbodyonline
     accessToken = ''
-    staffId = ''
 
     // GoHighLevel
     hlAccessToken
@@ -89,7 +88,6 @@ class Api {
         this.hlAccessToken = data.accessToken
         data = await this.db.getStoreObj(Db.STORE.MBO) 
         this.accessToken = data.accessToken
-        this.staffId = data.staffId
     }
 
     // Webhooks
@@ -279,11 +277,8 @@ class Api {
             if (response.status < 300) {
                 let data = response.data
                 this.accessToken = data.AccessToken
-                this.staffId = data.User.Id
-
                 let storeData = await this.db.getStoreObj(Db.STORE.MBO) 
                 storeData.accessToken = data.AccessToken
-                storeData.staffId = data.User.Id
                 this.db.setStoreObj(Db.STORE.MBO, storeData)
 
                 this.utils.log('authToken data : ' + JSON.stringify(data, null, 4))
