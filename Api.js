@@ -501,8 +501,47 @@ class Api {
         return {}
     }
 
+    async transactions(query) {
+        let { page } = query
+        if (!page) {
+            return { "error": "'page' parameters required" }
+        }
+        const limit = 100
+        let url = `https://api.mindbodyonline.com/public/v6/sale/transactions?limit=${limit}&offset=${limit * page}`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('transactions url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('transactions data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('transactions error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
     async sales(query) {
-        let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
+        let { page } = query
+        if (!page) {
+            return { "error": "'page' parameters required" }
+        }
+        const limit = 100
+        let url = `https://api.mindbodyonline.com/public/v6/sale/sales?limit=${limit}&offset=${limit * page}`
         try {
             let response = await axios.get(
                 url,
