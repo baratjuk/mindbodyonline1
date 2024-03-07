@@ -501,6 +501,35 @@ class Api {
         return {}
     }
 
+    async sales(query) {
+        let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('sales url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('sales data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('sales error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
     async appointments(query) {
         let { page } = query
         if (!page) {
