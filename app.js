@@ -119,7 +119,7 @@ const serverRequest = async (req, res) => {
                 db.insertApi(req.url, answer)
                 break 
             case '/services':  
-                answer = await api.services()
+                answer = await api.services(query)
                 db.insertApi(req.url, answer)
                 break      
             case '/schedule-items':  
