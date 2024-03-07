@@ -117,7 +117,11 @@ const serverRequest = async (req, res) => {
             case '/session-types':  
                 answer = await api.sessionTypesIDs()
                 db.insertApi(req.url, answer)
-                break  
+                break 
+            case '/services':  
+                answer = await api.services()
+                db.insertApi(req.url, answer)
+                break      
             case '/schedule-items':  
                 answer = await api.scheduleItems(query)
                 db.insertApi(req.url, answer)
