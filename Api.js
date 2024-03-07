@@ -346,12 +346,7 @@ class Api {
     }
 
     async services(query) {
-        let { page } = query
-        if (!page) {
-            return { "error": "'page' parameters required" }
-        }
-        const limit = 100
-        let url = `https://api.mindbodyonline.com/public/v6/sale/services?limit=${limit}&offset=${limit * page}`
+        let url = `https://api.mindbodyonline.com/public/v6/sale/services`
         try {
             let response = await axios.get(
                 url,
@@ -374,6 +369,35 @@ class Api {
         } catch (e) {
             let error = { error: { data: e.response.config.data, answer: e.response.data } }
             this.utils.log('services error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
+    async products(query) {
+        let url = `https://api.mindbodyonline.com/public/v6/sale/products`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('products url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('products data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('products error : ' + JSON.stringify(error, null, 4))
             return error
         }
         return {}
