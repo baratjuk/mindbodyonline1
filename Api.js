@@ -3,8 +3,7 @@ import Utils from './Utils.js';
 import Db from './Db.js';
 
 class Api {
-    // static API_KEY = '006b55a0c1904396a8815b33a52063bd'
-    static API_KEY = '04ea81ca138444f888557fc0383bd741'
+    static API_KEY = '006b55a0c1904396a8815b33a52063bd'
 
     // static USER = 'Siteowner'
     // static PASSWORD = 'apitest1234'
@@ -12,8 +11,8 @@ class Api {
 
     static USER = 'jpatalano@thecovery.com'
     static PASSWORD = 'Joe.12399'
-    // static SITEID = -2147481231
-    static SITEID = 5721453
+    static SITEID = -2147481231
+    // static SITEID = 5721453
 
     static EVENTS = [
         //Site
