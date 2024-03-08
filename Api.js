@@ -3,7 +3,8 @@ import Utils from './Utils.js';
 import Db from './Db.js';
 
 class Api {
-    static API_KEY = '006b55a0c1904396a8815b33a52063bd'
+    // static API_KEY = '006b55a0c1904396a8815b33a52063bd'
+    static API_KEY = '04ea81ca138444f888557fc0383bd741'
 
     // static USER = 'Siteowner'
     // static PASSWORD = 'apitest1234'
