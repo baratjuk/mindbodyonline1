@@ -550,7 +550,6 @@ class Api {
                 for (let client of data.Clients) {
                     let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
                     await this.db.insertClient(clientCompleteInfoData)
-                    break
                 }
                 return {success : true}
             }
