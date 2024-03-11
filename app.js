@@ -153,7 +153,7 @@ const serverRequest = async (req, res) => {
                 answer = await api.clients1(query)
                 break
             case '/clients1-delete': {
-                let isDelete = db.deleteClients()
+                let isDelete = await db.deleteClients()
                 res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
                 res.write(JSON.stringify({delete : isDelete}))
                 res.end()
