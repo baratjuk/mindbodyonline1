@@ -87,7 +87,7 @@ const serverRequest = async (req, res) => {
             case '/clients-json': {
                 let apiData = await db.selectClients()
                 res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(JSON.stringify(apiData))
+                res.write(JSON.stringify(apiData, null, 4))
                 res.end()
             }
                 return
