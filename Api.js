@@ -548,8 +548,18 @@ class Api {
                 this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
                 await this.db.deleteClients()
                 for (let client of data.Clients) {
-                    let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
-                    await this.db.insertClient(clientCompleteInfoData)
+                    // try {
+                    //     let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
+                    //     await this.db.insertClient(clientCompleteInfoData)
+                    // } catch(ex) {
+                    //     await this.db.insertClient({error : ex.message})
+                    // }
+                    ///////////////////
+                    try {
+                        await this.db.insertClient(client)
+                    } catch(ex) {
+                        await this.db.insertClient({error : ex.message})
+                    }
                 }
                 return {success : true}
             }

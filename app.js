@@ -83,7 +83,14 @@ const serverRequest = async (req, res) => {
                     res.write(JSON.stringify(webhooksData))
                     res.end()
                 }
-                return     
+                return   
+            case '/clients-json': {
+                    let apiData = await db.selectClients()
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(JSON.stringify(apiData))
+                    res.end()
+                }
+                return      
             // webhooks       
             case '/subscriptions':  // https://dev1.htt.ai/subscriptions
                 answer = await api.subscriptions()
