@@ -122,10 +122,10 @@ class Db {
 
     async deleteClients() {
         const sql = `DELETE FROM clients;`
-        let tableData = await new Promise(r => this.dbConnect.query(sql, data, (err, result) => {
+        let tableData = await new Promise(r => this.dbConnect.query(sql, (err, result) => {
             if (err) {
                 this.utils.log('deleteClients error : ' + err.stack)
-                r(halse)
+                r(false)
             } else {
                 r(true)
             }
