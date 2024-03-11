@@ -131,6 +131,7 @@ class Db {
                 r(true)
             }
         }))
+        return tableData
     }
 }
 

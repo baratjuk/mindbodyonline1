@@ -155,7 +155,7 @@ const serverRequest = async (req, res) => {
             case '/clients1-delete': {
                 let isDelete = await db.deleteClients()
                 res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(`{"delete" : ${isDelete}}`)
+                res.write(JSON.stringify({delete : isDelete}))
                 res.end()
             }
                 return
