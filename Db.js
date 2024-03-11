@@ -112,8 +112,9 @@ class Db {
     }
 
     insertClient(data) {
+        let jsonStr = JSON.stringify(data)
         const sql = `INSERT INTO clients (data) VALUES ?;`
-        this.dbConnect.query(sql, data, (err, result) => {
+        this.dbConnect.query(sql, jsonStr, (err, result) => {
             if (err) {
                 this.utils.log('insertClient error : ' + err.stack)
             }
