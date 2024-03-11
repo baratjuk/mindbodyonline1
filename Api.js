@@ -499,7 +499,8 @@ class Api {
         if (!page) {
             return { "error": "'page' parameters required" }
         }
-        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=10&offset=${10 * page}`
+        const limit = 100
+        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=${limit}&offset=${limit * page}`
         try {
             let response = await axios.get(
                 url,
@@ -528,7 +529,12 @@ class Api {
     }
 
     async clients1(query) {
-        let url = `https://api.mindbodyonline.com/public/v6/client/clients`
+        let { page } = query
+        if (!page) {
+            return { "error": "'page' parameters required" }
+        }
+        const limit = 100
+        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=${limit}&offset=${limit * page}`
         try {
             let response = await axios.get(
                 url,
@@ -546,7 +552,6 @@ class Api {
             if (response.status === 200) {
                 let data = response.data
                 this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
-                await this.db.deleteClients()
                 for (let client of data.Clients) {
                     // try {
                     //     let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
@@ -561,7 +566,7 @@ class Api {
                         await this.db.insertClient({error : ex.message})
                     }
                 }
-                return {success : true}
+                return data
             }
         } catch (e) {
             let error = { error: e.stack}

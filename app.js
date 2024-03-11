@@ -55,42 +55,42 @@ const serverRequest = async (req, res) => {
         switch (parts.pathname) {
             // log
             case '/api': {
-                    let apiData = await db.selectApi()
-                    let html = await getHtml('api.twig', {items: apiData})
-                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
-                    res.write(html)
-                    res.end()
-                }
+                let apiData = await db.selectApi()
+                let html = await getHtml('api.twig', { items: apiData })
+                res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
+                res.write(html)
+                res.end()
+            }
                 return
             case '/webhooks': {
-                    let webhooksData = await db.selectWebhooks()
-                    let html = await getHtml('webhooks.twig', {items: webhooksData})
-                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
-                    res.write(html)
-                    res.end()
-                }
+                let webhooksData = await db.selectWebhooks()
+                let html = await getHtml('webhooks.twig', { items: webhooksData })
+                res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
+                res.write(html)
+                res.end()
+            }
                 return
             case '/api-json': {
-                    let apiData = await db.selectApi()
-                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                    res.write(JSON.stringify(apiData))
-                    res.end()
-                }
+                let apiData = await db.selectApi()
+                res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                res.write(JSON.stringify(apiData))
+                res.end()
+            }
                 return
             case '/webhooks-json': {
-                    let webhooksData = await db.selectWebhooks()
-                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                    res.write(JSON.stringify(webhooksData))
-                    res.end()
-                }
-                return   
+                let webhooksData = await db.selectWebhooks()
+                res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                res.write(JSON.stringify(webhooksData))
+                res.end()
+            }
+                return
             case '/clients-json': {
-                    let apiData = await db.selectClients()
-                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                    res.write(JSON.stringify(apiData))
-                    res.end()
-                }
-                return      
+                let apiData = await db.selectClients()
+                res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                res.write(JSON.stringify(apiData))
+                res.end()
+            }
+                return
             // webhooks       
             case '/subscriptions':  // https://dev1.htt.ai/subscriptions
                 answer = await api.subscriptions()
@@ -99,7 +99,7 @@ const serverRequest = async (req, res) => {
             case '/subscribe':
                 answer = await api.subscribe(query)
                 db.insertApi(req.url, answer)
-                break    
+                break
             case '/subscribeall':  // https://dev1.htt.ai/subscribe
                 answer = await api.subscribeAll()
                 db.insertApi(req.url, answer)
@@ -107,7 +107,7 @@ const serverRequest = async (req, res) => {
             case '/patch':  // https://dev1.htt.ai/patch?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
                 answer = await api.patchSubscribe(query)
                 db.insertApi(req.url, answer)
-                break    
+                break
             case '/delete': // https://dev1.htt.ai/delete?id=07ac8fee-21c6-4363-96fc-b0e3178b88bc
                 answer = await api.delete(query)
                 db.insertApi(req.url, answer)
@@ -116,107 +116,114 @@ const serverRequest = async (req, res) => {
             case '/auth':  // https://dev1.htt.ai/auth
                 answer = await api.auth()
                 db.insertApi(req.url, answer)
-                break  
-            case '/locations':  
+                break
+            case '/locations':
                 answer = await api.locations()
                 db.insertApi(req.url, answer)
-                break   
-            case '/session-types':  
+                break
+            case '/session-types':
                 answer = await api.sessionTypesIDs()
                 db.insertApi(req.url, answer)
-                break 
-            case '/services':  
+                break
+            case '/services':
                 answer = await api.services(query)
                 db.insertApi(req.url, answer)
                 break
-            case '/products':  
+            case '/products':
                 answer = await api.products(query)
                 db.insertApi(req.url, answer)
-                break          
-            case '/schedule-items':  
+                break
+            case '/schedule-items':
                 answer = await api.scheduleItems(query)
                 db.insertApi(req.url, answer)
-                break 
-            case '/available-dates':  
+                break
+            case '/available-dates':
                 answer = await api.availableDates(query)
                 db.insertApi(req.url, answer)
-                break 
-            case '/bookable-items':  
+                break
+            case '/bookable-items':
                 answer = await api.bookableItems(query)
                 db.insertApi(req.url, answer)
-                break                    
-            case '/clients':  
+                break
+            case '/clients':
                 answer = await api.clients(query)
                 db.insertApi(req.url, answer)
                 break
-            case '/clients1':  
+            case '/clients1':
                 answer = await api.clients1(query)
-                break    
-            case '/client-info':  
+                break
+            case '/clients1-delete': {
+                let isDelete = this.db.deleteClients()
+                res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                res.write({delete : isDelete})
+                res.end()
+            }
+                break
+            case '/client-info':
                 answer = await api.clientCompleteInfo(query)
                 db.insertApi(req.url, answer)
-                break   
-            case '/sales':  
+                break
+            case '/sales':
                 answer = await api.sales(query)
                 db.insertApi(req.url, answer)
-                break 
-            case '/transactions':  
+                break
+            case '/transactions':
                 answer = await api.transactions(query)
                 db.insertApi(req.url, answer)
-                break         
-            case '/appointments':  
+                break
+            case '/appointments':
                 answer = await api.appointments(query)
                 db.insertApi(req.url, answer)
-                break    
-            case '/add-appointment':  
+                break
+            case '/add-appointment':
                 answer = await api.addAppointment(query)
                 db.insertApi(req.url, answer)
-                break      
+                break
             case '/favicon.ico':
-                break    
+                break
             // Go HighLevel
-            case '/hl-oauth':  
+            case '/hl-oauth':
                 answer = await api.hlOauth(res, query)
-                if(!answer) {
+                if (!answer) {
                     return
                 }
                 db.insertApi(req.url, answer)
-                break 
-            case '/hl-test':  
+                break
+            case '/hl-test':
                 answer = await api.hlTest()
                 db.insertApi(req.url, answer)
                 break
-            case '/hl-add-appointment': 
+            case '/hl-add-appointment':
                 answer = await api.hlAddAppointment(query)
                 db.insertApi(req.url, answer)
-                break    
-            case '/hl-contacts':  
+                break
+            case '/hl-contacts':
                 answer = await api.hlContacts()
                 db.insertApi(req.url, answer)
-                break 
-            case '/hl-calendars':  
+                break
+            case '/hl-calendars':
                 answer = await api.hlCalendars(query)
                 db.insertApi(req.url, answer)
-                break        
-            case '/hl-locations':  
+                break
+            case '/hl-locations':
                 answer = await api.hlLocations()
                 db.insertApi(req.url, answer)
                 break
-            case '/hl-users':  
+            case '/hl-users':
                 answer = await api.hlUsers(query)
                 db.insertApi(req.url, answer)
-                break           
-            case '/hl-calendars-teams':  
+                break
+            case '/hl-calendars-teams':
                 answer = await api.hlCalendarsTeams()
                 db.insertApi(req.url, answer)
-                break         
-            case '/hl-webhook':      
+                break
+            case '/hl-webhook':
                 break
             default:
                 db.insertWebhook(req.method, req.url, {}, req.headers)
         }
         res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-        if(answer) {
+        if (answer) {
             res.write(JSON.stringify(answer, null, 4))
         } else {
             res.write(`{"method" : "${req.method}", "message" : "OK"}`)
