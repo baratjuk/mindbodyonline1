@@ -158,7 +158,7 @@ const serverRequest = async (req, res) => {
                 res.write(JSON.stringify({delete : isDelete}))
                 res.end()
             }
-                break
+                return
             case '/client-info':
                 answer = await api.clientCompleteInfo(query)
                 db.insertApi(req.url, answer)
