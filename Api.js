@@ -547,7 +547,7 @@ class Api {
                 let data = response.data
                 this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
                 await this.db.deleteClients()
-                for (let client of data) {
+                for (let client of data.Clients) {
                     let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
                     this.db.insertClient(clientCompleteInfoData)
                     break
