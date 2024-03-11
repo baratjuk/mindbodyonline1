@@ -549,7 +549,7 @@ class Api {
                 await this.db.deleteClients()
                 for (let client of data.Clients) {
                     let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
-                    this.db.insertClient(clientCompleteInfoData)
+                    await this.db.insertClient(clientCompleteInfoData)
                     break
                 }
                 return {success : true}
