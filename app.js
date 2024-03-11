@@ -73,21 +73,21 @@ const serverRequest = async (req, res) => {
             case '/api-json': {
                 let apiData = await db.selectApi()
                 res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(JSON.stringify(apiData))
+                res.write(JSON.stringify(apiData, null, 4))
                 res.end()
             }
                 return
             case '/webhooks-json': {
                 let webhooksData = await db.selectWebhooks()
                 res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(JSON.stringify(webhooksData))
+                res.write(JSON.stringify(webhooksData, null, 4))
                 res.end()
             }
                 return
             case '/clients-json': {
-                let apiData = await db.selectClients()
+                let clientsData = await db.selectClients()
                 res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(JSON.stringify(apiData, null, 4))
+                res.write(JSON.stringify(clientsData, null, 4))
                 res.end()
             }
                 return
