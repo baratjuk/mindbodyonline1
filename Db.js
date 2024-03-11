@@ -84,7 +84,11 @@ class Db {
             if (err) {
                 r(null)
             } else {
-                r(result)
+                let ret = []
+                for(let rec of result) {
+                    ret.push(JSON.parse(rec.data))
+                }
+                r(ret)
             }
         }))
         return tableData
