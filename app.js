@@ -142,6 +142,9 @@ const serverRequest = async (req, res) => {
                 answer = await api.clients(query)
                 db.insertApi(req.url, answer)
                 break
+            case '/clients1':  
+                answer = await api.clients(query)
+                break    
             case '/client-info':  
                 answer = await api.clientCompleteInfo(query)
                 db.insertApi(req.url, answer)

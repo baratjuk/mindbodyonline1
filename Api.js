@@ -527,6 +527,41 @@ class Api {
         return {}
     }
 
+    async clients1(query) {
+        let url = `https://api.mindbodyonline.com/public/v6/client/clients`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('clients1 url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
+                await this.db.deleteClients()
+                for (let client of data) {
+                    let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
+                    this.db.insertClient(clientCompleteInfoData)
+                    break
+                }
+                return {success : true}
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('clients1 error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
     async clientCompleteInfo(query) {
         let { id } = query
         if (!id) {
@@ -555,6 +590,34 @@ class Api {
         } catch (e) {
             let error = { error: { data: e.response.config.data, answer: e.response.data } }
             this.utils.log('clientCompleteInfo error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
+    async clientCompleteInfo1(id) {
+        let url = `https://api.mindbodyonline.com/public/v6/client/clientcompleteinfo?clientId=${id}`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            // this.utils.log('clientCompleteInfo url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            // this.utils.log('clientCompleteInfo error : ' + JSON.stringify(error, null, 4))
             return error
         }
         return {}

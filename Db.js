@@ -78,6 +78,18 @@ class Db {
         return tableData
     }
 
+    async selectClients() {
+        const sql = `SELECT * FROM clients;`
+        let tableData = await new Promise(r => this.dbConnect.query(sql, (err, result) => {
+            if (err) {
+                r(null)
+            } else {
+                r(result)
+            }
+        }))
+        return tableData
+    }
+
     insertApi(url, answer) {
         let jsonStr = JSON.stringify(answer)
         const sql = `INSERT INTO api (url, answer, created_at) VALUES ('${url}', '${jsonStr}', now());`
@@ -97,6 +109,27 @@ class Db {
                 this.utils.log('insertWebhook error : ' + err.stack)
             }
         })
+    }
+
+    insertClient(data) {
+        const sql = `INSERT INTO clients (data) VALUES ?;`
+        this.dbConnect.query(sql, data, (err, result) => {
+            if (err) {
+                this.utils.log('insertClient error : ' + err.stack)
+            }
+        })
+    }
+
+    async deleteClients() {
+        const sql = `DELETE FROM clients;`
+        let tableData = await new Promise(r => this.dbConnect.query(sql, data, (err, result) => {
+            if (err) {
+                this.utils.log('deleteClients error : ' + err.stack)
+                r(halse)
+            } else {
+                r(true)
+            }
+        }))
     }
 }
 
