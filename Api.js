@@ -555,7 +555,7 @@ class Api {
                 return {success : true}
             }
         } catch (e) {
-            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            let error = { error: e.stack}
             this.utils.log('clients1 error : ' + JSON.stringify(error, null, 4))
             return error
         }
