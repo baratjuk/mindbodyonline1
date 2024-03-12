@@ -641,10 +641,10 @@ class Api {
         // '2024-03-13T09:00:00-08:00'
         const limit = 100
         let url = `https://api.mindbodyonline.com/public/v6/sale/transactions`
-            + (start && end)
-                ? `?transactionStartDateTime=${start}&transactionEndDateTime=${end}`
-                : ''
             + `?limit=${limit}&offset=${limit * (page ?? 0)}`
+            + (start && end)
+                ? `transactionStartDateTime=${start}&transactionEndDateTime=${end}`
+                : ''
         try {
             let response = await axios.get(
                 url,
@@ -678,10 +678,10 @@ class Api {
         // '2024-03-13T09:00:00-08:00'
         const limit = 100
         let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
-            + (start && end)
-                ? `?startSaleDateTime=${start}&endSaleDateTime=${end}`
-                : ''
             + `?limit=${limit}&offset=${limit * (page ?? 0)}`
+            + (start && end)
+                ? `startSaleDateTime=${start}&endSaleDateTime=${end}`
+                : ''
         try {
             let response = await axios.get(
                 url,
