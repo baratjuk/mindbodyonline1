@@ -209,6 +209,13 @@ const serverRequest = async (req, res) => {
                     res.end()
                 }     
                 return
+            case '/post': {
+                    let html = await utils.fileToHtml('page_post.html')
+                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
+                    res.write(html)
+                    res.end()
+                }     
+                return    
             case '/favicon.ico':
                 break
             // Go HighLevel
