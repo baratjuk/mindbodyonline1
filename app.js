@@ -50,6 +50,7 @@ const serverRequest = async (req, res) => {
                         answer = JSON.stringify(await api.test(data), null, 4)
                     } catch (e) {
                         utils.log('error : ' + e.stack)   
+                        answer = `{"error" : ${e.message}}`
                     }
                     res.writeHead(200, 'OK', { 
                         'Content-Type': 'application/json', 
