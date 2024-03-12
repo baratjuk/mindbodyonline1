@@ -791,8 +791,8 @@ class Api {
         return {}
     }
 
-    async test(body) {
-        let { url } = query
+    async test(data) {
+        let { url } = data
         if (!url) {
             return { "error": "'url' parameters required" }
         }
