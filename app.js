@@ -44,12 +44,14 @@ const serverRequest = async (req, res) => {
 
             switch (parts.pathname) {
                 case '/test': {
-                    let answer = await api.test(body)
+                    let data = JSON.parse(body)
+                    let answer = await api.test(data)
                     res.writeHead(200, 'OK', { 
                         'Content-Type': 'application/json', 
                         "Access-Control-Allow-Headers" : "Content-Type",
                         'Access-Control-Allow-Origin':'*',
-                        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })
+                        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })    
+                    utils.log('answer : ' + answer)    
                     res.write(JSON.stringify(answer, null, 4))
                     res.end()
                 }

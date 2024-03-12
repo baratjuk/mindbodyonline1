@@ -3,7 +3,7 @@
 <body>
   <script>
     function send() {
-      fetch('https://dev1.htt.ai/test/', {
+      fetch('https://dev1.htt.ai/test', {
         method: 'POST',
         body: JSON.stringify({
           url : 'test' //document.getElementById('result').text
@@ -15,7 +15,7 @@
       })
       .then(response => response.json())
       .then(data => {
-        // console.log(data)
+        console.log(data)
         document.getElementById('result').innerHTML = data.body
       })
       .catch((error) => {
