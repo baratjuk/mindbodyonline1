@@ -44,22 +44,22 @@ const serverRequest = async (req, res) => {
 
             switch (parts.pathname) {
                 case '/test': {
-                    let data = JSON.parse(body)
-                    let answer = '{}'
-                    try {
-                        answer = JSON.stringify(await api.test(data), null, 4)
-                    } catch (e) {
-                        utils.log('error : ' + e.stack)   
-                        answer = `{"error" : ${e.message}}`
+                        let data = JSON.parse(body)
+                        let answer = '{}'
+                        try {
+                            answer = JSON.stringify(await api.test(data), null, 4)
+                        } catch (e) {
+                            utils.log('error : ' + e.stack)   
+                            answer = `{"error" : ${e.message}}`
+                        }
+                        res.writeHead(200, 'OK', { 
+                            'Content-Type': 'application/json', 
+                            "Access-Control-Allow-Headers" : "Content-Type",
+                            'Access-Control-Allow-Origin':'*',
+                            'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })        
+                        res.write(answer)
+                        res.end()
                     }
-                    res.writeHead(200, 'OK', { 
-                        'Content-Type': 'application/json', 
-                        "Access-Control-Allow-Headers" : "Content-Type",
-                        'Access-Control-Allow-Origin':'*',
-                        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })        
-                    res.write(answer)
-                    res.end()
-                }
                     return    
             }        
             try {
@@ -78,34 +78,34 @@ const serverRequest = async (req, res) => {
         switch (parts.pathname) {
             // log
             case '/api': {
-                let apiData = await db.selectApi()
-                let html = await getHtml('api.twig', { items: apiData })
-                res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
-                res.write(html)
-                res.end()
-            }
+                    let apiData = await db.selectApi()
+                    let html = await getHtml('api.twig', { items: apiData })
+                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
+                    res.write(html)
+                    res.end()
+                }   
                 return
             case '/webhooks': {
-                let webhooksData = await db.selectWebhooks()
-                let html = await getHtml('webhooks.twig', { items: webhooksData })
-                res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
-                res.write(html)
-                res.end()
-            }
+                    let webhooksData = await db.selectWebhooks()
+                    let html = await getHtml('webhooks.twig', { items: webhooksData })
+                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
+                    res.write(html)
+                    res.end()
+                }
                 return
             case '/api-json': {
-                let apiData = await db.selectApi()
-                res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(JSON.stringify(apiData, null, 4))
-                res.end()
-            }
+                    let apiData = await db.selectApi()
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(JSON.stringify(apiData, null, 4))
+                    res.end()
+                }
                 return
             case '/webhooks-json': {
-                let webhooksData = await db.selectWebhooks()
-                res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(JSON.stringify(webhooksData, null, 4))
-                res.end()
-            }
+                    let webhooksData = await db.selectWebhooks()
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(JSON.stringify(webhooksData, null, 4))
+                    res.end()
+                }
                 return
             case '/clients-json': {
                 let clientsData = await db.selectClients()
@@ -176,11 +176,11 @@ const serverRequest = async (req, res) => {
                 answer = await api.clients1(query)
                 break
             case '/clients1-delete': {
-                let isDelete = await db.deleteClients()
-                res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
-                res.write(JSON.stringify({delete : isDelete}))
-                res.end()
-            }
+                    let isDelete = await db.deleteClients()
+                    res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+                    res.write(JSON.stringify({delete : isDelete}))
+                    res.end()
+                }
                 return
             case '/client-info':
                 answer = await api.clientCompleteInfo(query)
@@ -201,7 +201,14 @@ const serverRequest = async (req, res) => {
             case '/add-appointment':
                 answer = await api.addAppointment(query)
                 db.insertApi(req.url, answer)
-                break    
+                break   
+            case '/get': {
+                    let html = await utils.fileToHtml('page_get.html')
+                    res.writeHead(200, 'OK', { 'Content-Type': 'text/html' })
+                    res.write(html)
+                    res.end()
+                }     
+                return
             case '/favicon.ico':
                 break
             // Go HighLevel
@@ -267,13 +274,13 @@ const serverRequest = async (req, res) => {
 const getHtml = async (template, data) => {
     let ret_html = await new Promise(r => Twig.renderFile(template, data, (err, html) => {
         if (err) {
-            this.utils.log('getHtml : ' + err);
-            r(null);
+            this.utils.log('getHtml : ' + err)
+            r(null)
         } else {
-            r(html);
+            r(html)
         }
     }))
-    return ret_html;
+    return ret_html
 }
 
-utils.log('Server running at port : ' + port);
+utils.log('Server running at port : ' + port)

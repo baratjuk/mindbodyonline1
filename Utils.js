@@ -14,6 +14,17 @@ class Utils {
         console.log('')
     }
 
+    async fileToHtml(fileName) {
+        let ret_html = await new Promise(r => fs.readFile(fileName, (err, data) => {
+            if (err) {
+                r(null)
+            } else {
+                r(data)
+            }
+        }))
+        return ret_html
+    }
+
     print_object(obj) {
         return `\n${this.print(obj, 0, false)}`
     }
