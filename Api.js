@@ -624,14 +624,12 @@ class Api {
                     }
                 }
             )
-            // this.utils.log('clientCompleteInfo url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
                 return data
             }
         } catch (e) {
             let error = { error: { data: e.response.config.data, answer: e.response.data } }
-            // this.utils.log('clientCompleteInfo error : ' + JSON.stringify(error, null, 4))
             return error
         }
         return {}
@@ -672,12 +670,15 @@ class Api {
     }
 
     async sales(query) {
-        let { page } = query
-        if (!page) {
-            return { "error": "'page' parameters required" }
+        let { start, end } = query
+        if(!start) {
+            start = '2024-02-29T09:00:00-08:00'
         }
-        const limit = 100
-        let url = `https://api.mindbodyonline.com/public/v6/sale/sales?limit=${limit}&offset=${limit * page}`
+        if(!end) {
+            end = '2024-03-13T09:00:00-08:00'
+        }
+        let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
+                +`?startSaleDateTime=${start}&endSaleDateTime=${end}`
         try {
             let response = await axios.get(
                 url,
