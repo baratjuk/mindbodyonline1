@@ -34,6 +34,7 @@ const serverRequest = async (req, res) => {
     utils.log(req.method + ' : ' + req.url + ' : ' + JSON.stringify(req.headers, null, 4))
 
     if (req.method === 'POST') {
+        let parts = url.parse(req.url, true)
         let body = ''
         req.on('data', (chunk) => {
             body += chunk
