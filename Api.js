@@ -636,12 +636,15 @@ class Api {
     }
 
     async transactions(query) {
-        let { page } = query
-        if (!page) {
-            return { "error": "'page' parameters required" }
-        }
+        let { start, end, page } = query
+        // '2024-02-29T09:00:00-08:00'
+        // '2024-03-13T09:00:00-08:00'
         const limit = 100
-        let url = `https://api.mindbodyonline.com/public/v6/sale/transactions?limit=${limit}&offset=${limit * page}`
+        let url = `https://api.mindbodyonline.com/public/v6/sale/transactions`
+            + (start && end)
+                ? `?transactionStartDateTime=${start}&transactionEndDateTime=${end}`
+                : ''
+            + `?limit=${limit}&offset=${limit * (page ?? 0)}`
         try {
             let response = await axios.get(
                 url,
@@ -670,15 +673,15 @@ class Api {
     }
 
     async sales(query) {
-        let { start, end } = query
-        if(!start) {
-            start = '2024-02-29T09:00:00-08:00'
-        }
-        if(!end) {
-            end = '2024-03-13T09:00:00-08:00'
-        }
+        let { start, end, page } = query
+        // '2024-02-29T09:00:00-08:00'
+        // '2024-03-13T09:00:00-08:00'
+        const limit = 100
         let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
-                +`?startSaleDateTime=${start}&endSaleDateTime=${end}`
+            + (start && end)
+                ? `?startSaleDateTime=${start}&endSaleDateTime=${end}`
+                : ''
+            + `?limit=${limit}&offset=${limit * (page ?? 0)}`
         try {
             let response = await axios.get(
                 url,
