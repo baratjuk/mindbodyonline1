@@ -39,21 +39,27 @@ const serverRequest = async (req, res) => {
         req.on('data', (chunk) => {
             body += chunk
         });
-        req.on('end', () => {
+        req.on('end', async () => {
             utils.log('body : ' + body)
 
             switch (parts.pathname) {
-                case '/test':
-                    utils.log(req.method + ' : ' + req.url + ' : ' + JSON.stringify(req.headers, null, 4))
-                    break
-                default: {
-                    try {
-                        let json = JSON.parse(body)
-                        db.insertWebhook(req.method, req.url, json, req.headers)
-                    } catch (e) {
-                    }
-                }    
+                case '/test': {
+                    let answer = await api.test(body)
+                    res.writeHead(200, 'OK', { 
+                        'Content-Type': 'application/json', 
+                        "Access-Control-Allow-Headers" : "Content-Type",
+                        'Access-Control-Allow-Origin':'*',
+                        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })
+                    res.write(JSON.stringify(answer, null, 4))
+                    res.end()
+                }
+                    return    
             }        
+            try {
+                let json = JSON.parse(body)
+                db.insertWebhook(req.method, req.url, json, req.headers)
+            } catch (e) {
+            }
             res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
             res.write(`{"method" : "${req.method}", "message" : "OK"}`)
             res.end()
@@ -188,9 +194,6 @@ const serverRequest = async (req, res) => {
             case '/add-appointment':
                 answer = await api.addAppointment(query)
                 db.insertApi(req.url, answer)
-                break
-            case '/test':
-                answer = await api.test(query)
                 break    
             case '/favicon.ico':
                 break
