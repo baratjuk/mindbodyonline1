@@ -4,11 +4,12 @@
   <script>
     function send() {
       let url = document.getElementById('url').value
-      console.log("url :" + url)
+      let body = document.getElementById('body').value
       fetch('https://dev1.htt.ai/test', {
         method: 'POST',
         body: JSON.stringify({
-          url 
+          url,
+          body 
         }),
         headers: {
           'Accept': 'application/json',
@@ -28,6 +29,9 @@
 
 <div>
   <input style = "width: 100%; font-size:16px;" type="url" id="url" name="url" value="https://api.mindbodyonline.com/public/v6/appointment/staffappointments">
+  <br>
+  <br>
+  <input style = "width: 100%; font-size:16px;" type="text" id="body" name="body" value="{}">
   <br>
   <br>
   <button type="button" onclick="send()">Send</button>

@@ -791,7 +791,7 @@ class Api {
         return {}
     }
 
-    async test(data) {
+    async testGet(data) {
         let { url } = data
         if (!url) {
             return { "error": "'url' parameters required" }
@@ -809,15 +809,49 @@ class Api {
                     }
                 }
             )
-            this.utils.log('test url : ' + url + ' => ' + response.status)
+            this.utils.log('testGet url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('test data : ' + JSON.stringify(data, null, 4))
+                this.utils.log('testGet data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
             let error = { error: { data: e.response.config.data, answer: e.response.data } }
-            this.utils.log('test error : ' + JSON.stringify(error, null, 4))
+            this.utils.log('testGet error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
+    async testPost(data) {
+        let { url, body } = data
+        if (!url || !body) {
+            return { "error": "'url, body' parameters required" }
+        }
+        try {
+            let content = JSON.parse(body)
+            let response = await axios.post(
+                url,
+                content,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('testPost url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('testPost data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('testPost error : ' + JSON.stringify(error, null, 4))
             return error
         }
         return {}
