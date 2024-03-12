@@ -642,9 +642,9 @@ class Api {
         const limit = 100
         let url = `https://api.mindbodyonline.com/public/v6/sale/transactions`
             + `?limit=${limit}&offset=${limit * (page ?? 0)}`
-            + (start && end)
+            + ((start && end)
                 ? `transactionStartDateTime=${start}&transactionEndDateTime=${end}`
-                : ''
+                : '')
         try {
             let response = await axios.get(
                 url,
@@ -679,9 +679,9 @@ class Api {
         const limit = 100
         let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
             + `?limit=${limit}&offset=${limit * (page ?? 0)}`
-            + (start && end)
+            + ((start && end)
                 ? `startSaleDateTime=${start}&endSaleDateTime=${end}`
-                : ''
+                : '')
         try {
             let response = await axios.get(
                 url,
