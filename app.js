@@ -179,6 +179,9 @@ const serverRequest = async (req, res) => {
                 answer = await api.addAppointment(query)
                 db.insertApi(req.url, answer)
                 break
+            case '/test':
+                answer = await api.test(query)
+                break    
             case '/favicon.ico':
                 break
             // Go HighLevel

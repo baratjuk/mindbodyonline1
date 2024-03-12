@@ -791,6 +791,38 @@ class Api {
         return {}
     }
 
+    async test(query) {
+        let { url } = query
+        if (!url) {
+            return { "error": "'url' parameters required" }
+        }
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('test url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('test data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('test error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
     // GoHighLevel
     static HL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlFGZnBCQTZjMXQ4RDQyVTlyT0FVIiwiY29tcGFueV9pZCI6IktnUFpGVFZoRHhWM0FjdUdEZnYzIiwidmVyc2lvbiI6MSwiaWF0IjoxNzA4NjU0NzQ4MTQwLCJzdWIiOiJ1c2VyX2lkIn0.RPe6ZVDODH6z4wHMP_bOQtMKW21ENYdMmnEb-QtS5ZM'
     static HL_CLIENT_ID = '65df0226f872554f303a37c9-lt5mdcsu'
