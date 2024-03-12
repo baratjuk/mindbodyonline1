@@ -41,9 +41,18 @@ const serverRequest = async (req, res) => {
         req.on('end', () => {
             utils.log('body : ' + body)
 
-            let json = JSON.parse(body)
-            db.insertWebhook(req.method, req.url, json, req.headers)
-
+            switch (parts.pathname) {
+                case '/test':
+                    utils.log(req.method + ' : ' + req.url + ' : ' + JSON.stringify(req.headers, null, 4))
+                    break
+                default: {
+                    try {
+                        let json = JSON.parse(body)
+                        db.insertWebhook(req.method, req.url, json, req.headers)
+                    } catch (e) {
+                    }
+                }    
+            }        
             res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
             res.write(`{"method" : "${req.method}", "message" : "OK"}`)
             res.end()
@@ -234,7 +243,10 @@ const serverRequest = async (req, res) => {
         res.end()
     } else {
         db.insertWebhook(req.method, req.url, {}, req.headers)
-        res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
+        res.writeHead(200, 'OK', { 
+            'Content-Type': 'application/json', 
+            'Access-Control-Allow-Origin':'*',
+            'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })
         res.write(`{"method" : "${req.method}", "message" : "OK"}`)
         res.end()
     }
