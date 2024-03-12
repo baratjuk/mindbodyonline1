@@ -245,6 +245,7 @@ const serverRequest = async (req, res) => {
         db.insertWebhook(req.method, req.url, {}, req.headers)
         res.writeHead(200, 'OK', { 
             'Content-Type': 'application/json', 
+            "Access-Control-Allow-Headers" : "Content-Type",
             'Access-Control-Allow-Origin':'*',
             'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })
         res.write(`{"method" : "${req.method}", "message" : "OK"}`)
