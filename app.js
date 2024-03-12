@@ -43,11 +43,11 @@ const serverRequest = async (req, res) => {
             utils.log('body : ' + body)
 
             switch (parts.pathname) {
-                case '/test': {
+                case '/test-get': {
                         let data = JSON.parse(body)
                         let answer = '{}'
                         try {
-                            answer = JSON.stringify(await api.test(data), null, 4)
+                            answer = JSON.stringify(await api.testGet(data), null, 4)
                         } catch (e) {
                             utils.log('error : ' + e.stack)   
                             answer = `{"error" : ${e.message}}`
@@ -60,7 +60,25 @@ const serverRequest = async (req, res) => {
                         res.write(answer)
                         res.end()
                     }
-                    return    
+                    return
+                case '/test-post': {
+                        let data = JSON.parse(body)
+                        let answer = '{}'
+                        try {
+                            answer = JSON.stringify(await api.testPost(data), null, 4)
+                        } catch (e) {
+                            utils.log('error : ' + e.stack)   
+                            answer = `{"error" : ${e.message}}`
+                        }
+                        res.writeHead(200, 'OK', { 
+                            'Content-Type': 'application/json', 
+                            "Access-Control-Allow-Headers" : "Content-Type",
+                            'Access-Control-Allow-Origin':'*',
+                            'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS' })        
+                        res.write(answer)
+                        res.end()
+                    }
+                    return        
             }        
             try {
                 let json = JSON.parse(body)
