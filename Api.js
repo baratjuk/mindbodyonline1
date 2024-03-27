@@ -1140,7 +1140,7 @@ class Api {
 
     clientsSales(id, sales) {
         let arr = []
-        for(saleData of sales) {
+        for(let saleData of sales) {
             if( saleData.ClientId === id) {
                 arr.push(saleData)
             }
