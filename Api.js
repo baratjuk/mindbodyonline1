@@ -850,9 +850,13 @@ class Api {
 
     // GoHighLevel
     static HL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlFGZnBCQTZjMXQ4RDQyVTlyT0FVIiwiY29tcGFueV9pZCI6IktnUFpGVFZoRHhWM0FjdUdEZnYzIiwidmVyc2lvbiI6MSwiaWF0IjoxNzA4NjU0NzQ4MTQwLCJzdWIiOiJ1c2VyX2lkIn0.RPe6ZVDODH6z4wHMP_bOQtMKW21ENYdMmnEb-QtS5ZM'
+    // key1
     static HL_CLIENT_ID = '65df0226f872554f303a37c9-lt5mdcsu'
     static HL_CLIENT_SECRET = 'f4ad852d-7915-4918-b1a5-262e21c58c9d'
-    // static HL_LOCATION_ID = 'QFfpBA6c1t8D42U9rOAU'
+    // key2
+    // static HL_CLIENT_ID = '65df0226f872554f303a37c9-lu9qa6ma'
+    // static HL_CLIENT_SECRET = '6080dfc5-1f45-425c-8e63-a27559f1147e'
+    
  
     async hlOauth(res, query) {
         let { code } = query
@@ -869,7 +873,7 @@ class Api {
         }
         const redirectUri = 'https://dev1.htt.ai/hl-oauth' 
         const clientId = Api.HL_CLIENT_ID
-        const scope = 'contacts.readonly calendars.readonly calendars.write calendars/events.readonly calendars/events.write calendars/groups.readonly calendars/groups.write calendars/resources.readonly calendars/resources.write'
+        const scope = 'contacts.readonly calendars.readonly calendars.write calendars/events.readonly calendars/events.write calendars/groups.readonly calendars/groups.write calendars/resources.readonly calendars/resources.write contacts.write'
         const url = `https://marketplace.gohighlevel.com/oauth/chooselocation?response_type=code&redirect_uri=${redirectUri}&client_id=${clientId}&scope=${scope}`
         this.utils.log('oauth url : ' + url)
         res.writeHead(302, {'Location': url});
