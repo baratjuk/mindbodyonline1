@@ -1119,6 +1119,9 @@ class Api {
         }
         query.page = 0
         let salesData = await this.sales(query) 
+        for(let key in salesData) {
+            this.utils.log(key)
+        }
         let clientsData = await this.db.selectClients()
         this.utils.log('hlAddClients sales count : ' + salesData.Sales.length + ' clients count : ' + clientsData.length)
         let count = 0
