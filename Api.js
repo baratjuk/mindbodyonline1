@@ -528,6 +528,40 @@ class Api {
         return {}
     }
 
+    async copyClients(query) {
+        let { page } = query
+        if (!page) {
+            return { "error": "'page' parameters required" }
+        }
+        const limit = 1000
+        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=${limit}&offset=${limit * page}`
+        try {
+            let response = await axios.get(
+                url,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        'API-Key': Api.API_KEY,
+                        siteId: Api.SITEID,
+                        Accept: 'application/json',
+                        authorization: this.accessToken
+                    }
+                }
+            )
+            this.utils.log('clients url : ' + url + ' => ' + response.status)
+            if (response.status === 200) {
+                let data = response.data
+                this.utils.log('clients data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = { error: { data: e.response.config.data, answer: e.response.data } }
+            this.utils.log('clients error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
     async clients1(query) {
         let { page } = query
         if (!page) {
@@ -554,17 +588,10 @@ class Api {
                 this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
                 for (let client of data.Clients) {
                     try {
-                        let clientCompleteInfoData = await this.clientCompleteInfo1(client.Id)
-                        await this.db.insertClient(clientCompleteInfoData)
+                        await this.db.insertClient(client, FALSE)
                     } catch(ex) {
-                        await this.db.insertClient({error : ex.message})
+                        await this.db.insertClient({error : ex.message}, TRUE)
                     }
-                    ///////////////////
-                    // try {
-                    //     await this.db.insertClient(client)
-                    // } catch(ex) {
-                    //     await this.db.insertClient({error : ex.message})
-                    // }
                 }
                 return data
             }
