@@ -1167,7 +1167,7 @@ class Api {
             website: '',
             timezone: 'America/New_York',
             dnd: false,
-            customFields:
+            customField:
             [
                 {key: 'Id', field_value: data.Id},
                 {key: 'CreationDate', field_value: data.Id},
