@@ -1117,8 +1117,11 @@ class Api {
         if (!start || !end || !start || !end ) {
             return { "error": "'start', 'end' parameters required" }
         }
-        query.page = 0
-        let salesData = await this.sales(query) 
+        let salesData = await this.sales({   
+            start : startDate, 
+            end: endDate, 
+            page: 0
+        }) 
         for(let key in salesData) {
             this.utils.log(key + ' : ' + salesData[key] )
         }
