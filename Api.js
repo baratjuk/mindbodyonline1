@@ -1130,7 +1130,7 @@ class Api {
         let count = 0
         for (let i = Number(start); i < Number(end); i++) { 
             let data = clientsData[i]
-            let cSales = this.clientsSales(data.Id, salesData.Sales)
+            let cSales = this.clientsSales(data.Id, [...salesData.Sales])
             this.hlAddClient(data, cSales)
             count++
         }
