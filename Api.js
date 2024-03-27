@@ -593,7 +593,7 @@ class Api {
                         await this.db.insertClient({error : ex.message}, true)
                     }
                 }
-                return data
+                return {count: data.Clients.lenght}
             }
         } catch (e) {
             let error = { error: e.stack}
