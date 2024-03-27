@@ -192,7 +192,7 @@ const serverRequest = async (req, res) => {
                 break
             case '/clients1':
                 answer = await api.clients1(query)
-                break
+                break    
             case '/clients1-delete': {
                     let isDelete = await db.deleteClients()
                     res.writeHead(200, 'OK', { 'Content-Type': 'application/json' })
@@ -244,6 +244,9 @@ const serverRequest = async (req, res) => {
                 }
                 db.insertApi(req.url, answer)
                 break
+            case '/hl-add-clients':
+                answer = await api.hlAddClients(query)
+                break    
             case '/hl-test':
                 answer = await api.hlTest()
                 db.insertApi(req.url, answer)

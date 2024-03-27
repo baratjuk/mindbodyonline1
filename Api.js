@@ -528,40 +528,6 @@ class Api {
         return {}
     }
 
-    async copyClients(query) {
-        let { page } = query
-        if (!page) {
-            return { "error": "'page' parameters required" }
-        }
-        const limit = 1000
-        let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=${limit}&offset=${limit * page}`
-        try {
-            let response = await axios.get(
-                url,
-                {
-                    timeout: Api.TIMEOUT,
-                    headers: {
-                        'API-Key': Api.API_KEY,
-                        siteId: Api.SITEID,
-                        Accept: 'application/json',
-                        authorization: this.accessToken
-                    }
-                }
-            )
-            this.utils.log('clients url : ' + url + ' => ' + response.status)
-            if (response.status === 200) {
-                let data = response.data
-                this.utils.log('clients data : ' + JSON.stringify(data, null, 4))
-                return data
-            }
-        } catch (e) {
-            let error = { error: { data: e.response.config.data, answer: e.response.data } }
-            this.utils.log('clients error : ' + JSON.stringify(error, null, 4))
-            return error
-        }
-        return {}
-    }
-
     async clients1(query) {
         let { page } = query
         if (!page) {
@@ -1137,6 +1103,75 @@ class Api {
         } catch (e) {
             let error = {error: {data: e.response.config.data, answer: e.response.data}}
             this.utils.log('hlUsers error : ' + JSON.stringify(error, null, 4))
+            return error
+        }
+        return {}
+    }
+
+    async hlAddClients(query) {
+        let { start, end } = query
+        if (!start || !end) {
+            return { "error": "'start', 'end' parameters required" }
+        }
+        let clientsData = await this.db.selectClients()
+        let i = 0
+        for (let i = start; i < end; i++) { // clientsData.length
+            let data = clientsData[i]
+            hlAddClient(data)
+            i++
+        }
+        return {count: i}
+    }
+
+    async hlAddClient(data) {
+        let url = `https://services.leadconnectorhq.com/contacts/upsert`
+        let content = {
+            firstName: data.FirstName,
+            lastName: data.LastName,
+            name: `${data.FirstName} ${data.LastName}`,
+            email: data.Email,
+            locationId:'QFfpBA6c1t8D42U9rOAU', // 
+            gender: data.Gender,
+            phone: data.MobilePhone,
+            address1: data.HomeLocation.Address,
+            city: data.HomeLocation.City,
+            state: data.HomeLocation.StateProvCode,
+            postalCode: data.HomeLocation.PostalCode,
+            website: '',
+            timezone: 'America/Chihuahua',
+            dnd: false,
+            customFields:
+            [
+                {key: 'id', field_value: data.Id},
+                {key: 'birthDate', field_value: data.BirthDate},
+            ],
+            source: 'public api',
+            country: data.Country,
+            companyName: data.HomeLocation.BusinessDescription,
+        }
+        try {
+            let response = await axios.post(
+                url,
+                content,
+                {
+                    timeout: Api.TIMEOUT,
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${this.hlAccessToken}`,
+                        'Content-Type': 'application/json',
+                        Version: '2021-04-15'
+                    }
+                }
+            )
+            this.utils.log('hlAddAppointment url : ' + url + ' => ' + response.status)
+            if (response.status < 300) {
+                let data = response.data
+                this.utils.log('hlAddAppointment data : ' + JSON.stringify(data, null, 4))
+                return data
+            }
+        } catch (e) {
+            let error = {error: {data: e.response.config.data, answer: e.response.data}}
+            this.utils.log('hlAddAppointment error : ' + JSON.stringify(error, null, 4))
             return error
         }
         return {}
