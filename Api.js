@@ -1114,22 +1114,34 @@ class Api {
 
     async hlAddClients(query) {
         let { start, end } = query
-        if (!start || !end) {
+        if (!start || !end || !start || !end ) {
             return { "error": "'start', 'end' parameters required" }
         }
-
+        query.page = 0
+        let sales = await this.sales(query) 
         let clientsData = await this.db.selectClients()
-        this.utils.log('hlAddClients all count : ' + clientsData.length)
+        this.utils.log('hlAddClients sales count : ' + sales.length + ' clients count : ' + clientsData.length)
         let count = 0
         for (let i = Number(start); i < Number(end); i++) { 
             let data = clientsData[i]
-            this.hlAddClient(data)
+            let cSales = this.clientsSales(data.Id, sales)
+            this.hlAddClient(data, cSales)
             count++
         }
         return {count}
     }
 
-    async hlAddClient(data) {
+    clientsSales(id, sales) {
+        let arr = []
+        for(saleData of sales.Sales) {
+            if( saleData.ClientId === id) {
+                arr.push(saleData)
+            }
+        }
+        return arr
+    }
+
+    async hlAddClient(data, sales) {
         let url = `https://services.leadconnectorhq.com/contacts/upsert`
         let content = {
             firstName: data.FirstName,
@@ -1152,11 +1164,21 @@ class Api {
                 {key: 'CreationDate', field_value: data.Id},
                 {key: 'BirthDate', field_value: data.BirthDate},
                 {key: 'ClientCreditCard', field_value: data.ClientCreditCard},
+                {key: 'SendAccountTexts', field_value: data.SendAccountTexts},
+                {key: 'SendPromotionalEmails', field_value: data.SendPromotionalEmails},
+                {key: 'SendPromotionalTexts', field_value: data.SendPromotionalTexts},
+                {key: 'SendScheduleEmails', field_value: data.SendScheduleEmails},
+                {key: 'SendScheduleTexts', field_value: data.SendScheduleTexts},
+                {key: 'Sales', field_value: sales},
             ],
             source: 'public api',
             country: data.Country,
             companyName: data.HomeLocation.BusinessDescription,
         }
+        //
+        this.utils.log('hlAddClient : ' + JSON.stringify(content, null, 4))
+        return content
+        //
         try {
             let response = await axios.post(
                 url,
