@@ -1118,8 +1118,9 @@ class Api {
             return { "error": "'start', 'end' parameters required" }
         }
         let clientsData = await this.db.selectClients()
+        this.utils.log('hlAddClients all count : ' + clientsData.length)
         let count = 0
-        for (let i = start; i < end; i++) { // clientsData.length
+        for (let i = start; i < end; i++) { 
             let data = clientsData[i]
             this.hlAddClient(data)
             count++
