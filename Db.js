@@ -79,7 +79,7 @@ class Db {
     }
 
     async selectClients() {
-        const sql = `SELECT data FROM clients;`
+        const sql = `SELECT data FROM clients WHERE is_error = 0;`
         let tableData = await new Promise(r => this.dbConnect.query(sql, (err, result) => {
             if (err) {
                 r(null)
