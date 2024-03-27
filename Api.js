@@ -567,7 +567,7 @@ class Api {
         if (!page) {
             return { "error": "'page' parameters required" }
         }
-        const limit = 10
+        const limit = 100
         let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=${limit}&offset=${limit * page}`
         try {
             let response = await axios.get(
