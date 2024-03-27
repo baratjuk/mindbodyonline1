@@ -1118,13 +1118,13 @@ class Api {
             return { "error": "'start', 'end' parameters required" }
         }
         query.page = 0
-        let sales = await this.sales(query) 
+        let salesData = await this.sales(query) 
         let clientsData = await this.db.selectClients()
-        this.utils.log('hlAddClients sales count : ' + sales.length + ' clients count : ' + clientsData.length)
+        this.utils.log('hlAddClients sales count : ' + salesData.Sales.length + ' clients count : ' + clientsData.length)
         let count = 0
         for (let i = Number(start); i < Number(end); i++) { 
             let data = clientsData[i]
-            let cSales = this.clientsSales(data.Id, sales)
+            let cSales = this.clientsSales(data.Id, salesData.Sales)
             this.hlAddClient(data, cSales)
             count++
         }
@@ -1133,7 +1133,7 @@ class Api {
 
     clientsSales(id, sales) {
         let arr = []
-        for(saleData of sales.Sales) {
+        for(saleData of sales) {
             if( saleData.ClientId === id) {
                 arr.push(saleData)
             }
