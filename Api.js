@@ -1117,7 +1117,7 @@ class Api {
         let i = 0
         for (let i = start; i < end; i++) { // clientsData.length
             let data = clientsData[i]
-            hlAddClient(data)
+            this.hlAddClient(data)
             i++
         }
         return {count: i}
