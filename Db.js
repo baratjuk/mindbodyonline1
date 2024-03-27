@@ -123,6 +123,9 @@ class Db {
                 this.utils.log('insertClient error : ' + err.message)
                 this.insertClient({error: err.message, Id: data.Id}, true)
             }
+            if (err && isError) {
+                this.utils.log('insertClient error ID : ' + data.Id)
+            }    
         })
     }
 
