@@ -588,13 +588,8 @@ class Api {
                 // this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
                 let i = 0
                 for (let client of data.Clients) {
-                    try {
-                        await this.db.insertClient(client, false)
-                        i++
-                    } catch(ex) {
-                        await this.db.insertClient({error : ex.message}, true)
-                        this.utils.log('insertClient error : ID ' + client.Id)
-                    }
+                    this.db.insertClient(client, false)
+                    i++
                 }
                 return {count: i}
             }
