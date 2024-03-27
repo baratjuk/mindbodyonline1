@@ -1128,9 +1128,10 @@ class Api {
         let clientsData = await this.db.selectClients()
         this.utils.log('hlAddClients sales count : ' + salesData.Sales.length + ' clients count : ' + clientsData.length)
         let count = 0
+        const salesCopy = [...salesData.Sales]
         for (let i = Number(start); i < Number(end); i++) { 
             let data = clientsData[i]
-            let cSales = this.clientsSales(data.Id, [...salesData.Sales])
+            let cSales = this.clientsSales(data.Id, salesCopy)
             this.hlAddClient(data, cSales)
             count++
         }
