@@ -673,8 +673,8 @@ class Api {
         }
         const limit = 1000
         let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
-            // + `?startSaleDateTime=${start}&endSaleDateTime=${end}`
-            + `?limit=${limit}&offset=${limit * (page ?? 0)}`    
+            + `?startSaleDateTime=${start}&endSaleDateTime=${end}`
+            + `&limit=${limit}&offset=${limit * (page ?? 0)}`    
         try {
             let response = await axios.get(
                 url,
