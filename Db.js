@@ -121,7 +121,7 @@ class Db {
         this.dbConnect.query(sql, (err, result) => {
             if (err && !isError) {
                 this.utils.log('insertClient error : ' + err.message)
-                this.insertClient({error : err.message}, true)
+                this.insertClient({error: err.message, Id: data.Id}, true)
             }
         })
     }
