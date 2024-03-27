@@ -1113,7 +1113,7 @@ class Api {
     }
 
     async hlAddClients(query) {
-        let { start, end } = query
+        let { start, end, startDate, endDate} = query
         if (!start || !end || !start || !end ) {
             return { "error": "'start', 'end' parameters required" }
         }
