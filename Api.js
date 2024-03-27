@@ -1114,13 +1114,13 @@ class Api {
 
     async hlAddClients(query) {
         let { start, end, startDate, endDate} = query
-        if (!start || !end || !start || !end ) {
-            return { "error": "'start', 'end' parameters required" }
+        if (!start || !end || !startDate || !endDate ) {
+            return { "error": "'start', 'end', 'startDate', 'endDate' parameters required" }
         }
         let salesData = await this.sales({   
             start : startDate, 
             end: endDate, 
-            page: 0
+            page: '0'
         }) 
         for(let key in salesData) {
             this.utils.log(key + ' : ' + salesData[key] )
