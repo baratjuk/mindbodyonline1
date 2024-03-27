@@ -588,9 +588,9 @@ class Api {
                 this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
                 for (let client of data.Clients) {
                     try {
-                        await this.db.insertClient(client, true)
+                        await this.db.insertClient(client, false)
                     } catch(ex) {
-                        await this.db.insertClient({error : ex.message}, false)
+                        await this.db.insertClient({error : ex.message}, true)
                     }
                 }
                 return data
