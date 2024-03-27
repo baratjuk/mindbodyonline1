@@ -671,10 +671,10 @@ class Api {
         if (!start || !end || !page) {
             return { "error": "'start, end, page' parameters required" }
         }
-        const limit = 100
+        const limit = 1000
         let url = `https://api.mindbodyonline.com/public/v6/sale/sales`
-            + `?startSaleDateTime=${start}&endSaleDateTime=${end}`
-            + `&limit=${limit}&offset=${limit * (page ?? 0)}`    
+            // + `?startSaleDateTime=${start}&endSaleDateTime=${end}`
+            + `?limit=${limit}&offset=${limit * (page ?? 0)}`    
         try {
             let response = await axios.get(
                 url,
@@ -1117,6 +1117,7 @@ class Api {
         if (!start || !end) {
             return { "error": "'start', 'end' parameters required" }
         }
+
         let clientsData = await this.db.selectClients()
         this.utils.log('hlAddClients all count : ' + clientsData.length)
         let count = 0
@@ -1143,12 +1144,14 @@ class Api {
             state: data.HomeLocation.StateProvCode,
             postalCode: data.HomeLocation.PostalCode,
             website: '',
-            timezone: 'America/Chihuahua',
+            timezone: 'America/New_York',
             dnd: false,
             customFields:
             [
-                {key: 'id', field_value: data.Id},
-                {key: 'birthDate', field_value: data.BirthDate},
+                {key: 'Id', field_value: data.Id},
+                {key: 'CreationDate', field_value: data.Id},
+                {key: 'BirthDate', field_value: data.BirthDate},
+                {key: 'ClientCreditCard', field_value: data.ClientCreditCard},
             ],
             source: 'public api',
             country: data.Country,
