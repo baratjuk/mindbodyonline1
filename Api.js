@@ -1120,11 +1120,9 @@ class Api {
         let clientsData = await this.db.selectClients()
         this.utils.log('hlAddClients all count : ' + clientsData.length)
         let count = 0
-        for (let i = start; i < end; i++) { 
+        for (let i = Number(start); i < Number(end); i++) { 
             let data = clientsData[i]
-            this.utils.log('hlAddClients ++ : ' + count)
             this.hlAddClient(data)
-            this.utils.log('hlAddClients +++ : ' + count)
             count++
         }
         return {count}
