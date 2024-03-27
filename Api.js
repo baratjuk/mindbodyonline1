@@ -567,7 +567,7 @@ class Api {
         if (!page) {
             return { "error": "'page' parameters required" }
         }
-        const limit = 100
+        const limit = 1000
         let url = `https://api.mindbodyonline.com/public/v6/client/clients?limit=${limit}&offset=${limit * page}`
         try {
             let response = await axios.get(
@@ -585,16 +585,18 @@ class Api {
             this.utils.log('clients1 url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
+                // this.utils.log('clients1 data : ' + JSON.stringify(data, null, 4))
+                let i = 0
                 for (let client of data.Clients) {
                     try {
                         await this.db.insertClient(client, false)
+                        i++
                     } catch(ex) {
                         await this.db.insertClient({error : ex.message}, true)
                         this.utils.log('insertClient error : ID ' + client.Id)
                     }
                 }
-                return {count: data.Clients.lenght}
+                return {count: i}
             }
         } catch (e) {
             let error = { error: e.stack}
