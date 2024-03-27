@@ -591,6 +591,7 @@ class Api {
                         await this.db.insertClient(client, false)
                     } catch(ex) {
                         await this.db.insertClient({error : ex.message}, true)
+                        this.utils.log('insertClient error : ID ' + client.Id)
                     }
                 }
                 return {count: data.Clients.lenght}
