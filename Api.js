@@ -724,8 +724,8 @@ class Api {
                 isError = true
             }
         }
-        if(isError) {
-            return salesData
+        if(isError || !salesData) {
+            return {sales: salesData}
         }
         let sales = this.clientsSales(id, salesData)
         return {sales}
