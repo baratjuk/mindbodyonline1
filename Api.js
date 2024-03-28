@@ -1181,9 +1181,9 @@ class Api {
             dnd: false,
             customFields:
             [
-                {key: 'contact.originalid', field_value: data.Id},
-                {key: 'contact.creation_date', field_value: data.CreationDate},
-                {key: 'contact.birth_date', field_value: data.BirthDate},
+                {key: 'originalid', field_value: data.Id},
+                {key: 'creation_date', field_value: data.CreationDate},
+                {key: 'birth_date', field_value: data.BirthDate},
                 // {key: 'ClientCreditCard', field_value: data.ClientCreditCard},
                 // {key: 'SendAccountTexts', field_value: data.SendAccountTexts},
                 // {key: 'SendPromotionalEmails', field_value: data.SendPromotionalEmails},
