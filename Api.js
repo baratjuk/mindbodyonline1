@@ -1196,8 +1196,8 @@ class Api {
             country: data.Country,
             companyName: data.HomeLocation.BusinessDescription,
         }
+        this.utils.log('hlAddClient : ' + JSON.stringify(content, null, 4))
         
-        // this.utils.log('hlAddClient : ' + JSON.stringify(content, null, 4))
         // return content
         
         try {
