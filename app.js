@@ -208,6 +208,10 @@ const serverRequest = async (req, res) => {
                 answer = await api.sales(query)
                 db.insertApi(req.url, answer)
                 break
+            case '/client-sales':
+                answer = await api.salesById(query)
+                db.insertApi(req.url, answer)
+                break    
             case '/transactions':
                 answer = await api.transactions(query)
                 db.insertApi(req.url, answer)
@@ -247,10 +251,6 @@ const serverRequest = async (req, res) => {
             case '/hl-add-clients':
                 answer = await api.hlAddClients(query)
                 break    
-            case '/hl-test':
-                answer = await api.hlTest()
-                db.insertApi(req.url, answer)
-                break
             case '/hl-add-appointment':
                 answer = await api.hlAddAppointment(query)
                 db.insertApi(req.url, answer)

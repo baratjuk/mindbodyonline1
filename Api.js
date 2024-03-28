@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Utils from './Utils.js';
 import Db from './Db.js';
+import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
 class Api {
     static API_KEY = '006b55a0c1904396a8815b33a52063bd'
@@ -702,6 +703,48 @@ class Api {
         return {}
     }
 
+    async salesById(query) {
+        let { id, period} = query
+        if (!id || !period ) {
+            return { "error": "'id', 'period' parameters required" }
+        }
+        const FORMAT = 'yyyy-MM-ddT00:00:00-08:00'
+        let start = format(new Date(), FORMAT)
+        let endDate = formatDistance(subDays(new Date(), Number(period)), new Date(), { addSuffix: true })
+        let end = format(endDate, FORMAT)
+
+        this.utils.log('testGet url : ' + url + ' => ' + response.status)
+
+        return {id, start, end}
+
+        let salesData = await this.sales({   
+            start : startDate, 
+            end: endDate, 
+            page: '0'
+        }) 
+        let isError = false
+        for(let key in salesData) {
+            this.utils.log(key + ' : ' + salesData[key] )
+            if(key == 'error') {
+                isError = true
+            }
+        }
+        if(isError) {
+            return salesData
+        }
+        
+        let salesCount = []
+        const salesCopy = [...salesData.Sales]
+        for (let i = Number(start); i < Number(end); i++) { 
+            let data = clientsData[i]
+            let cSales = this.clientsSales(data.Id, salesCopy)
+            this.hlAddClient(data, cSales)
+            count++
+            salesCount.push({id: data.Id, salesCount: cSales.length})
+        }
+        return {count, salesCount}
+    }
+
     async appointments(query) {
         let { page } = query
         if (!page) {
@@ -1177,8 +1220,8 @@ class Api {
             customFields:
             [
                 // {id: 'jZE3gPqTELn2ICqQGmCk', field_value: 'Evolve'},
-                {id: 'jZE4gPqTELn2ICqQGmCk', key: 'Id', field_value: data.Id},
-                {id: 'jZE5gPqTELn2ICqQGmCk', key: 'CreationDate', field_value: data.Id},
+                {id: 'jZE4gPqTELn2ICqQGmCk', key: 'OriginalId', field_value: data.Id},
+                {id: 'jZE5gPqTELn2ICqQGmCk', key: 'CreationDate', field_value: data.CreationDate},
                 {id: 'jZE6gPqTELn2ICqQGmCk', key: 'BirthDate', field_value: data.BirthDate},
                 {id: 'jZE7gPqTELn2ICqQGmCk', key: 'ClientCreditCard', field_value: data.ClientCreditCard},
                 {id: 'jZE8gPqTELn2ICqQGmCk', key: 'SendAccountTexts', field_value: data.SendAccountTexts},
@@ -1219,34 +1262,6 @@ class Api {
         } catch (e) {
             let error = {error: {data: e.response.config.data, answer: e.response.data}}
             this.utils.log('hlAddAppointment error : ' + JSON.stringify(error, null, 4))
-            return error
-        }
-        return {}
-    }
-
-    async hlTest() {
-        let url = `https://services.leadconnectorhq.com/calendars/?locationId=${Api.HL_LOCATION_ID}`
-        try {
-            let response = await axios.get(
-                url,
-                {
-                    timeout: Api.TIMEOUT,
-                    headers: {
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${this.hlAccessToken}`,
-                        Version: '2021-07-28'
-                    }
-                }
-            )
-            this.utils.log('hlTest url : ' + url + ' => ' + response.status)
-            if (response.status === 200) {
-                let data = response.data
-                this.utils.log('hlTest data : ' + JSON.stringify(data, null, 4))
-                return data
-            }
-        } catch (e) {
-            let error = {error: {data: e.response.config.data, answer: e.response.data}}
-            this.utils.log('hlTest error : ' + JSON.stringify(error, null, 4))
             return error
         }
         return {}
