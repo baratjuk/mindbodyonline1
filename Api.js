@@ -717,18 +717,11 @@ class Api {
             end, 
             page: `${page}`
         }) 
-        let isError = false
-        for(let key in salesData) {
-            this.utils.log(key + ' : ' + salesData[key] )
-            if(key === 'error') {
-                isError = true
-            }
-        }
-        if(isError) {
-            return {salesData}
+        if(salesData.error) {
+            return salesData
         }
         let sales = this.clientsSales(id, salesData.Sales)
-        return {sales}
+        return sales
     }
 
     async appointments(query) {
