@@ -1135,15 +1135,15 @@ class Api {
     }
 
     async hlAddClients(query) {
-        let { start, end, startDate, endDate} = query
-        if (!start || !end || !startDate || !endDate ) {
-            return { "error": "'start', 'end', 'startDate', 'endDate' parameters required" }
+        let { start, end} = query
+        if (!start || !end ) {
+            return { "error": "'start', 'end' parameters required" }
         }
         let clientsData = await this.db.selectClients()
         this.utils.log('hlAddClients clients count : ' + clientsData.length)
         let count = 0
         let clients = []
-        for (let i = Number(start); i < Number(end); i++) { 
+        for (let i = Number(start); i <= Number(end); i++) { 
             let data = clientsData[i]
             this.hlAddClient(data)
             count++
