@@ -708,7 +708,7 @@ class Api {
         if (!id || !period ) {
             return { "error": "'id', 'period' parameters required" }
         }
-        const FORMAT = 'yyyy-MM-dd"T"00:00:00-08:00'
+        const FORMAT = 'yyyy-MM-dd`T`00:00:00-08:00'
         let start = format(new Date(), FORMAT)
         let end = format(subDays(new Date(), Number(period)), FORMAT)
 
