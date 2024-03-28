@@ -709,8 +709,8 @@ class Api {
             return { "error": "'id', 'period' parameters required" }
         }
         const FORMAT = "yyyy-MM-dd'T'00:00:00-08:00"
-        let start = format(new Date(), FORMAT)
-        let end = format(subDays(new Date(), Number(period)), FORMAT)
+        let start = format(subDays(new Date(), Number(period)), FORMAT)
+        let end = format(new Date(), FORMAT)
         let page = 0
         let salesData = await this.sales({   
             start, 
