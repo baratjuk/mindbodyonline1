@@ -1193,8 +1193,8 @@ class Api {
             companyName: data.HomeLocation.BusinessDescription,
         }
         
-        this.utils.log('hlAddClient : ' + JSON.stringify(content, null, 4))
-        return content
+        // this.utils.log('hlAddClient : ' + JSON.stringify(content, null, 4))
+        // return content
         
         try {
             let response = await axios.post(
