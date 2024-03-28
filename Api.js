@@ -1122,8 +1122,15 @@ class Api {
             end: endDate, 
             page: '0'
         }) 
+        let isError = false
         for(let key in salesData) {
             this.utils.log(key + ' : ' + salesData[key] )
+            if(key == 'error') {
+                isError = true
+            }
+        }
+        if(isError) {
+            return salesData
         }
         let clientsData = await this.db.selectClients()
         this.utils.log('hlAddClients sales count : ' + salesData.Sales.length + ' clients count : ' + clientsData.length)
