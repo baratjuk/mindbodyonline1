@@ -714,7 +714,7 @@ class Api {
 
         // this.utils.log('testGet url : ' + url + ' => ' + response.status)
 
-        return {id, start, endDate}
+        return {id, start, end}
 
         let salesData = await this.sales({   
             start : startDate, 
