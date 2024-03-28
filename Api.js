@@ -711,11 +711,11 @@ class Api {
         const FORMAT = 'yyyy-MM-ddT00:00:00-08:00'
         let start = format(new Date(), FORMAT)
         let endDate = formatDistance(subDays(new Date(), Number(period)), new Date(), { addSuffix: true })
-        let end = format(endDate, FORMAT)
+        // let end = format(endDate, FORMAT)
 
-        this.utils.log('testGet url : ' + url + ' => ' + response.status)
+        // this.utils.log('testGet url : ' + url + ' => ' + response.status)
 
-        return {id, start, end}
+        return {id, start, endDate}
 
         let salesData = await this.sales({   
             start : startDate, 
