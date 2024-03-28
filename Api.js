@@ -1139,34 +1139,17 @@ class Api {
         if (!start || !end || !startDate || !endDate ) {
             return { "error": "'start', 'end', 'startDate', 'endDate' parameters required" }
         }
-        let salesData = await this.sales({   
-            start : startDate, 
-            end: endDate, 
-            page: '0'
-        }) 
-        let isError = false
-        for(let key in salesData) {
-            this.utils.log(key + ' : ' + salesData[key] )
-            if(key == 'error') {
-                isError = true
-            }
-        }
-        if(isError) {
-            return salesData
-        }
         let clientsData = await this.db.selectClients()
-        this.utils.log('hlAddClients sales count : ' + salesData.Sales.length + ' clients count : ' + clientsData.length)
+        this.utils.log('hlAddClients clients count : ' + clientsData.length)
         let count = 0
-        let salesCount = []
-        const salesCopy = [...salesData.Sales]
+        let clients = []
         for (let i = Number(start); i < Number(end); i++) { 
             let data = clientsData[i]
-            let cSales = this.clientsSales(data.Id, salesCopy)
-            this.hlAddClient(data, cSales)
+            this.hlAddClient(data)
             count++
-            salesCount.push({id: data.Id, salesCount: cSales.length})
+            clients.push({id: data.Id})
         }
-        return {count, salesCount}
+        return {count, clients}
     }
 
     clientsSales(id, sales) {
@@ -1179,7 +1162,7 @@ class Api {
         return arr
     }
 
-    async hlAddClient(data, sales) {
+    async hlAddClient(data) {
         let url = `https://services.leadconnectorhq.com/contacts/upsert`
         let content = {
             firstName: data.FirstName,
@@ -1198,17 +1181,16 @@ class Api {
             dnd: false,
             customFields:
             [
-                // {id: 'jZE3gPqTELn2ICqQGmCk', field_value: 'Evolve'},
-                {id: 'jZE4gPqTELn2ICqQGmCk', key: 'OriginalId', field_value: data.Id},
-                {id: 'jZE5gPqTELn2ICqQGmCk', key: 'CreationDate', field_value: data.CreationDate},
-                {id: 'jZE6gPqTELn2ICqQGmCk', key: 'BirthDate', field_value: data.BirthDate},
-                {id: 'jZE7gPqTELn2ICqQGmCk', key: 'ClientCreditCard', field_value: data.ClientCreditCard},
-                {id: 'jZE8gPqTELn2ICqQGmCk', key: 'SendAccountTexts', field_value: data.SendAccountTexts},
-                {id: 'jZE9gPqTELn2ICqQGmCk', key: 'SendPromotionalEmails', field_value: data.SendPromotionalEmails},
-                {id: 'jZE0gPqTELn2ICqQGmCk', key: 'SendPromotionalTexts', field_value: data.SendPromotionalTexts},
-                {id: 'jZE1gPqTELn2ICqQGmCk', key: 'SendScheduleEmails', field_value: data.SendScheduleEmails},
-                {id: 'jZE2gPqTELn2ICqQGmCk', key: 'SendScheduleTexts', field_value: data.SendScheduleTexts},
-                {id: 'jZE4gPqTELn3ICqQGmCk', key: 'Sales', field_value: sales},
+                {key: 'contact.originalid', field_value: data.Id},
+                {key: 'contact.creation_date', field_value: data.CreationDate},
+                {key: 'contact.birth_date', field_value: data.BirthDate},
+                // {key: 'ClientCreditCard', field_value: data.ClientCreditCard},
+                // {key: 'SendAccountTexts', field_value: data.SendAccountTexts},
+                // {key: 'SendPromotionalEmails', field_value: data.SendPromotionalEmails},
+                // {key: 'SendPromotionalTexts', field_value: data.SendPromotionalTexts},
+                // {id: 'jZE1gPqTELn2ICqQGmCk', key: 'SendScheduleEmails', field_value: data.SendScheduleEmails},
+                // {id: 'jZE2gPqTELn2ICqQGmCk', key: 'SendScheduleTexts', field_value: data.SendScheduleTexts},
+                // {id: 'jZE4gPqTELn3ICqQGmCk', key: 'Sales', field_value: sales},
             ],
             source: 'public api',
             country: data.Country,
