@@ -711,37 +711,24 @@ class Api {
         const FORMAT = "yyyy-MM-dd'T'00:00:00-08:00"
         let start = format(new Date(), FORMAT)
         let end = format(subDays(new Date(), Number(period)), FORMAT)
-
-        // this.utils.log('testGet url : ' + url + ' => ' + response.status)
-
-        return {id, start, end}
-
+        let page = 0
         let salesData = await this.sales({   
-            start : startDate, 
-            end: endDate, 
-            page: '0'
+            start, 
+            end, 
+            page
         }) 
         let isError = false
         for(let key in salesData) {
             this.utils.log(key + ' : ' + salesData[key] )
-            if(key == 'error') {
+            if(key === 'error') {
                 isError = true
             }
         }
         if(isError) {
             return salesData
         }
-        
-        let salesCount = []
-        const salesCopy = [...salesData.Sales]
-        for (let i = Number(start); i < Number(end); i++) { 
-            let data = clientsData[i]
-            let cSales = this.clientsSales(data.Id, salesCopy)
-            this.hlAddClient(data, cSales)
-            count++
-            salesCount.push({id: data.Id, salesCount: cSales.length})
-        }
-        return {count, salesCount}
+        let sales = this.clientsSales(id, salesData)
+        return {sales}
     }
 
     async appointments(query) {
