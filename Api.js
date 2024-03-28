@@ -691,7 +691,7 @@ class Api {
             this.utils.log('sales url : ' + url + ' => ' + response.status)
             if (response.status === 200) {
                 let data = response.data
-                this.utils.log('sales data : ' + JSON.stringify(data, null, 4))
+                // this.utils.log('sales data : ' + JSON.stringify(data, null, 4))
                 return data
             }
         } catch (e) {
@@ -1170,25 +1170,25 @@ class Api {
             customFields:
             [
                 {id: 'jZE3gPqTELn2ICqQGmCk', field_value: 'Evolve'},
-                // {id: 'jZE4gPqTELn2ICqQGmCk', key: 'Id', field_value: data.Id},
-                // {id: 'jZE5gPqTELn2ICqQGmCk', key: 'CreationDate', field_value: data.Id},
-                // {id: 'jZE6gPqTELn2ICqQGmCk', key: 'BirthDate', field_value: data.BirthDate},
-                // {id: 'jZE7gPqTELn2ICqQGmCk', key: 'ClientCreditCard', field_value: data.ClientCreditCard},
-                // {id: 'jZE8gPqTELn2ICqQGmCk', key: 'SendAccountTexts', field_value: data.SendAccountTexts},
-                // {id: 'jZE9gPqTELn2ICqQGmCk', key: 'SendPromotionalEmails', field_value: data.SendPromotionalEmails},
-                // {id: 'jZE0gPqTELn2ICqQGmCk', key: 'SendPromotionalTexts', field_value: data.SendPromotionalTexts},
-                // {id: 'jZE1gPqTELn2ICqQGmCk', key: 'SendScheduleEmails', field_value: data.SendScheduleEmails},
-                // {id: 'jZE2gPqTELn2ICqQGmCk', key: 'SendScheduleTexts', field_value: data.SendScheduleTexts},
-                // {id: 'jZE4gPqTELn3ICqQGmCk', key: 'Sales', field_value: sales},
+                {id: 'jZE4gPqTELn2ICqQGmCk', key: 'Id', field_value: data.Id},
+                {id: 'jZE5gPqTELn2ICqQGmCk', key: 'CreationDate', field_value: data.Id},
+                {id: 'jZE6gPqTELn2ICqQGmCk', key: 'BirthDate', field_value: data.BirthDate},
+                {id: 'jZE7gPqTELn2ICqQGmCk', key: 'ClientCreditCard', field_value: data.ClientCreditCard},
+                {id: 'jZE8gPqTELn2ICqQGmCk', key: 'SendAccountTexts', field_value: data.SendAccountTexts},
+                {id: 'jZE9gPqTELn2ICqQGmCk', key: 'SendPromotionalEmails', field_value: data.SendPromotionalEmails},
+                {id: 'jZE0gPqTELn2ICqQGmCk', key: 'SendPromotionalTexts', field_value: data.SendPromotionalTexts},
+                {id: 'jZE1gPqTELn2ICqQGmCk', key: 'SendScheduleEmails', field_value: data.SendScheduleEmails},
+                {id: 'jZE2gPqTELn2ICqQGmCk', key: 'SendScheduleTexts', field_value: data.SendScheduleTexts},
+                {id: 'jZE4gPqTELn3ICqQGmCk', key: 'Sales', field_value: sales},
             ],
             source: 'public api',
             country: data.Country,
             companyName: data.HomeLocation.BusinessDescription,
         }
-        //
-        // this.utils.log('hlAddClient : ' + JSON.stringify(content, null, 4))
-        // return content
-        //
+        
+        this.utils.log('hlAddClient : ' + JSON.stringify(content, null, 4))
+        return content
+        
         try {
             let response = await axios.post(
                 url,
