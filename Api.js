@@ -715,7 +715,7 @@ class Api {
         let salesData = await this.sales({   
             start, 
             end, 
-            page
+            page: `${page}`
         }) 
         let isError = false
         for(let key in salesData) {
